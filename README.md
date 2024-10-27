@@ -9,3 +9,6 @@ The application allows viewing of all games played, with results and statistics 
 Each player’s salary is managed within the application, ensuring that team payrolls comply with league salary caps. If a salary increase exceeds the cap, the user is alerted, and the increase is disallowed.
 Any change in a player's statistics is automatically reflected in the team's overall statistics.
 Coaches can modify their team’s strategies, and these strategies can be updated as players are added or removed from the team.
+
+#UML Representation 
+https://wireframepro.mockflow.com/view/Mk29vgrDorb
