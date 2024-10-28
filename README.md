@@ -10,5 +10,3 @@ Each player’s salary is managed within the application, ensuring that team pay
 Any change in a player's statistics is automatically reflected in the team's overall statistics.
 Coaches can modify their team’s strategies, and these strategies can be updated as players are added or removed from the team.
 
-#UML Representation 
-https://wireframepro.mockflow.com/view/Mk29vgrDorb
