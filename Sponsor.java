@@ -14,10 +14,4 @@ public class Sponsor {
     public void setSponsorshipDeal(String sponsorshipDeal) {
         this.sponsorshipDeal = sponsorshipDeal;
     }
-    public void changeSponsor(String sponsorName, String sponsorshipDeal) {}
-    public void addSponsor(String sponsorName, String sponsorshipDeal) {}
-    public void removeSponsor(String sponsorName) {}
-    public void increaseSponsorDeal(String sponsorName, String sponsorshipDeal) {}
-    public void decreaseSponsorDeal(String sponsorName, String sponsorshipDeal) {}
-
 }

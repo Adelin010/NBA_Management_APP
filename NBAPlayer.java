@@ -19,6 +19,4 @@ public class NBAPlayer extends Player {
     public void setTeam(NBATeam team) {
         this.team = team;
     }
-    public void stats(int points, int rebounds, int assists) {}
-    public void displayStats() {}
 }

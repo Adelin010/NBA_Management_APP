@@ -18,13 +18,4 @@ public class NBATeam {
     public void setConference(Conference conference) {
     }
 
-    public void addPlayer(NBAPlayer player){
-    }
-    public void removePlayer(NBAPLayer player){
-
-    }
-    public void printRoaster(){
-
-    }
-
 }

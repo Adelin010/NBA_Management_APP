@@ -11,7 +11,4 @@ public class Conference {
     public void setConferenceName(String conferenceName) {
         this.conferenceName = conferenceName;
     }
-    public void addTeam(NBATeam team) {}
-    public void removeTeam(NBATeam team) {}
-    public void listTeams() {}
 }

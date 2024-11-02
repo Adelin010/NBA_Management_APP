@@ -4,8 +4,4 @@ public class Season {
     private List<Game> games;
 
     public Season(int year) {}
-
-    public void addGame(Game game) {}
-    public void listGames() {}
-    public void displaySeasonStats() {}
 }
