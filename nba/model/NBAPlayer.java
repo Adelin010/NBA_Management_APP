@@ -1,4 +1,6 @@
-public class NBAPlayer extends Player {
+package nba.model;
+
+public class NBAPlayer extends Player{
     private String position;
     private NBATeam team;
     private int points;
@@ -19,4 +21,5 @@ public class NBAPlayer extends Player {
     public void setTeam(NBATeam team) {
         this.team = team;
     }
+    
 }

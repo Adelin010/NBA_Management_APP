@@ -1,4 +1,7 @@
-public class Sponsor {
+package nba.model;
+
+public class Sponsor implements IdBounded {
+    protected Integer id;
     private String sponsorName;
     private String sponsorshipDeal;
     public Sponsor(String sponsorName, String sponsorshipDeal) {}
@@ -14,4 +17,6 @@ public class Sponsor {
     public void setSponsorshipDeal(String sponsorshipDeal) {
         this.sponsorshipDeal = sponsorshipDeal;
     }
+    @Override
+    public Integer getId(){return id;}
 }
