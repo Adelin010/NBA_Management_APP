@@ -1,0 +1,2 @@
+#Ignore the dist director(used to store the executed files)
+/built

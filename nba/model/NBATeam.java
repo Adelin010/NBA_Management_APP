@@ -1,4 +1,7 @@
-public class NBATeam {
+package nba.model;
+
+public class NBATeam implements IdBounded{
+    protected Integer id;
     private String name;
     private Manager manager;
     private Conference conference;
@@ -17,5 +20,6 @@ public class NBATeam {
     }
     public void setConference(Conference conference) {
     }
-
+    @Override 
+    public Integer getId(){return id;}
 }
