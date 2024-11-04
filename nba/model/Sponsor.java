@@ -5,6 +5,11 @@ public class Sponsor implements IdBounded {
     private String sponsorName;
     private String sponsorshipDeal;
     public Sponsor(String sponsorName, String sponsorshipDeal) {}
+
+    public Sponsor() {
+
+    }
+
     public String getSponsorName() {
         return sponsorName;
     }

@@ -9,6 +9,11 @@ public class NBAPlayer extends Player{
     public NBAPlayer(String name, int age, double salary, String position) {
         super(name, age, salary);
     }
+
+    public NBAPlayer() {
+        super();
+    }
+
     public String getPosition() {
         return position;
     }
