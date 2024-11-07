@@ -6,6 +6,7 @@ public abstract class Player implements IdBounded{
     protected String name;
     protected int age;
     protected double salary;
+    //Nu ai voie sa ai constructori in clasele abstracte
     public Player(String name, int age, double salary) {}
 
     public Player() {
