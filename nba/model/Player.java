@@ -7,6 +7,11 @@ public abstract class Player implements IdBounded{
     protected int age;
     protected double salary;
     public Player(String name, int age, double salary) {}
+
+    public Player() {
+
+    }
+
     public String getName() { return name; }
     public int getAge() { return age; }
     public double getSalary() { return salary; }
