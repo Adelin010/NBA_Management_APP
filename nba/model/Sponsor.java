@@ -4,10 +4,14 @@ public class Sponsor implements IdBounded {
     protected Integer id;
     private String sponsorName;
     private String sponsorshipDeal;
-    public Sponsor(String sponsorName, String sponsorshipDeal) {}
+    public Sponsor(int id, String sponsorName, String sponsorshipDeal) {
+        this.id  = id;
+        this.sponsorName = sponsorName;
+        this.sponsorshipDeal = sponsorshipDeal;
+    }
 
-    public Sponsor() {
-
+    public Sponsor(int id) {
+        this.id = id;
     }
 
     public String getSponsorName() {

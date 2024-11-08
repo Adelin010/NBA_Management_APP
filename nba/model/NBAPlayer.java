@@ -6,12 +6,21 @@ public class NBAPlayer extends Player{
     private int points;
     private int rebounds;
     private int assists;
-    public NBAPlayer(String name, int age, double salary, String position) {
-        super(name, age, salary);
+    //Refactor the constructors id must always be included
+    public NBAPlayer(int id,String name, int age, double salary, String position) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+        this.position = position;
     }
 
-    public NBAPlayer() {
-        super();
+    public NBAPlayer(int id) {
+        this.id = id;
+        this.name = "default";
+        this.age = 0;
+        this.salary = 0.00;
+        this.position = "unknown";
     }
 
     public String getPosition() {

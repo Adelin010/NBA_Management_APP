@@ -52,6 +52,7 @@ public class Console {
     private  void addPlayer(){
         System.out.println("Enter player name:");
         String name = scanner.nextLine();
+        //Always add the id - otherwise wont work
         NBAPlayer player = new NBAPlayer();
         player.setName(name);
         generalService.addPlayer(player);
