@@ -7,7 +7,10 @@ public class Season implements IdBounded{
     private int year;
     private List<Game> games;
 
-    public Season(int year) {}
+    public Season(int id ,int year) {
+        this.id = id;
+        this.year = year;
+    }
     public Integer getId(){
         return id;
     }

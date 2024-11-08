@@ -1,7 +1,10 @@
 package nba.model;
 
 public class PlayoffGame extends Game{
-    public PlayoffGame(String data,NBATeam team1,NBATeam team2) {
-        super(data,team1,team2);
+    public PlayoffGame(int id, String date,NBATeam team1,NBATeam team2) {
+        this.id = id;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.date = date;
     }
 }

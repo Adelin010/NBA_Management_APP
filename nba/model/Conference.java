@@ -6,7 +6,11 @@ public class Conference implements IdBounded {
     protected Integer id;
     private String conferenceName;
     private List<NBATeam> teams;
-    public Conference(String conferenceName, List<NBATeam> teams) {
+    //Also not implemented - WHY?
+    public Conference(int id, String conferenceName, List<NBATeam> teams) {
+        this.id = id;
+        this.conferenceName = conferenceName;
+        this.teams = teams;
     }
     public String getConferenceName() {
         return conferenceName;

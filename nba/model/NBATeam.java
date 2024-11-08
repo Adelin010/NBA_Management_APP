@@ -5,7 +5,11 @@ public class NBATeam implements IdBounded{
     private String name;
     private Manager manager;
     private Conference conference;
-    public NBATeam(String name) {}
+    //Constructor not implemeted - WHY?
+    public NBATeam(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
     public String getName(){
         return name;
     }
