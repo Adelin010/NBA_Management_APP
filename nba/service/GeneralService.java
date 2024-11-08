@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nba.model.Game;
+import nba.model.Manager;
 import nba.model.NBATeam;
 import nba.model.Player;
 import nba.model.Sponsor;
@@ -18,6 +19,8 @@ public class GeneralService {
     private final Repository<Sponsor> sponsors;
     private final Repository<Game> games;
     private final Repository<NBATeam> teams;
+    private final Repository<Manager> managers;
+
 
     /**
      * Dependicy injections
@@ -25,11 +28,12 @@ public class GeneralService {
      * @param sponsors
      * @param games
      */
-    public GeneralService(Repository<Player> players, Repository<Sponsor> sponsors, Repository<Game> games, Repository<NBATeam> teams){
+    public GeneralService(Repository<Player> players, Repository<Sponsor> sponsors, Repository<Game> games, Repository<NBATeam> teams, Repository<Manager> managers){
         this.players = players;
         this.games = games;
         this.sponsors = sponsors;
         this.teams = teams;
+        this.managers = managers;
     }
 
     public void addPlayerToTeam(){
@@ -69,10 +73,74 @@ public class GeneralService {
         
 
     }
+    /**
+     * Team related function - adds a new Team in the memory
+     * @param team
+     */
+    public void addTeam(NBATeam team){
+        teams.create(team);
+    }
+    /**
+     * retunrs all the Teams from the memory
+     * @return List<NBATeam>
+     */
+    public List<NBATeam> getAllTeams(){
+        return teams.getAll();
+    }
 
+    /**
+     * Returns a Team by the name provided
+     * @param teamName
+     * @return
+     */
+    public NBATeam getTeamByTeamName(String teamName){
+        for(NBATeam team: teams.getAll()){
+            if(team.getName() == teamName)
+                return team;
+        }
+        return null;
+    }
+    /**
+     * Returns a Team by the id
+     * @param id
+     * @return
+     */
+    public NBATeam getTeamById(int id){
+        for(NBATeam team: teams.getAll()){
+            if(team.getId() == id)
+                return team;
+        }
+        return null;
+    }
+    /**
+     * Manager related methods - adds a new Manager in memory
+     * @param manager
+     */
+    public void addManager(Manager manager){
+        managers.create(manager);
+    }
+    /**
+     * Retrieves a Manager of a specific Team
+     * @param teamName
+     * @return
+     */
+    public Manager getTeamManager(String teamName){
+        NBATeam team = getTeamByTeamName(teamName);
+        return team.getManager();
+    }
+
+    public Manager getManagerOfPlayer(int playerId){
+        NBAPlayer player = getPlayerById(playerId);
+        return player.getTeam().getManager();
+    }
 
     public void addPlayer(Player player){
         players.create(player);
+    }
+
+    public NBAPlayer getPlayerById(int id){
+        
+        return (NBAPlayer)players.get(id);
     }
 
     public void addSponsor(Sponsor sponsor){
