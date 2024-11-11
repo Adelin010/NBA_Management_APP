@@ -13,11 +13,20 @@ public class GeneralController{
     public GeneralController(GeneralService service) {
     }
 
-    public void addPlayer(String name, int age, double salary, String position){
-        Player player = new NBAPlayer(name, age, salary, position);
+    public void addPlayer(int id, String name, int age, double salary, String position){
+        Player player = new NBAPlayer(id, name, age, salary, position);
         service.addPlayer(player);
-        System.out.println("Player " + name + " added to the list");
     }
+
+    public NBAPlayer getNbaPlayerById(int id){
+        return service.getPlayerById(id);
+    }
+
+    public List<NBAPlayer> getAllPlayersInTeam(int teamId){
+        NBATeam team = service.getTeamById(teamId);
+        return service.getAllPlayersPerTeam(team); 
+    }
+
     public void addTeam(String name, int id, Manager manager){
         NBATeam team = new NBATeam(id, name,manager);
         service.addTeam(team);

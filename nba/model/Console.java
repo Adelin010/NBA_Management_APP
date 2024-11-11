@@ -98,7 +98,7 @@ public class Console {
         scanner.nextLine(); // Consume newline
         System.out.print("Enter player position: ");
         String position = scanner.nextLine();
-        controller.addPlayer(name, age, salary, position);
+        // controller.addPlayer(name, age, salary, position);
     }
 
     private void addTeam() {
