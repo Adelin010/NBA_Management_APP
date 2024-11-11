@@ -43,6 +43,9 @@ public class Driver {
                 Menu Game(g):
                 \t1)add game
                 \t2)get game by id
+
+                Special Menu(sp):
+                \t1)Change the manager of a team
                 """;
 
         System.out.println(menu);
@@ -95,7 +98,63 @@ public class Driver {
             ex.printStackTrace();
         }
     }
+
+    private static void addManager(GeneralController ctr, Scanner in){
+        System.out.print("Enter id: ");
+        int id = in.nextInt();
+        System.out.print("Enter name: ");
+        String name = in.next();
+        ctr.addManager(id, name, null);
+    }
     
+
+    public static void addTeam(GeneralController ctr, Scanner in){
+        System.out.print("Enter id: ");
+        int id = in.nextInt();
+        System.out.print("Enter name: ");
+        String name = in.next();
+        System.out.println("Enter manager id: ");
+        int manId = in.nextInt();
+        ctr.addTeam(name, id, manId);
+    }
+
+    public static void getManagerOfTeam(GeneralController ctr, Scanner in){
+        System.out.print("Enter team name: ");
+        String name = in.next();
+        System.out.println(ctr.getTeamManager(name).toString()); 
+    }
+
+    public static void getTeamById(GeneralController ctr, Scanner in){
+        System.out.print("Enter team id: ");
+        int id = in.nextInt();
+        System.out.println(ctr.getTeamByID(id).toString());
+    }
+
+
+    public static void getTeamByName(GeneralController ctr, Scanner in){
+        System.out.print("Enter team name: ");
+        String name = in.next();
+        System.out.println(ctr.getTeamByName(name).toString());
+    }
+
+    public static void getAllTeams(GeneralController ctr, Scanner in){
+        for(NBATeam team: ctr.getAllTeams())
+            System.out.println(team.toString());
+    }
+
+
+    public static void hireManager(GeneralController ctr, Scanner in){
+        System.out.print("Enter team id: ");
+        int teamId = in.nextInt();
+        System.out.print("Enter manager id: ");
+        int namagerId = in.nextInt();
+        int res = ctr.hireManager(teamId, namagerId);
+        if(res == -1)
+            System.out.println("\033[33m Manager already taken\033[0m");
+        else 
+            System.out.println("Manager hired");
+        
+    }
 
     private static void execOption(String option, GeneralController ctr, Scanner in){
         switch (option) {
@@ -115,9 +174,11 @@ public class Driver {
             }
             // Manager menu cases
             case "1m":{
+                addManager(ctr, in);
                 break;
             }
             case "2m":{
+                getManagerOfTeam(ctr, in);
                 break;
             }
             case "3m":{
@@ -132,15 +193,19 @@ public class Driver {
             }
             // Team menu cases
             case "1t":{
+                addTeam(ctr, in);
                 break;
             }
             case "2t":{
+                getAllTeams(ctr, in);
                 break;
             }
             case "3t":{
+                getTeamById(ctr, in);
                 break;
             }
             case "4t":{
+                getTeamByName(ctr, in);
                 break;
             }
             // Game menu cases
@@ -151,6 +216,10 @@ public class Driver {
                 break;
             }      
             
+            case "1sp":{
+                hireManager(ctr, in);
+                break;
+            }
         }
     }
     
@@ -171,6 +240,9 @@ public class Driver {
                 break;
             }
             execOption(op, ctr, in);
+            System.out.println("\033[32mWant to exit the menu pres write '/quit'... \033[0m");
+            // Wait for an input
+            
         }
 
         in.close();

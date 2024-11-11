@@ -14,17 +14,26 @@ public class NBATeam implements IdBounded{
     public String getName(){
         return name;
     }
-    public void setName(String name) {}
+    public void setName(String name) {
+        this.name = name;
+    }
     public Manager getManager(){
         return manager;
     }
-    public void setManager(Manager manager){}
+    public void setManager(Manager manager){
+        this.manager = manager;
+    }
 
     public Conference getConference() {
         return conference;
     }
     public void setConference(Conference conference) {
+        this.conference = conference;
     }
     @Override 
     public Integer getId(){return id;}
+
+    public String toString(){
+        return "Team " + name + " with id " + id + " and the manager is " + manager.getName();
+    }
 }

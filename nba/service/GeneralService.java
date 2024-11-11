@@ -74,6 +74,9 @@ public class GeneralService {
      * @param team
      */
     public void addTeam(NBATeam team){
+        Manager man = team.getManager();
+        man.setTeam(team);
+        System.out.println(man.getTeam().toString());
         teams.create(team);
     }
     /**
@@ -84,14 +87,41 @@ public class GeneralService {
         return teams.getAll();
     }
 
+    public int changeTeamManager(int teamId, int managerId){
+        Manager man = managers.get(managerId);
+        System.out.println(man.getName());
+        NBATeam team = teams.get(teamId);
+        System.out.println(team.getManager().getName());
+
+        //check if the new Manager is already assigned
+        boolean isAssigned = false;
+        for(NBATeam current: teams.getAll()){
+            if(current.getManager().getId() == managerId)
+                isAssigned = true;
+        }
+        if(isAssigned)
+            return -1;
+        // Fire the old manager
+        Manager oldOne = team.getManager();
+        oldOne.setTeam(null);
+        //Hire the new one
+        team.setManager(man);
+        System.out.println(team.getManager().getName());
+        return 0;
+    }
+
     /**
      * Returns a Team by the name provided
      * @param teamName
      * @return
      */
     public NBATeam getTeamByTeamName(String teamName){
+        System.out.println("\033[31m" + teamName);
         for(NBATeam team: teams.getAll()){
+            System.out.println("\033[31m");
+            System.out.println(team.toString());
             if(team.getName() == teamName)
+                System.out.println("Found it................");
                 return team;
         }
         return null;
@@ -122,7 +152,12 @@ public class GeneralService {
      */
     public Manager getTeamManager(String teamName){
         NBATeam team = getTeamByTeamName(teamName);
+        System.out.println(team.toString());
         return team.getManager();
+    }
+
+    public Manager getManagerById(int id){
+        return managers.get(id);
     }
 
     public Manager getManagerOfPlayer(int playerId){
