@@ -21,20 +21,18 @@ public class GeneralService {
     private final Repository<NBATeam> teams;
     private final Repository<Manager> managers;
 
+    public GeneralService(Repository<Player> players, Repository<Sponsor> sponsors, Repository<Game> games, Repository<NBATeam> teams, Repository<Manager> managers) {
+        this.players = players;
+        this.sponsors = sponsors;
+        this.games =  games;
+        this.teams = teams;
+        this.managers =managers;
+    }
+
 
     /**
      * Dependicy injections
-     * @param players
-     * @param sponsors
-     * @param games
      */
-    public GeneralService(Repository<Player> players, Repository<Sponsor> sponsors, Repository<Game> games, Repository<NBATeam> teams, Repository<Manager> managers){
-        this.players = players;
-        this.games = games;
-        this.sponsors = sponsors;
-        this.teams = teams;
-        this.managers = managers;
-    }
 
     public void addPlayerToTeam(){
 

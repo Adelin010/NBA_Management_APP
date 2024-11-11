@@ -15,7 +15,7 @@ public class NBAPlayer extends Player{
         this.position = position;
     }
 
-    public NBAPlayer(int id) {
+    public NBAPlayer(String name, int id, double salary, String position) {
         this.id = id;
         this.name = "default";
         this.age = 0;
