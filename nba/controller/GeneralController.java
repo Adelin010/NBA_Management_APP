@@ -11,14 +11,31 @@ public class GeneralController{
     private GeneralService service;
 
     public GeneralController(GeneralService service) {
+        this.service = service;
     }
 
-    public void addPlayer(String name, int age, double salary, String position){
-        Player player = new NBAPlayer(name, age, salary, position);
+    public void addPlayer(int id, String name, int age, double salary, String position){
+        Player player = new NBAPlayer(id, name, age, salary, position);
         service.addPlayer(player);
-        System.out.println("Player " + name + " added to the list");
+        System.out.println("Player added !");
     }
-    public void addTeam(String name, int id, Manager manager){
+
+    public int hireManager(int teamId, int managerId){
+        return service.changeTeamManager(teamId, managerId);
+    }
+
+    public NBAPlayer getNbaPlayerById(int id){
+        return service.getPlayerById(id);
+    }
+
+    public List<NBAPlayer> getAllPlayersInTeam(int teamId){
+        NBATeam team = service.getTeamById(teamId);
+        return service.getAllPlayersPerTeam(team); 
+    }
+
+    public void addTeam(String name, int id, int  manId){
+        Manager manager = service.getManagerById(manId);
+        System.out.println(manager.toString());
         NBATeam team = new NBATeam(id, name,manager);
         service.addTeam(team);
         System.out.println("Team " + name + " added to the list");
@@ -37,22 +54,22 @@ public class GeneralController{
     public List<NBATeam> getAllTeams(){
         return service.getAllTeams();
     }
-    public void addManager(String name, int id, NBATeam team){
-        Manager manager = new Manager(name,team);
+    public void addManager(int id, String name, NBATeam team){
+        Manager manager = new Manager(id,name,team);
         service.addManager(manager);
         System.out.println("Manager " + name + " added to the list");
     }
 
     public Manager getTeamManager(String teamName){
         Manager manager = service.getTeamManager(teamName);
-        if(manager != null){
-            System.out.println("Manager " + teamName + " found in the list");
-        }
-        else {
-            System.out.println("Manager " + teamName + " not found in the list");
-        }
         return manager;
     }
+
+    public NBATeam getTeamByName(String name){
+        return service.getTeamByTeamName(name);
+    }
+
+
     public Manager getManagerOfPlayer(int playerId) {
         return service.getManagerOfPlayer(playerId);
     }

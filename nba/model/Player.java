@@ -16,5 +16,9 @@ public abstract class Player implements IdBounded{
     public void setSalary(double salary) { this.salary = salary; }
     @Override 
     public Integer getId(){return id;}
+
+    public String toString(){
+        return "Player " + name + " with id " + id + ", the age " + age + " and the salary " + salary; 
+    }
 }
 

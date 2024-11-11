@@ -6,7 +6,6 @@ public class Fonds implements IdBounded{
     private String sponsorName;
     private String sponsorshipDeal;
     private NBATeam team;
-    //Not implemented - WHY?
     public Fonds(int id, String sponsorName, String sponsorshipDeal, NBATeam team) {
         this.id = id;
         this.sponsorName = sponsorName;

@@ -2,7 +2,7 @@ package nba.model;
 
 public class NBAPlayer extends Player{
     private String position;
-    private NBATeam team;
+    private NBATeam team = null;
     private int points;
     private int rebounds;
     private int assists;
@@ -15,7 +15,7 @@ public class NBAPlayer extends Player{
         this.position = position;
     }
 
-    public NBAPlayer(String name, int id, double salary, String position) {
+    public NBAPlayer(int id) {
         this.id = id;
         this.name = "default";
         this.age = 0;
