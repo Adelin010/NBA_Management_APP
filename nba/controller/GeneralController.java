@@ -11,11 +11,13 @@ public class GeneralController{
     private GeneralService service;
 
     public GeneralController(GeneralService service) {
+        this.service = service;
     }
 
     public void addPlayer(int id, String name, int age, double salary, String position){
         Player player = new NBAPlayer(id, name, age, salary, position);
         service.addPlayer(player);
+        System.out.println("Player added !");
     }
 
     public NBAPlayer getNbaPlayerById(int id){

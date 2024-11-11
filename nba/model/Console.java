@@ -133,8 +133,8 @@ public class Console {
     private void addSponsor() {
         System.out.print("Enter sponsor name: ");
         String name = scanner.nextLine();
-        Sponsor sponsor = new Sponsor(name);
-        controller.addSponsor(sponsor);
+        // Sponsor sponsor = new Sponsor(name);
+        // controller.addSponsor(sponsor);
     }
 
     private void getAllPlayersPerTeam() {

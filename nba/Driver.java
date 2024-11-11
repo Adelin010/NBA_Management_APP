@@ -4,56 +4,64 @@ import java.util.List;
 import java.util.Scanner;
 
 import nba.controller.GeneralController;
+import nba.model.Game;
+import nba.model.Manager;
 import nba.model.NBAPlayer;
+import nba.model.NBATeam;
+import nba.model.Player;
+import nba.model.Sponsor;
+import nba.repo.InMemRepository;
+import nba.repo.Repository;
+import nba.service.GeneralService;
 
 public class Driver {
 
-    private static String mainMenu(){
-        System.out.println("Wellcome to the main page...\nTo select a option enter\nthe number of the option and \nthe letter of each menu");
+
+    private static String mainMenu(Scanner in){
+        System.out.println("Wellcome to the main page...\nTo select a option enter\nthe number of the option and \nthe letter of each menu\n");
         String menu = """
-                Menu Player(m):
+                Menu Player(p):
                 \t1)add player
-                \t1)get player by id
-                \t1)get all players in a team
+                \t2)get player by id
+                \t3)get all players in a team
 
                 Menu Manager(m):
                 \t1)add manager
-                \t1)get team manager
-                \t1)get manager of player
+                \t2)get team manager
+                \t3)get manager of player
 
                 Menu Sponsor(s):
                 \t1)add sponsor
-                \t1)get sponsor by id
+                \t2)get sponsor by id
 
                 Menu Team(t):
                 \t1)add team
-                \t1)get all teams
-                \t1)get team by id
-                \t1)get team by name
+                \t2)get all teams
+                \t3)get team by id
+                \t4)get team by name
 
                 Menu Game(g):
                 \t1)add game
-                \t1)get game by id
+                \t2)get game by id
                 """;
 
         System.out.println(menu);
-        Scanner in  = new Scanner(System.in);
         String op = in.nextLine().trim();
-        in.close();
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
         return op;
     }
 
-    private static void addPlayer(GeneralController ctr){
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter id: ");
+    private static void addPlayer(GeneralController ctr, Scanner in){
+        System.out.print("Enter id: ");
         int id  = in.nextInt();
-        System.out.println("Enter age: ");
+        System.out.print("Enter age: ");
         int age = in.nextInt();
-        System.out.println("Enter name: ");
+        System.out.print("Enter name: ");
         String name = in.next();
-        System.out.println("Enter salary: ");
+        System.out.print("Enter salary: ");
         double salary = in.nextDouble();
-        System.out.println("Enter position: ");
+        System.out.print("Enter position: ");
         String pos = in.next();
         try{
             ctr.addPlayer(id, name, age, salary, pos);
@@ -61,26 +69,22 @@ public class Driver {
         }catch(Exception exp){
             exp.printStackTrace();
         }
-        in.close();
     }  
     
 
-    private static void getPlayer(GeneralController ctr){
-        Scanner in = new Scanner(System.in);
-        System.out.println("id: ");
+    private static void getPlayer(GeneralController ctr, Scanner in ){
+        System.out.print("id: ");
         int id = in.nextInt();
-        in.close();
         try{
             NBAPlayer player = ctr.getNbaPlayerById(id);
-            System.out.println(player.toString());
+            System.out.print(player.toString());
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
 
-    private static void getAllPlayersInTeam(GeneralController ctr){
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter team id: ");
+    private static void getAllPlayersInTeam(GeneralController ctr, Scanner in){
+        System.out.print("Enter team id: ");
         int id = in.nextInt();
         try{
             List<NBAPlayer> players = ctr.getAllPlayersInTeam(id);
@@ -93,19 +97,20 @@ public class Driver {
     }
     
 
-    private static void execOption(String option, GeneralController ctr){
+    private static void execOption(String option, GeneralController ctr, Scanner in){
         switch (option) {
+
             // Player menu cases
             case "1p":{
-                addPlayer(ctr);
+                addPlayer(ctr, in);
                 break;
             }
             case "2p":{
-                getPlayer(ctr);
+                getPlayer(ctr, in);
                 break;
             }
             case "3p":{
-                getAllPlayersInTeam(ctr);
+                getAllPlayersInTeam(ctr, in);
                 break;
             }
             // Manager menu cases
@@ -150,8 +155,25 @@ public class Driver {
     }
     
     public static void main(String[] args) {
-        String op = mainMenu();
+        final Repository<Player> players = new InMemRepository<>();
+        final Repository<Sponsor> sponsors = new InMemRepository<>();
+        final Repository<Game> games = new InMemRepository<>();
+        final Repository<NBATeam> teams = new InMemRepository<>();
+        final Repository<Manager> managers = new InMemRepository<>();
+        final GeneralService service = new GeneralService(players, sponsors, games, teams, managers);
+        final GeneralController ctr = new GeneralController(service);
+        Scanner in = new Scanner(System.in);
 
+        while (true){
+            String op = mainMenu(in);
+            if(op == "/quit"){
+                System.out.println("Menu left...\n");
+                break;
+            }
+            execOption(op, ctr, in);
+        }
+
+        in.close();
     }
     
 }
