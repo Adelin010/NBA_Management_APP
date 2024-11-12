@@ -229,8 +229,9 @@ public class Driver {
         final Repository<Game> games = new InMemRepository<>();
         final Repository<NBATeam> teams = new InMemRepository<>();
         final Repository<Manager> managers = new InMemRepository<>();
-        final GeneralService service = new GeneralService(players, sponsors, games, teams, managers);
+        final GeneralService service = new GeneralService(players, teams,sponsors, games, managers);
         final GeneralController ctr = new GeneralController(service);
+        
         Scanner in = new Scanner(System.in);
 
         while (true){

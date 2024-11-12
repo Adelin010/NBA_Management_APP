@@ -16,7 +16,7 @@ public interface Repository<T extends IdBounded> {
      *
      * @param obj The object to create.
      */
-    void create(T instance);
+    void add(T instance);
      /**
      * Updates an existing object in the repository.
      *

@@ -1,7 +1,7 @@
 package nba.repo;
 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
 //######################
 import nba.model.IdBounded;
@@ -10,13 +10,13 @@ import nba.model.IdBounded;
 public class InMemRepository<T extends IdBounded> implements Repository<T>{
 
 
-    private final Map<Integer, T> data = new HashMap<>();
+    private final Map<Integer, T> data = new TreeMap<>();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void create(T instance){
+    public void add(T instance){
         data.putIfAbsent(instance.getId(), instance);
     }
 

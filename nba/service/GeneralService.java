@@ -21,7 +21,7 @@ public class GeneralService {
     private final Repository<NBATeam> teams;
     private final Repository<Manager> managers;
 
-    public GeneralService(Repository<Player> players, Repository<Sponsor> sponsors, Repository<Game> games, Repository<NBATeam> teams, Repository<Manager> managers) {
+    public GeneralService(Repository<Player> players, Repository<NBATeam> teams, Repository<Sponsor> sponsors, Repository<Game> games, Repository<Manager> managers) {
         this.players = players;
         this.sponsors = sponsors;
         this.games =  games;
@@ -61,7 +61,7 @@ public class GeneralService {
                 throw new Exception("\nDate format invalid");
             }
             //Final functionality
-            games.create(game);
+            games.add(game);
         }catch(Exception exp){
             System.err.println(exp.getMessage());
             exp.printStackTrace();
@@ -77,7 +77,7 @@ public class GeneralService {
         Manager man = team.getManager();
         man.setTeam(team);
         System.out.println(man.getTeam().toString());
-        teams.create(team);
+        teams.add(team);
     }
     /**
      * retunrs all the Teams from the memory
@@ -143,7 +143,7 @@ public class GeneralService {
      * @param manager
      */
     public void addManager(Manager manager){
-        managers.create(manager);
+        managers.add(manager);
     }
     /**
      * Retrieves a Manager of a specific Team
@@ -166,7 +166,7 @@ public class GeneralService {
     }
 
     public void addPlayer(Player player){
-        players.create(player);
+        players.add(player);
     }
 
     public NBAPlayer getPlayerById(int id){
@@ -175,7 +175,7 @@ public class GeneralService {
     }
 
     public void addSponsor(Sponsor sponsor){
-        sponsors.create(sponsor);
+        sponsors.add(sponsor);
     }
 
     public List<NBAPlayer> getAllPlayersPerTeam(NBATeam team){
