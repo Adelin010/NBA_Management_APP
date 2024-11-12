@@ -29,6 +29,14 @@ public class Manager implements IdBounded{
     public Integer getId(){return id;}
 
     public String toString(){
-        return "";
+        String res = "{\n\\tManagerID:"+ id +".\n\tManager Name:"+name +",\n";
+        if(team != null){
+            res+= "\tTeamID:" + team.getId() + ",\n\tTeamName:" + team.getName() + "\n\t}\n";
+        }
+        else{
+            res+= "\tTeam: Unemplyed\n";
+        }
+        res+="{";
+        return res;
     }
 }
