@@ -18,7 +18,15 @@ public abstract class Player implements IdBounded{
     public Integer getId(){return id;}
 
     public String toString(){
-        return "[Player " + name + " with id " + id + ", the age " + age + " and the salary " + salary + "]"; 
+        String res ="{\n\tplayerId: " + id + ",\n";
+        if(name != null){
+            res += "\tname: " + name + ",\n";
+        }
+        else{res += "\tname: null,\n";}
+        res+= "\tage: " + age + ",\n";
+        res+= "\tsalary: " + salary + ",\n";
+        res+="{";
+        return res;
     }
 }
 
