@@ -1,11 +1,11 @@
 package nba.model;
 
 public class NBAPlayer extends Player{
-    private String position;
-    private NBATeam team = null;
-    private int points;
-    private int rebounds;
-    private int assists;
+    protected String position;
+    protected NBATeam team;
+    protected int points;
+    protected int rebounds;
+    protected int assists;
     //Refactor the constructors id must always be included
     public NBAPlayer(int id,String name, int age, double salary, String position) {
         this.id = id;
@@ -13,6 +13,7 @@ public class NBAPlayer extends Player{
         this.age = age;
         this.salary = salary;
         this.position = position;
+        this.team = null;
     }
 
     public NBAPlayer(int id) {
@@ -21,20 +22,29 @@ public class NBAPlayer extends Player{
         this.age = 0;
         this.salary = 0.00;
         this.position = "unknown";
+        this.team = null;
     }
-
+    /*
+     * Getters/Setters Position
+     */
     public String getPosition() {
         return position;
     }
     public void setPosition(String position) {
         this.position = position;
     }
+    /*
+     * Getters/Setters Team
+     */
     public NBATeam getTeam() {
         return team;
     }
     public void setTeam(NBATeam team) {
         this.team = team;
     }
+    /*
+     * Getters/Setters Points
+     */
     public int getPoints() {
         return points;
     }
