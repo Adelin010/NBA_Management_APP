@@ -33,15 +33,15 @@ public class Fonds implements IdBounded{
     public String toString(){
         String res = "{\n\tfondsId: " + id + ",\n";
         if (sponsorName != null) {
-            res += "\tsponsorName: " + sponsorName + ",\n";
+            res += "\tname: " + sponsorName + ",\n";
         }
         if (sponsorshipDeal != null) {
-            res += "\tsponsorshipDeal: " + sponsorshipDeal + ",\n";
+            res += "\tdeal: " + sponsorshipDeal + ",\n";
         }
         if (team != null) {
             res += "\tteam: {\n";
-            res += "\t\tteamId: " + team.getId() + ",\n";
-            res += "\t\tteamName: " + team.getName() + "\n";
+            res += "\t\tid: " + team.getId() + ",\n";
+            res += "\t\tname: " + team.getName() + "\n";
             res += "\t}\n";
         }
         res += "}";
