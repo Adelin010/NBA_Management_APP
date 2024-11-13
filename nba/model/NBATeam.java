@@ -59,13 +59,18 @@ public class NBATeam implements IdBounded{
     public String toString(){
         String res = "{ \n\tteamId: " + id + ",\n\tteamName: " + name + ",\n";
         if(manager != null){
-            res += "\tmanager: {\n\t\tid: " + manager.id + ",\n\t\tname: " + manager.name + "\n\t}\n\t";
+            res += "\tmanager: {\n\t\tid: " + manager.id + ",\n\t\tname: " + manager.name + "\n\t}\n";
+        }
+        else{
+            res += "\tmanager: null\n";
         }
         if(players.size() != 0){
-            res += "\tplayers : [\n\t\t";
+            res += "\tplayers : [\n";
             for(NBAPlayer player: players){
-                res += "{\n\t\t\tid: " + player.id + ",\n\t\t\tname: " + player.name + ",\n\t\t\tposition: " + player.position + ",\n\t\t\tsalary: " + player.salary + ",\n\t\t\tage: " + player.age + "\n\t\t},\n\t\t";
+                res += "\t\t{\n\t\t\tid: " + player.id + ",\n\t\t\tname: " + player.name + ",\n\t\t\tposition: " + player.position + ",\n\t\t\tsalary: " + player.salary + ",\n\t\t\tage: " + player.age + "\n\t\t},\n";
             }
+        }else{
+            res += "\tplayers: []\n";
         }
         res += "}";
         return res;

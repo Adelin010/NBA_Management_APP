@@ -1,8 +1,5 @@
 package nba.ui;
 
-import nba.repo.InMemRepository;
-import nba.repo.Repository;
-import nba.service.TeamService;
 import nba.controller.TeamController;
 import nba.model.*;
 import java.util.Scanner;
@@ -10,8 +7,10 @@ import java.util.List;
 
 public class TeamMenu {
     
+    private final TeamController tmC;
+    private final Scanner in;
 
-    private static void addTeam(TeamController tc, Scanner in){
+    private void addTeam(TeamController tc, Scanner in){
         System.out.print("Id of the Team: ");
         int id = in.nextInt();
         System.out.print("Name of the team: ");
@@ -26,7 +25,7 @@ public class TeamMenu {
         }
     }
 
-    public static void getTeamById(TeamController tc, Scanner in){
+    private void getTeamById(TeamController tc, Scanner in){
         System.out.print("Id of the Team: ");
         int id = in.nextInt();
         try{
@@ -38,7 +37,7 @@ public class TeamMenu {
         }
     }
 
-    public static void getTeamByName(TeamController tc, Scanner in){
+    private void getTeamByName(TeamController tc, Scanner in){
         System.out.print("Id of the Team: ");
         String name = in.next();
         System.out.println("Name entered: " + name);
@@ -51,7 +50,7 @@ public class TeamMenu {
         }
     }
 
-    public static void getAllTeams(TeamController tc, Scanner in){
+    private void getAllTeams(TeamController tc, Scanner in){
         try{
             List<NBATeam> teams = tc.getAllTeams();
             if(teams.size() == 0)
@@ -66,14 +65,15 @@ public class TeamMenu {
         }
     }
 
-    public static void main(String[] args) {
-        Repository<NBATeam> tmR = new InMemRepository<>();
-        Repository<Manager> manR = new InMemRepository<>();
-        TeamService tmS = new TeamService(tmR, manR);
-        TeamController tmC = new TeamController(tmS);
-        Scanner in = new Scanner(System.in);
+    public TeamMenu(TeamController tmC, Scanner in){
+        this.in = in;
+        this.tmC = tmC;
+    }
 
-        while(true){
+    public void run() {
+
+        boolean loop = true;
+        while(loop){
             System.out.println("1) Add Team\n2)Get Team by Id\n3)Get Team By Name\n4)Get all teams");
             System.out.println("Option: ");
             int option = in.nextInt();
@@ -92,6 +92,10 @@ public class TeamMenu {
                 }
                 case 4:{
                     getAllTeams(tmC, in);
+                    break;
+                }
+                case -1:{
+                    loop = false;
                     break;
                 }
                 default:{
