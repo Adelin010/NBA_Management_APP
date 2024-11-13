@@ -1,11 +1,31 @@
 package nba.model;
 
+
+
+
 public class NBAPlayer extends Player{
     protected String position;
     protected NBATeam team;
     protected int points;
     protected int rebounds;
     protected int assists;
+    enum Positions{
+        PG("Point Guard"),
+        SG("shooting Guard"),
+        SF("Small Forward"),
+        PF("Power Forward"),
+        C("Center");
+    
+        private final String desc;
+    
+        Positions(String desc){
+            this.desc = desc;
+        }
+    
+        public String description(){
+            return desc;
+        }
+    }
     //Refactor the constructors id must always be included
     public NBAPlayer(int id,String name, int age, double salary, String position) {
         this.id = id;
