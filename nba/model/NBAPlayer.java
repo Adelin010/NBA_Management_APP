@@ -63,5 +63,21 @@ public class NBAPlayer extends Player{
     public void setAssists(int assists) {
         this.assists = assists;
     }
+    public String toString(){
+        String res = "{\n\tPlayerID: " + id + ",\n\tPlayerName: " + name + ",\n\tAge: " + age + ",\n\tSalary: " + salary + ",\n\tPosition: " + position + ",\n";
+
+        if(team != null){
+            res += "\tTeam: {\n\t\tTeamID: " + team.getId() + ",\n\t\tTeamName: " + team.getName() + "\n\t},\n";
+
+        }
+        else{
+            res += "\tTeam: Free AGent,\n}";
+        }
+        res += "\tPoints: " + points + ",\n";
+        res += "\tRebounds: " + rebounds + ",\n";
+        res += "\tAssists: " + assists + "\n";
+        res+="}";
+        return res;
+    }
     
 }

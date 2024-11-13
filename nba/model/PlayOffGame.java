@@ -1,24 +1,11 @@
 package nba.model;
 
-// 
-public abstract class Game  implements IdBounded {
-    protected Integer id;
-    protected String date;
-    protected NBATeam team1;
-    protected NBATeam team2;
-    protected int scoreTeam1;
-    protected int scoreTeam2;
-    //No Constructors in an abstract class
-
-    @Override
-    public Integer getId(){return id;}
-
-    public NBATeam[] getTeams(){
-        NBATeam[] teams = {team1, team2};
-        return teams;
-    }
-    public String getDate(){
-        return date;
+public class PlayOffGame extends Game{
+    public PlayOffGame(int id, String date, NBATeam team1, NBATeam team2) {
+        this.id = id;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.date = date;
     }
     public String toString(){
         String res ="{\n\tgameId: " + id + ",\n\tdate: " + date + ",\n";
@@ -34,5 +21,4 @@ public abstract class Game  implements IdBounded {
         return res;
 
     }
-
 }

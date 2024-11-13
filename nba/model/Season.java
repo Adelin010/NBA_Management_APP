@@ -26,4 +26,16 @@ public class Season implements IdBounded{
     public void setGames(List<Game> games){
         this.games = games;
     }
+    @Override
+    public String toString() {
+        String res ="{\n\tSeasonID:"+id+",\n\tYear:"+year+",\n\tGames:[\n";
+        if(games!=null && games.size()>0){
+            for(Game g : games){
+                res += "\t\t"+g.toString().replace("\n","\n\t\t")+",\n";
+            }
+        }
+        else{res+="\t\tThere are no games\n";}
+        res+="\t]\n}";
+        return res;
+    }
 }
