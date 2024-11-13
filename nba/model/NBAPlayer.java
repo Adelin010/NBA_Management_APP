@@ -87,11 +87,8 @@ public class NBAPlayer extends Player{
         String res = "{\n\tPlayerID: " + id + ",\n\tPlayerName: " + name + ",\n\tAge: " + age + ",\n\tSalary: " + salary + ",\n\tPosition: " + position + ",\n";
 
         if(team != null){
-            res += "\tTeam: {\n\t\tTeamID: " + team.getId() + ",\n\t\tTeamName: " + team.getName() + "\n\t},\n";
+            res += "\tTeam: {\n\t\tid: " + team.getId() + ",\n\t\tname: " + team.getName() + "\n\t},\n";
 
-        }
-        else{
-            res += "\tTeam: Free AGent,\n}";
         }
         res += "\tPoints: " + points + ",\n";
         res += "\tRebounds: " + rebounds + ",\n";
