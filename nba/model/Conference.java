@@ -32,7 +32,7 @@ public class Conference implements IdBounded {
         if (teams != null){
             res+= "\tteams:[\n\t\t";
             for (NBATeam team : teams){
-                res+= "{\n\t\t\tteamId: " + team.getId() + ",\n\t\t\tteamName: " + team.getName() + "\n\t\t},\n\t\t";
+                res+= "{\n\t\t\tid: " + team.getId() + ",\n\t\t\tname: " + team.getName() + "\n\t\t},\n\t\t";
             }
             res+= "\n\t]\n";
         }

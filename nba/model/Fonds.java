@@ -31,11 +31,20 @@ public class Fonds implements IdBounded{
         this.team = team;
     }
     public String toString(){
-        String res = "{\n\tFondsID:"+ id+",\n\tSponsor Name: "+ sponsorName+"\n\tSponsor Deal: "+ sponsorshipDeal+",\n";
-        if(team != null){
-            res+= "\tTeam: {\n\t\tTeamID:" + team.getId() +"\n\t\tTeam Name:"+ team.getName()+"\n\t}\n";
+        String res = "{\n\tfondsId: " + id + ",\n";
+        if (sponsorName != null) {
+            res += "\tname: " + sponsorName + ",\n";
         }
-        res+="}";
+        if (sponsorshipDeal != null) {
+            res += "\tdeal: " + sponsorshipDeal + ",\n";
+        }
+        if (team != null) {
+            res += "\tteam: {\n";
+            res += "\t\tid: " + team.getId() + ",\n";
+            res += "\t\tname: " + team.getName() + "\n";
+            res += "\t}\n";
+        }
+        res += "}";
         return res;
     }
 }

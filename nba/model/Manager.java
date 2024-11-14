@@ -28,15 +28,15 @@ public class Manager implements IdBounded{
     @Override 
     public Integer getId(){return id;}
 
-    public String toString(){
-        String res = "{\n\\tManagerID:"+ id +".\n\tManager Name:"+name +",\n";
-        if(team != null){
-            res+= "\tTeamID:" + team.getId() + ",\n\tTeamName:" + team.getName() + "\n\t}\n";
+    public String toString() {
+        String res ="{\n\tmanagerId: " + id + ",\n\tmanagerName: " + name + ",\n";
+        if (team != null) {
+            res+= "\tteam: {\n";
+            res+= "\t\tid: " + team.getId() + ",\n";
+            res+= "\t\tname: " + team.getName() + "\n";
+            res+= "\t}\n";
         }
-        else{
-            res+= "\tTeam: Unemplyed\n";
-        }
-        res+="{";
+        res+="}";
         return res;
     }
 }

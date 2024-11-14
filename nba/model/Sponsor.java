@@ -29,17 +29,18 @@ public class Sponsor implements IdBounded {
     @Override
     public Integer getId(){return id;}
     public String toString(){
-       String res = "{\n\tsponsorId: " + id + ",\n";
-       if(sponsorshipDeal != null){
-           res += "\tsponsorshipDeal: " + sponsorshipDeal + ",\n";
-       }
-       else{res+="\tSponsorship Deal:There is no deal.\n";}
-       if(sponsorName != null){
-           res += "\tsponsorName: " + sponsorName + ",\n";
-       }
-       else{res+="\tSponsor name:There is no name.\n";}
-       res+="}";
-       return res;
-
+        String res = "{\n\tsponsorId: " + id + ",\n";
+        if (sponsorName != null) {
+            res+= "\tname: " + sponsorName + ",\n";
+        } else {
+            res+= "\tsponsorName: null,\n";
+        }
+        if (sponsorshipDeal != null) {
+            res+= "\tdeal: " + sponsorshipDeal + ",\n";
+        } else {
+            res+= "\tdeal: null,\n";
+        }
+        res += "}";
+        return res;
     }
 }

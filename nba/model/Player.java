@@ -18,14 +18,13 @@ public abstract class Player implements IdBounded{
     public Integer getId(){return id;}
 
     public String toString(){
-        String res ="{\n\tplayerId: " + id + ",\n";
-        if(name != null){
-            res += "\tname: " + name + ",\n";
+        String res = "{\n\tplayerId: " + id + ",\n";
+        if (name != null) {
+            res+= "\tname: " + name + ",\n";
         }
-        else{res += "\tname: null,\n";}
         res+= "\tage: " + age + ",\n";
-        res+= "\tsalary: " + salary + ",\n";
-        res+="{";
+        res+= "\tsalary: " + salary + "\n";
+        res+= "}";
         return res;
     }
 }
