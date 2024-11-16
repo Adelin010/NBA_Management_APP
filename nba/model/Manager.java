@@ -4,12 +4,13 @@ public class Manager implements IdBounded{
     protected Integer id;
     protected String name;
     protected NBATeam team;
+    protected NBAPlayer player;
     public Manager(int id, String name, NBATeam team) {
         this.id = id;
         this.name = name;
         this.team = team;
     }
-    public Manager(int id, String name){
+    public Manager(int id, String name, int teamID){
         this.id = id;
         this.name = name;
         this.team = null;
