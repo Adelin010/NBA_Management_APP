@@ -16,22 +16,22 @@ public class ManagerService {
 
     /**
      * Adds a new manager to the repository.
-     * @param manager The manager to be added.
      * @throws AlreadyExistingException
      */
-    public void addManager(Manager manager)throws AlreadyExistingException{
-        if(managers.get(manager.getId()) != null){
-            throw new AlreadyExistingException("Manager with ID " + manager.getId() + " already exists.");
+    public void addManager( int id,String name, int teamID)throws AlreadyExistingException {
+        if (managers.get(id) != null) {
+            throw new AlreadyExistingException("Manager with ID " + id + " already exists.");
         }
-        if(managers.get(manager.getTeam().getId()) != null){
-            NBATeam team = teams.get(manager.getTeam().getId());
-            if(team!=null){
-                team.setManager(manager);
-            }
 
+        NBATeam team = teams.get(teamID);
+        if (team == null) {
+            throw new InexistenteInstance("Team with ID " + teamID + " does not exist.");
         }
+
+        Manager manager = new Manager(id, name, team);
+        team.setManager(manager);
         managers.add(manager);
-
+        System.out.println("Manager with ID " + id + " has been added at the team: " + teamID);
     }
     public Manager getManagerById(int id){return managers.get(id);}
     public List<Manager> getManagersByName(String name){

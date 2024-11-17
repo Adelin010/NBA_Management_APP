@@ -3,27 +3,31 @@ import nba.model.Manager;
 import nba.model.NBATeam;
 import nba.service.ManagerService;
 import nba.exceptions.*;
+import nba.service.TeamService;
+
 import java.util.*;
+import java.util.stream.Collectors;
+
 public class ManagerController {
     private final ManagerService managerService;
     public ManagerController(ManagerService managerService) {
         this.managerService = managerService;
     }
     public void addManager(int id, String name, int teamID){
-        if (name.length()<=2) {
+        if (name.length() <= 2) {
             System.out.println("Name is too short");
             return;
         }
-        try{
-            Manager manager = new Manager(id,name,teamID);
-            managerService.addManager(manager);
-            System.out.println("Manager added");
-        }
-        catch(AlreadyExistingException e){
-            System.out.println("Manager already exists");
-        }
-        catch (NullPointerException e) {
-            System.out.println("Null reference encountered. Please check your input and try again.");
+
+        try {
+            managerService.addManager(id, name, teamID);
+            System.out.println("Manager added successfully.");
+        } catch (AlreadyExistingException e) {
+            System.out.println("Manager already exists.");
+        } catch (InexistenteInstance e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
             e.printStackTrace();
         }
     }

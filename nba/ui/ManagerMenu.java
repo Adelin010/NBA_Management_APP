@@ -27,7 +27,7 @@ public class ManagerMenu {
         } catch (InexistenteInstance exp) {
             exp.printInfo();
         } catch (Exception exp) {
-            System.err.println("Other kind of exception occurred when adding a Manager");
+            System.err.println("Error!");
             exp.printStackTrace();
         }
     }
@@ -83,17 +83,7 @@ public class ManagerMenu {
             }
         }
     }
-    private static void handleSubMenu(Driver menu, Scanner in) {
-        boolean subMenuLoop = true;
-        while (subMenuLoop) {
-            menu.main();
-            System.out.print("\nEnter 'b' to go back to the main menu or any other key to continue in the current menu: ");
-            String input = in.next().trim().toLowerCase();
-            if (input.equals("b")) {
-                subMenuLoop = false;
-            }
-        }
-    }
+
 }
 
 
