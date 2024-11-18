@@ -71,8 +71,8 @@
 //         }catch(Exception exp){
 //             exp.printStackTrace();
 //         }
-//     }  
-    
+//     }
+
 
 //     private static void getPlayer(GeneralController ctr, Scanner in ){
 //         System.out.print("id: ");
@@ -105,7 +105,7 @@
 //         String name = in.next();
 //         ctr.addManager(id, name, null);
 //     }
-    
+
 
 //     public static void addTeam(GeneralController ctr, Scanner in){
 //         System.out.print("Enter id: ");
@@ -120,7 +120,7 @@
 //     public static void getManagerOfTeam(GeneralController ctr, Scanner in){
 //         System.out.print("Enter team name: ");
 //         String name = in.next();
-//         System.out.println(ctr.getTeamManager(name).toString()); 
+//         System.out.println(ctr.getTeamManager(name).toString());
 //     }
 
 //     public static void getTeamById(GeneralController ctr, Scanner in){
@@ -150,9 +150,9 @@
 //         int res = ctr.hireManager(teamId, namagerId);
 //         if(res == -1)
 //             System.out.println("\033[33m Manager already taken\033[0m");
-//         else 
+//         else
 //             System.out.println("Manager hired");
-        
+
 //     }
 
 //     private static void execOption(String option, GeneralController ctr, Scanner in){
@@ -213,15 +213,15 @@
 //             }
 //             case "2g":{
 //                 break;
-//             }      
-            
+//             }
+
 //             case "1sp":{
 //                 hireManager(ctr, in);
 //                 break;
 //             }
 //         }
 //     }
-    
+
 //     public static void main(String[] args) {
 //         final Repository<Player> players = new InMemRepository<>();
 //         final Repository<Sponsor> sponsors = new InMemRepository<>();
@@ -230,7 +230,7 @@
 //         final Repository<Manager> managers = new InMemRepository<>();
 //         final GeneralService service = new GeneralService(players, teams,sponsors, games, managers);
 //         final GeneralController ctr = new GeneralController(service);
-        
+
 //         Scanner in = new Scanner(System.in);
 
 //         while (true){
@@ -242,18 +242,20 @@
 //             execOption(op, ctr, in);
 //             System.out.println("\033[32mWant to exit the menu pres write '/quit'... \033[0m");
 //             // Wait for an input
-            
+
 //         }
 
 //         in.close();
 //     }
-    
+
 // }
 
 package nba;
 
+import nba.controller.ManagerController;
 import nba.repo.InMemRepository;
 import nba.repo.Repository;
+import nba.service.ManagerService;
 import nba.service.PlayerService;
 import nba.service.TeamService;
 import nba.ui.*;
@@ -276,20 +278,24 @@ public class Driver{
         //Services
         TeamService tmS = new TeamService(tmR, manR);
         PlayerService plS = new PlayerService(plR, tmR);
-        
+        ManagerService manS = new ManagerService(manR, tmR);
+
+
         //Controllers
         TeamController tmC = new TeamController(tmS);
         PlayerController plC = new PlayerController(plS);
+        ManagerController manC = new ManagerController(manS);
 
         //Menus
         TeamMenu teamMenu = new TeamMenu(tmC, in);
         PlayerMenu playerMenu = new PlayerMenu(plC, in);
+        ManagerMenu managerMenu = new ManagerMenu(manC, in);
 
-        //Switch between the menus 
+        //Switch between the menus
         int option;
         boolean loop = true;
         while(loop){
-            System.out.print("1)Player Menu\n2)Team Menu\nChoose menu: ");
+            System.out.print("1)Player Menu\n2)Team Menu\n3)Manager Menu\nChoose menu: ");
             option = in.nextInt();
             switch(option){
                 case 1:{
@@ -298,9 +304,11 @@ public class Driver{
                 }case 2:{
                     teamMenu.run();
                     break;
-                }default:{
+                } case 3:
+                    managerMenu.run();
+                    break;
+                default:{
                     System.out.println("Session ended...");
-                    loop = false;
                 }
             }
         }

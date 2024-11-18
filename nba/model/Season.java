@@ -29,12 +29,15 @@ public class Season implements IdBounded{
     @Override
     public String toString() {
         String res = "{\n";
-        res+= "\tseasonId: " + id + ",\n";
+        res+= "\tid: " + id + ",\n";
         res+= "\tyear: " + year + ",\n";
 
         if (games != null && !games.isEmpty()) {
             res+= "\tgames: [\n";
             for (Game game : games) {
+                /*
+                    res += "\t\t{\n\t\t\tid: game.getIn(),\n\t\t\t"
+                 */
                 res+= "\t\t" + game.toString().replace("\n", "\n\t\t") + ",\n";
             }
             res+= "\t]\n";
