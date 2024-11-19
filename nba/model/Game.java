@@ -26,6 +26,17 @@ public class Game  implements IdBounded, FileBounded {
         this.type = type;
     }
 
+    public Game(String[] args){
+        this.id = Integer.parseInt(args[0]);
+        MAX_ID = MAX_ID > id ? MAX_ID : id;
+        MAX_ID++;
+        this.date = args[1];
+        this.team1Id = Integer.parseInt(args[2]);
+        this.team2Id = Integer.parseInt(args[3]);
+        this.scoreTeam1 = Integer.parseInt(args[4]);
+        this.scoreTeam2 = Integer.parseInt(args[5]);
+    }
+
     //GETTERS
     public Integer[] getTeamsId(){
         Integer[] teams = {team1Id, team2Id};

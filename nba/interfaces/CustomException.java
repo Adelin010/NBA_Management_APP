@@ -1,4 +1,4 @@
-package nba.error;
+package nba.interfaces;
 
 @FunctionalInterface
 public interface CustomException {

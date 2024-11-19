@@ -3,14 +3,12 @@ package nba.model;
 import nba.interfaces.*;
 
 public class Fonds implements IdBounded, FileBounded{
-
     //Fields
     protected static int MAX_ID = 1;
     protected Integer id;
     protected Integer sponsorId;
     protected long dealAmount;
     protected Integer teamId;
-
     //Constructors
     public Fonds(int id, Integer sponsorId, Integer team, long dealAmount) {
         this.id = Fonds.MAX_ID;
@@ -19,28 +17,30 @@ public class Fonds implements IdBounded, FileBounded{
         this.dealAmount = dealAmount;
         this.teamId = team;
     }
-    
+    public Fonds(String[] args){
+        this.id = Integer.parseInt(args[0]);
+        MAX_ID = MAX_ID > id ? MAX_ID : id;
+        MAX_ID++;
+        this.sponsorId = "null".equals(args[1]) ? null : Integer.parseInt(args[1]);
+        this.teamId = "null".equals(args[2]) ? null : Integer.parseInt(args[2]);
+        this.dealAmount = Long.parseLong(args[3]);
+    } 
     //Getters
     public Integer getSponsorId(){
         return sponsorId;
     }
-
     public long getDealAmount(){return dealAmount;}
-
     public Integer getTeamId(){return teamId;}
-
     //Setters
     public void setSponsorId(Integer sponsorId){
         this.sponsorId = sponsorId;
     }
-
     public void setDealAmount(long dealAmount){
         this.dealAmount = dealAmount;
     }
     public void setTeamId(Integer team){
         this.teamId = team;
     }
-
     //To String method
     public String toString(){
         String res = """
@@ -58,7 +58,6 @@ public class Fonds implements IdBounded, FileBounded{
     public Integer getId(){
         return id;
     }
-
     @Override 
     public String fileFormat(){
         return "";

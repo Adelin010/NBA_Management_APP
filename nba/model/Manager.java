@@ -21,6 +21,13 @@ public class Manager implements IdBounded, FileBounded{
         this.name = name;
         this.teamId = -1;
     }
+    public Manager(String[] args){
+        this.id = Integer.parseInt(args[0]);
+        MAX_ID = MAX_ID > id ? MAX_ID : id;
+        MAX_ID++;
+        this.name = args[1];
+        this.teamId = "null".equals(args[2]) ? null : Integer.parseInt(args[2]);
+    }
 
     //Getters
     public String getName() {return name;}
