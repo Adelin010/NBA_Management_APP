@@ -1,100 +1,124 @@
 package nba.model;
 
 
-
-
 public class NBAPlayer extends Player{
+    //FIELDS
     protected String position;
-    protected NBATeam team;
+    protected Integer teamId;
     protected int points;
     protected int rebounds;
     protected int assists;
-    enum Positions{
-        PG("Point Guard"),
-        SG("shooting Guard"),
-        SF("Small Forward"),
-        PF("Power Forward"),
-        C("Center");
+    protected static int MAX_ID = 1;
     
-        private final String desc;
-    
-        Positions(String desc){
-            this.desc = desc;
-        }
-    
-        public String description(){
-            return desc;
-        }
-    }
-    //Refactor the constructors id must always be included
-    public NBAPlayer(int id,String name, int age, double salary, String position) {
-        this.id = id;
+    //CONSTRUCTORS
+    public NBAPlayer(String name, int age, double salary, String position) {
+        this.id = MAX_ID;
+        NBAPlayer.MAX_ID++;
         this.name = name;
         this.age = age;
         this.salary = salary;
         this.position = position;
-        this.team = null;
+        this.teamId = -1;
+
     }
 
-    public NBAPlayer(int id) {
-        this.id = id;
+    public NBAPlayer(String[] args){
+        id = Integer.parseInt(args[0]);
+        MAX_ID = id > MAX_ID ? id : MAX_ID;
+        MAX_ID++;
+        name = args[1];
+        age = Integer.parseInt(args[2]);
+        salary = Double.parseDouble(args[3]);
+        position = args[4];
+        teamId = args[5].equals("null") ? null : Integer.parseInt(args[5]); 
+    }
+
+    public NBAPlayer(String name, int age, double salary, String position, int teamId) {
+        this.id = MAX_ID;
+        NBAPlayer.MAX_ID++;
+
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+        this.position = position;
+        this.teamId = teamId;
+    }
+
+    public NBAPlayer() {
+        this.id = MAX_ID;
+        NBAPlayer.MAX_ID++;
         this.name = "default";
         this.age = 0;
         this.salary = 0.00;
         this.position = "unknown";
-        this.team = null;
+        this.teamId = -1;
     }
-    /*
-     * Getters/Setters Position
-     */
+    //GETTERS
     public String getPosition() {
         return position;
     }
-    public void setPosition(String position) {
-        this.position = position;
+    
+    public int getTeamId() {
+        return teamId;
     }
-    /*
-     * Getters/Setters Team
-     */
-    public NBATeam getTeam() {
-        return team;
-    }
-    public void setTeam(NBATeam team) {
-        this.team = team;
-    }
-    /*
-     * Getters/Setters Points
-     */
+    
     public int getPoints() {
         return points;
     }
-    public void setPoints(int points) {
-        this.points = points;
-    }
+    
     public int getRebounds() {
         return rebounds;
+    }
+    
+    public int getAssists() {
+        return assists;
+    }
+
+    //SETTERS
+    public void setPoints(int points) {
+        this.points = points;
     }
     public void setRebounds(int rebounds) {
         this.rebounds = rebounds;
     }
-    public int getAssists() {
-        return assists;
-    }
     public void setAssists(int assists) {
         this.assists = assists;
     }
+    public void setTeam(int teamId) {
+        this.teamId= teamId;
+    }
+    public void setPosition(String position) {
+        this.position = position;
+    }
+    
+
+    //TO STRING METHOD
     public String toString(){
-        String res = "{\n\tPlayerID: " + id + ",\n\tPlayerName: " + name + ",\n\tAge: " + age + ",\n\tSalary: " + salary + ",\n\tPosition: " + position + ",\n";
-
-        if(team != null){
-            res += "\tTeam: {\n\t\tid: " + team.getId() + ",\n\t\tname: " + team.getName() + "\n\t},\n";
-
-        }
-        res += "\tPoints: " + points + ",\n";
-        res += "\tRebounds: " + rebounds + ",\n";
-        res += "\tAssists: " + assists + "\n";
-        res+="}";
+        String res = """
+            {
+                id: %d,
+                name: %s,
+                position: %s,
+                salary: %.2f,
+                points: %d,
+                rebounds: %d,
+                assists: %d,
+                teamId: %d
+            }
+                """.formatted(id, name, position, salary, points, rebounds, assists, teamId);
         return res;
     }
     
+    //OVERRIDE FOR THE INTERFACE
+    public String fileFormat(){
+        return "";
+    }
 }
+
+
+
+
+
+
+
+

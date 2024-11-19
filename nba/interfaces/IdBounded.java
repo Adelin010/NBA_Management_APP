@@ -1,9 +1,9 @@
-package nba.model;
+package nba.interfaces;
 
 import java.io.Serializable;
 
 @FunctionalInterface
-public interface IdBounded extends Serializable{
+public interface IdBounded extends Serializable{ 
 
     /**
      * Gets the unique identifier of the object.

@@ -1,4 +1,4 @@
-package nba.exceptions;
+package nba.error;
 
 public class AlreadyExistingException extends RuntimeException implements CustomException{
     public AlreadyExistingException(String message){

@@ -1,48 +1,58 @@
 package nba.model;
 
 import java.util.List;
+import nba.interfaces.*;
 
-public class Season implements IdBounded{
+public class Season implements IdBounded, FileBounded{
+    //FIELDS
+    protected static int MAX_ID = 1;
     protected Integer id;
     private int year;
-    private List<Game> games;
+    private List<Integer> gameIds;
 
+    //CONSTRUCTORS
     public Season(int id ,int year) {
-        this.id = id;
+        this.id = Season.MAX_ID;
+        Season.MAX_ID++;
         this.year = year;
+        gameIds = null;
     }
-    public Integer getId(){
-        return id;
-    }
+
+    //GETTERS
     public int getYear(){
         return year;
     }
-    public List<Game> getGames(){
-        return games;
+    public List<Integer> getGames(){
+        return gameIds;
     }
+    //SETTERS
     public void setYear(int year){
         this.year = year;
     }
-    public void setGames(List<Game> games){
-        this.games = games;
+    public void setGames(List<Integer> gameIds){
+        this.gameIds = gameIds;
     }
+
+    //TO STRING METHOD
     @Override
     public String toString() {
-        String res = "{\n";
-        res+= "\tid: " + id + ",\n";
-        res+= "\tyear: " + year + ",\n";
-
-        if (games != null && !games.isEmpty()) {
-            res+= "\tgames: [\n";
-            for (Game game : games) {
-                /*
-                    res += "\t\t{\n\t\t\tid: game.getIn(),\n\t\t\t"
-                 */
-                res+= "\t\t" + game.toString().replace("\n", "\n\t\t") + ",\n";
+        String res ="""
+            {
+                id: %d,
+                year: %d,
+                gameIds: %s
             }
-            res+= "\t]\n";
-        }
-        res+= "}";
+                """.formatted(id, year, gameIds.toString());
         return res;
+    }
+
+    //OVERRIDE FOR THE INTERFACES
+    @Override
+    public String fileFormat(){
+        return "";
+    }
+    @Override
+    public Integer getId(){
+        return id;
     }
 }

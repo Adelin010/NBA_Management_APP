@@ -1,46 +1,48 @@
 package nba.model;
 
-public class Sponsor implements IdBounded {
+
+import nba.interfaces.*;
+
+public class Sponsor implements IdBounded, FileBounded{
+    //FIELDS
+    protected static int MAX_ID = 1;
     protected Integer id;
-    private String sponsorName;
-    private String sponsorshipDeal;
-    public Sponsor(int id,String sponsorName, String sponsorshipDeal) {
-        this.id  = id;
-        this.sponsorName = sponsorName;
-        this.sponsorshipDeal = sponsorshipDeal;
+    private String name;
+
+    //CONSTRUCTORS
+    public Sponsor(int id,String sponsorName) {
+        this.id = Sponsor.MAX_ID;
+        Sponsor.MAX_ID++;
+        this.name = sponsorName;
     }
 
-    public Sponsor(int id) {
-        this.id = id;
-    }
-
+    //GETTERS
     public String getSponsorName() {
-        return sponsorName;
+        return name;
     }
+
+    //SETTERS
     public void setSponsorName(String sponsorName) {
-        this.sponsorName = sponsorName;
+        this.name = sponsorName;
     }
-    public String getSponsorshipDeal() {
-        return sponsorshipDeal;
+   
+    //TO STRING METHOD  
+    public String toString(){
+        String res = """
+            {
+                id: %d,
+                name: %s
+            }
+                """.formatted(id, name);
+        return res;
     }
-    public void setSponsorshipDeal(String sponsorshipDeal) {
-        this.sponsorshipDeal = sponsorshipDeal;
-    }
+
+    //OVERRIDE FOR THE INTERFACES
     @Override
     public Integer getId(){return id;}
-    public String toString(){
-        String res = "{\n\tsponsorId: " + id + ",\n";
-        if (sponsorName != null) {
-            res+= "\tname: " + sponsorName + ",\n";
-        } else {
-            res+= "\tsponsorName: null,\n";
-        }
-        if (sponsorshipDeal != null) {
-            res+= "\tdeal: " + sponsorshipDeal + ",\n";
-        } else {
-            res+= "\tdeal: null,\n";
-        }
-        res += "}";
-        return res;
+
+    @Override 
+    public String fileFormat(){
+        return "";
     }
 }

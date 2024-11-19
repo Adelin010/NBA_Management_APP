@@ -1,50 +1,66 @@
 package nba.model;
 
-public class Fonds implements IdBounded{
+import nba.interfaces.*;
 
+public class Fonds implements IdBounded, FileBounded{
+
+    //Fields
+    protected static int MAX_ID = 1;
     protected Integer id;
-    private String sponsorName;
-    private String sponsorshipDeal;
-    private NBATeam team;
-    public Fonds(int id, String sponsorName, String sponsorshipDeal, NBATeam team) {
-        this.id = id;
-        this.sponsorName = sponsorName;
-        this.sponsorName = sponsorshipDeal;
-        this.team = team;
-    }
-    @Override 
-    public Integer getId(){return id;}
+    protected Integer sponsorId;
+    protected long dealAmount;
+    protected Integer teamId;
 
-    public String getSponsorName(){
-        return sponsorName;
+    //Constructors
+    public Fonds(int id, Integer sponsorId, Integer team, long dealAmount) {
+        this.id = Fonds.MAX_ID;
+        Fonds.MAX_ID++;
+        this.sponsorId = sponsorId;
+        this.dealAmount = dealAmount;
+        this.teamId = team;
+    }
+    
+    //Getters
+    public Integer getSponsorId(){
+        return sponsorId;
     }
 
-    public String getSponsorshipDeal(){return sponsorshipDeal;}
-    public NBATeam getTeam(){return team;}
-    public void setSponsorName(String sponsorName){
-        this.sponsorName = sponsorName;
+    public long getDealAmount(){return dealAmount;}
+
+    public Integer getTeamId(){return teamId;}
+
+    //Setters
+    public void setSponsorId(Integer sponsorId){
+        this.sponsorId = sponsorId;
     }
-    public void setSponsorshipDeal(String sponsorshipDeal){
-        this.sponsorshipDeal = sponsorshipDeal;
+
+    public void setDealAmount(long dealAmount){
+        this.dealAmount = dealAmount;
     }
-    public void setTeam(NBATeam team){
-        this.team = team;
+    public void setTeamId(Integer team){
+        this.teamId = team;
     }
+
+    //To String method
     public String toString(){
-        String res = "{\n\tfondsId: " + id + ",\n";
-        if (sponsorName != null) {
-            res += "\tname: " + sponsorName + ",\n";
-        }
-        if (sponsorshipDeal != null) {
-            res += "\tdeal: " + sponsorshipDeal + ",\n";
-        }
-        if (team != null) {
-            res += "\tteam: {\n";
-            res += "\t\tid: " + team.getId() + ",\n";
-            res += "\t\tname: " + team.getName() + "\n";
-            res += "\t}\n";
-        }
-        res += "}";
+        String res = """
+            {
+                id: %d,
+                sponsorId: %d,
+                teamId: %d,
+                dealAmount: %d
+            }
+                """.formatted(id, sponsorId, teamId, dealAmount);
         return res;
+    }
+    //Override for the interfaces
+    @Override 
+    public Integer getId(){
+        return id;
+    }
+
+    @Override 
+    public String fileFormat(){
+        return "";
     }
 }

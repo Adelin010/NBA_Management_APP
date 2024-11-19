@@ -1,28 +1,26 @@
 package nba.repo;
 
+import nba.interfaces.*;
 import java.util.List;
-
-import nba.model.IdBounded;
-
 
 /**
  * An interface that defines the basic CRUD operations for a repository.
  *
  * @param <T> The type of objects stored in the repository
  */
-public interface Repository<T extends IdBounded> {
+public interface Repo<T extends IdBounded & FileBounded> {
     /**
      * Creates a new object in the repository.
      *
      * @param obj The object to create.
      */
-    void add(T instance);
+    void add(T obj);
      /**
      * Updates an existing object in the repository.
      *
      * @param obj The object to update.
      */
-    void update(T instance);
+    void update(T obj);
       /**
      * Retrieves an object from the repository by its ID.
      *
