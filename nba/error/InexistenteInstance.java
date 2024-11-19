@@ -1,4 +1,4 @@
-package nba.exceptions;
+package nba.error;
 
 public class InexistenteInstance extends RuntimeException implements CustomException{
     public InexistenteInstance(String message){

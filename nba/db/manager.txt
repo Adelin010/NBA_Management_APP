@@ -1,0 +1,3 @@
+[id | name | team_id]
+1,Manager1,2
+2,Manager2,1

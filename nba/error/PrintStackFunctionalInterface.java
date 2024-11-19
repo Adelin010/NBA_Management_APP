@@ -1,4 +1,4 @@
-package nba.exceptions;
+package nba.error;
 
 @FunctionalInterface
 public interface PrintStackFunctionalInterface {

@@ -1,43 +1,56 @@
 package nba.model;
 
-public class Manager implements IdBounded{
+import nba.interfaces.*;
+
+
+public class Manager implements IdBounded, FileBounded{
+    //FIELDS
+    protected static int MAX_ID = 1;
     protected Integer id;
     protected String name;
-    protected NBATeam team;
-    protected NBAPlayer player;
-    public Manager(int id, String name, NBATeam team) {
-        this.id = id;
+    protected Integer teamId;
+    public Manager(int id, String name, Integer teamId) {
+        this.id = Manager.MAX_ID;
+        Manager.MAX_ID++;
         this.name = name;
-        this.team = team;
+        this.teamId = teamId;
     }
-    public Manager(int id, String name, int teamID){
-        this.id = id;
+    public Manager(int id, String name){
+        this.id = Manager.MAX_ID;
+        Manager.MAX_ID++;
         this.name = name;
-        this.team = null;
+        this.teamId = -1;
     }
-    /*
-     * Getter/Setters Name
-     */
+
+    //Getters
     public String getName() {return name;}
+    public Integer getTeamId() {return teamId;}
+    
+    //Setters
     public void setName(String name) {this.name = name;}
-    /*
-     * Getters/Setters Team
-     */
-    public NBATeam getTeam() {return team;}
-    public void setTeam(NBATeam team) {this.team = team;}
+    public void setTeamId(Integer teamId) {this.teamId = teamId;}
+
+   
+
+
+    public String toString() {
+        String res = """
+            {
+                id: %d,
+                name: %s,
+                teamId: %d
+            }
+                """.formatted(id, name, teamId);
+        return res;
+    }
 
     @Override 
     public Integer getId(){return id;}
 
-    public String toString() {
-        String res ="{\n\tmanagerId: " + id + ",\n\tmanagerName: " + name + ",\n";
-        if (team != null) {
-            res+= "\tteam: {\n";
-            res+= "\t\tid: " + team.getId() + ",\n";
-            res+= "\t\tname: " + team.getName() + "\n";
-            res+= "\t}\n";
-        }
-        res+="}";
-        return res;
-    }
+
+    @Override
+    public String fileFormat(){
+        return "";
+     }
+ 
 }

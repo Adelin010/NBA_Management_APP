@@ -1,4 +1,4 @@
-package nba.model;
+package nba.enums;
 
 public enum Positions{
     PG("Point Guard"),
