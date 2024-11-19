@@ -1,6 +1,5 @@
 package nba.model;
 
-import java.util.List;
 import nba.interfaces.*;
 
 public class Season implements IdBounded, FileBounded{
@@ -8,29 +7,30 @@ public class Season implements IdBounded, FileBounded{
     protected static int MAX_ID = 1;
     protected Integer id;
     private int year;
-    private List<Integer> gameIds;
 
     //CONSTRUCTORS
     public Season(int id ,int year) {
         this.id = Season.MAX_ID;
         Season.MAX_ID++;
         this.year = year;
-        gameIds = null;
+    }
+
+    public Season(String[] args){
+        this.id = Integer.parseInt(args[0]);
+        MAX_ID = MAX_ID > id ? MAX_ID : id;
+        MAX_ID++;
+        this.year = Integer.parseInt(args[1]);
+
     }
 
     //GETTERS
     public int getYear(){
         return year;
     }
-    public List<Integer> getGames(){
-        return gameIds;
-    }
+    
     //SETTERS
     public void setYear(int year){
         this.year = year;
-    }
-    public void setGames(List<Integer> gameIds){
-        this.gameIds = gameIds;
     }
 
     //TO STRING METHOD
@@ -39,10 +39,9 @@ public class Season implements IdBounded, FileBounded{
         String res ="""
             {
                 id: %d,
-                year: %d,
-                gameIds: %s
+                year: %d
             }
-                """.formatted(id, year, gameIds.toString());
+                """.formatted(id, year);
         return res;
     }
 
