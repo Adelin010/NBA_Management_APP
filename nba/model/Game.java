@@ -15,7 +15,7 @@ public class Game  implements IdBounded, FileBounded {
     protected String type;
 
     //CONSTRUCTOR
-    public Game(int id, String date, int team1Id, int team2Id, int scoreTeam1, int scoreTeam2, String type){
+    public Game(String date, int scoreTeam1, int scoreTeam2, int team1Id, int team2Id, String type){
         this.id = Game.MAX_ID;
         Game.MAX_ID++;
         this.date = date;

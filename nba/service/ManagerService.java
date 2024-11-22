@@ -23,8 +23,8 @@ public class ManagerService {
         /*
          * Check Foreign_keys constraints
          */
-        Integer teamId = manager.getId();
-        if(repT.get(teamId) != null){
+        Integer teamId = manager.getTeamId();
+        if(repT.get(teamId) == null){
             throw new InexistenteInstance("\033[31mException raised in Add_Manager transaction. Team_Foreign_Key violation, Team inexistante.\033[0m");
         }
         repM.add(manager);
