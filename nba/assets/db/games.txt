@@ -1,0 +1,3 @@
+[id | date | score_team1 | score_team2 | team1 | team2 | type]
+1,12-12-2009,121,117,1,2,RS
+2,23-01-2010,97,110,2,3,RS

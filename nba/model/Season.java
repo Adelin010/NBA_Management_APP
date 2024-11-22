@@ -24,6 +24,10 @@ public class Season implements IdBounded, FileBounded{
     }
 
     //GETTERS
+    public static int getMaxId(){
+        return MAX_ID;
+    }
+
     public int getYear(){
         return year;
     }
@@ -48,7 +52,7 @@ public class Season implements IdBounded, FileBounded{
     //OVERRIDE FOR THE INTERFACES
     @Override
     public String fileFormat(){
-        return "";
+        return "%d,%d".formatted(id, year);
     }
     @Override
     public Integer getId(){

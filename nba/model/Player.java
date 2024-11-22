@@ -36,7 +36,7 @@ public abstract class Player implements IdBounded, FileBounded{
     //OVERRIDE FOR THE INTERFACES
     @Override
     public String fileFormat(){
-        return "";
+        return "%d,%s,%d,%.2f".formatted(id, name, age, salary);
     }
 
     @Override 

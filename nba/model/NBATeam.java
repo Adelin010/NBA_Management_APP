@@ -26,6 +26,10 @@ public class NBATeam implements IdBounded, FileBounded{
     }
     
     //GETTERS
+    public static int getMaxId(){
+        return MAX_ID;
+    }
+
     public String getName(){
         return name;
     }
@@ -44,6 +48,7 @@ public class NBATeam implements IdBounded, FileBounded{
     public void setName(String name) {
         this.name = name;
     }
+
     
     //TO STRING METHOD
     public String toString(){
@@ -64,7 +69,7 @@ public class NBATeam implements IdBounded, FileBounded{
 
     @Override 
     public String fileFormat(){
-        return "";
+        return "%d,%s,%d".formatted(id, name, conferenceId);
     }
 
 }

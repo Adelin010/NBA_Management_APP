@@ -17,6 +17,10 @@ public class Sponsor implements IdBounded, FileBounded{
     }
 
     //GETTERS
+    public static int getMaxId(){
+        return MAX_ID;
+    }
+
     public String getSponsorName() {
         return name;
     }
@@ -43,6 +47,6 @@ public class Sponsor implements IdBounded, FileBounded{
 
     @Override 
     public String fileFormat(){
-        return "";
+        return "%d,%s".formatted(id, name);
     }
 }

@@ -10,8 +10,8 @@ public class TestIOFile {
 
 
     public void test()throws Exception{
-        FReader<NBATeam> fr = new FReader<>("build/nba/db/team.txt", NBATeam.class);
-        FReader<NBAPlayer> fr2 = new FReader<>("build/nba/db/player.txt", NBAPlayer.class);
+        FReader<NBATeam> fr = new FReader<>("assets/db/team.txt", NBATeam.class);
+        FReader<NBAPlayer> fr2 = new FReader<>("assets/db/player.txt", NBAPlayer.class);
 
         //test all players
         List<NBAPlayer> players = fr2.initListElements();
@@ -42,8 +42,8 @@ public class TestIOFile {
         }
 
 
-        FWriter<NBAPlayer> fw = new FWriter<>("build/nba/db/player.txt", NBAPlayer.class);
-        FWriter<NBATeam> fw2 = new FWriter<>("build/nba/db/team.txt", NBATeam.class);
+        FWriter<NBAPlayer> fw = new FWriter<>("assets/db/player.txt", NBAPlayer.class);
+        FWriter<NBATeam> fw2 = new FWriter<>("assets/db/team.txt", NBATeam.class);
 
         fw.append("9,Alehandro9,26,126.07,PG,3");
         fw.delete(5);

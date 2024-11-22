@@ -20,6 +20,9 @@ public class Conference implements IdBounded, FileBounded {
         this.name = args[1];
     }
     //Getters
+    public static int getMaxId(){
+        return MAX_ID;
+    }
     public String getName() {
         return name;
     }
@@ -44,6 +47,6 @@ public class Conference implements IdBounded, FileBounded {
     }
     @Override
     public String fileFormat(){
-        return "";
+        return "%d,%s".formatted(id, name);
     }
 }
