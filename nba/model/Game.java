@@ -38,6 +38,10 @@ public class Game  implements IdBounded, FileBounded {
     }
 
     //GETTERS
+    public static int getMaxId(){
+        return MAX_ID;
+    }
+
     public Integer[] getTeamsId(){
         Integer[] teams = {team1Id, team2Id};
         return teams;
@@ -76,6 +80,6 @@ public class Game  implements IdBounded, FileBounded {
     public Integer getId(){return id;}
     @Override
     public String fileFormat(){
-        return "";
+        return "%d,%d,%d,%d,%d,%s,%s".formatted(id, team1Id, team2Id, scoreTeam1, scoreTeam2, date, type);
     }
 }

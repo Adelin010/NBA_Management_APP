@@ -15,11 +15,11 @@ public class Manager implements IdBounded, FileBounded{
         this.name = name;
         this.teamId = teamId;
     }
-    public Manager(int id, String name){
+    public Manager(String name, Integer teamId){
         this.id = Manager.MAX_ID;
         Manager.MAX_ID++;
         this.name = name;
-        this.teamId = -1;
+        this.teamId = teamId;
     }
     public Manager(String[] args){
         this.id = Integer.parseInt(args[0]);
@@ -30,6 +30,9 @@ public class Manager implements IdBounded, FileBounded{
     }
 
     //Getters
+    public static int getMaxId(){
+        return MAX_ID;
+    }
     public String getName() {return name;}
     public Integer getTeamId() {return teamId;}
     
@@ -57,7 +60,7 @@ public class Manager implements IdBounded, FileBounded{
 
     @Override
     public String fileFormat(){
-        return "";
+        return "%d,%s,%d".formatted(id, name, teamId);
      }
  
 }

@@ -5,9 +5,9 @@ public class NBAPlayer extends Player{
     //FIELDS
     protected String position;
     protected Integer teamId;
-    protected int points;
-    protected int rebounds;
-    protected int assists;
+    protected int points = 0;
+    protected int rebounds = 0;
+    protected int assists = 0;
     protected static int MAX_ID = 1;
     
     //CONSTRUCTORS
@@ -30,10 +30,13 @@ public class NBAPlayer extends Player{
         age = Integer.parseInt(args[2]);
         salary = Double.parseDouble(args[3]);
         position = args[4];
-        teamId = args[5].equals("null") ? null : Integer.parseInt(args[5]); 
+        points = Integer.parseInt(args[5]);
+        rebounds = Integer.parseInt(args[6]);
+        assists = Integer.parseInt(args[7]);
+        teamId = args[8].equals("null") ? null : Integer.parseInt(args[8]); 
     }
 
-    public NBAPlayer(String name, int age, double salary, String position, int teamId) {
+    public NBAPlayer(String name, int age, double salary, String position,int points, int rebounds, int assists ,int teamId) {
         this.id = MAX_ID;
         NBAPlayer.MAX_ID++;
 
@@ -41,6 +44,9 @@ public class NBAPlayer extends Player{
         this.age = age;
         this.salary = salary;
         this.position = position;
+        this.points = points;
+        this.rebounds = rebounds;
+        this.assists = assists;
         this.teamId = teamId;
     }
 
@@ -54,6 +60,10 @@ public class NBAPlayer extends Player{
         this.teamId = -1;
     }
     //GETTERS
+    public static int getMaxId(){
+        return MAX_ID;
+    }
+
     public String getPosition() {
         return position;
     }
@@ -111,7 +121,7 @@ public class NBAPlayer extends Player{
     
     //OVERRIDE FOR THE INTERFACE
     public String fileFormat(){
-        return "";
+        return "%d,%s,%d,%.2f,%s,%d,%d,%d,%d".formatted(id, name, age, salary, position,points,rebounds, assists ,teamId);
     }
 }
 

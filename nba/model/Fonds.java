@@ -26,6 +26,10 @@ public class Fonds implements IdBounded, FileBounded{
         this.dealAmount = Long.parseLong(args[3]);
     } 
     //Getters
+    public static int getMaxId(){
+        return MAX_ID;
+    }
+
     public Integer getSponsorId(){
         return sponsorId;
     }
@@ -60,6 +64,6 @@ public class Fonds implements IdBounded, FileBounded{
     }
     @Override 
     public String fileFormat(){
-        return "";
+        return "%d,%d,%d,%d".formatted(id, sponsorId, teamId, dealAmount);
     }
 }
