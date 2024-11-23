@@ -1,12 +1,12 @@
 nba/model/Conference.java
 nba/model/Fonds.java
-nba/model/Game.java
 nba/model/Manager.java
 nba/model/NBAPlayer.java
 nba/model/NBATeam.java
 nba/model/Player.java
 nba/model/Season.java
 nba/model/Sponsor.java
+nba/model/Game.java
 nba/enums/GameTypes.java
 nba/enums/Positions.java
 nba/error/AlreadyExistingException.java
@@ -32,10 +32,10 @@ nba/ui/TeamMenu.java
 nba/controller/AdvancedController.java
 nba/controller/GameController.java
 nba/controller/ManagerController.java
-nba/controller/PlayerController.java
 nba/controller/TeamController.java
+nba/controller/PlayerController.java
 nba/service/AdvancedService.java
 nba/service/GameService.java
+nba/service/TeamService.java
 nba/service/ManagerService.java
 nba/service/PlayerService.java
-nba/service/TeamService.java

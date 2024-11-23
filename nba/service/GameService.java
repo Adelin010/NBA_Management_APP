@@ -1,6 +1,11 @@
 package nba.service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
+import java.text.ParseException;
 
 import nba.error.IdOutOfRangeException;
 import nba.error.InexistenteInstance;
@@ -8,9 +13,30 @@ import nba.model.NBATeam;
 import nba.model.Game;
 import nba.repo.Repo;
 
+
+
 public class GameService {
     Repo<Game> repG;
     Repo<NBATeam> repT;
+
+
+    private class ComparatorByDate implements Comparator<Game>{
+        @Override 
+        public int compare(Game g1, Game g2){
+            //get both the dates 
+            String d1 = g1.getDate(), d2 = g2.getDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            try{
+                Date date1 = sdf.parse(d1);
+                Date date2 = sdf.parse(d2);
+                return date1.compareTo(date2);
+
+            }catch(ParseException exp){
+                exp.printStackTrace();
+            }
+            return 0;
+        }
+    }
 
     public GameService(Repo<Game> repG, Repo<NBATeam> repT){
         this.repG = repG;
@@ -44,4 +70,9 @@ public class GameService {
         repG.delete(id);
     }
 
+    public List<Game> sortByDate(){
+        List<Game> games = repG.getAll();
+        Collections.sort(games, new ComparatorByDate());
+        return games;
+    }
 }

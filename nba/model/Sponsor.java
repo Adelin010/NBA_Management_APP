@@ -16,6 +16,12 @@ public class Sponsor implements IdBounded, FileBounded{
         this.name = sponsorName;
     }
 
+    public Sponsor(String[] args){
+        id = Integer.parseInt(args[0]);
+        MAX_ID = MAX_ID > id ? MAX_ID : 1+id;
+        name = args[1];
+    }
+
     //GETTERS
     public static int getMaxId(){
         return MAX_ID;

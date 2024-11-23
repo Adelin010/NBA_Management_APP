@@ -18,7 +18,7 @@ public class NBATeam implements IdBounded, FileBounded{
     }
     public NBATeam(String[] args){
         this.id = Integer.parseInt(args[0]);
-        MAX_ID = id > MAX_ID ? id : MAX_ID;
+        MAX_ID = id >= MAX_ID ? id+1 : MAX_ID;
         MAX_ID++;
         this.name = args[1];
         this.conferenceId = args[2].equals("null") ? null : Integer.parseInt(args[2]);

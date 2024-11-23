@@ -24,8 +24,7 @@ public class NBAPlayer extends Player{
 
     public NBAPlayer(String[] args){
         id = Integer.parseInt(args[0]);
-        MAX_ID = id > MAX_ID ? id : MAX_ID;
-        MAX_ID++;
+        MAX_ID = id >= MAX_ID ? id+1 : MAX_ID;
         name = args[1];
         age = Integer.parseInt(args[2]);
         salary = Double.parseDouble(args[3]);
@@ -108,6 +107,7 @@ public class NBAPlayer extends Player{
             {
                 id: %d,
                 name: %s,
+                age: %d,
                 position: %s,
                 salary: %.2f,
                 points: %d,
@@ -115,7 +115,7 @@ public class NBAPlayer extends Player{
                 assists: %d,
                 teamId: %d
             }
-                """.formatted(id, name, position, salary, points, rebounds, assists, teamId);
+                """.formatted(id, name, age,position, salary, points, rebounds, assists, teamId);
         return res;
     }
     

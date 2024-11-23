@@ -1,5 +1,7 @@
 package nba.service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import nba.error.IdOutOfRangeException;
@@ -39,18 +41,23 @@ public class PlayerService {
         return repP.getAll();
     }
 
-    public NBAPlayer getByName(String name){
+    public List<NBAPlayer> getByName(String name){
         List<NBAPlayer> players = repP.getAll();
+        List<NBAPlayer> res = new ArrayList<>();
         for(NBAPlayer player: players){
             if(name.equals(player.getName()))
-                return player;
+                res.add(player);
         }
-        return null;
+        return res.size() == 0 ? null : res;
     }
 
     public void delete(Integer id)throws IdOutOfRangeException{
         if(id >= NBAPlayer.getMaxId())
             throw new IdOutOfRangeException("\033[31mId out of bound exception for the Delete_Player transaction...\033[0m");
         repP.delete(id);
+    }
+
+    public List<NBAPlayer> sortByAge(){
+        return repP.getAll().stream().sorted(Comparator.comparing(NBAPlayer::getAge)).toList();
     }
 }

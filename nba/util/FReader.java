@@ -28,7 +28,6 @@ public class FReader<T extends IdBounded & FileBounded> {
         //set the reader to the begging of the file 
         in.seek(0);
         String line = in.readLine();
-        System.out.println(line);
         while((line = in.readLine()) != null){
             //read the next line from where the data strats
             String[] args = line.split(",");

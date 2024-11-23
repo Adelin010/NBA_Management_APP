@@ -26,4 +26,7 @@ public class GameController {
     public void delete(Integer id){
         gs.delete(id);
     }
+    public List<Game> sortByDate(){
+        return gs.sortByDate();
+    }
 }

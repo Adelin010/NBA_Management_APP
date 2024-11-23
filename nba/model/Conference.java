@@ -15,8 +15,7 @@ public class Conference implements IdBounded, FileBounded {
     }
     public Conference(String[] args){
         this.id = Integer.parseInt(args[0]);
-        MAX_ID = MAX_ID > id ? MAX_ID : id;
-        MAX_ID++;
+        MAX_ID = MAX_ID > id ? MAX_ID : id+1;
         this.name = args[1];
     }
     //Getters

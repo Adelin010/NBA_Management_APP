@@ -28,13 +28,13 @@ public class Game  implements IdBounded, FileBounded {
 
     public Game(String[] args){
         this.id = Integer.parseInt(args[0]);
-        MAX_ID = MAX_ID > id ? MAX_ID : id;
-        MAX_ID++;
+        MAX_ID = MAX_ID > id ? MAX_ID : id+1;
         this.date = args[1];
-        this.team1Id = Integer.parseInt(args[2]);
-        this.team2Id = Integer.parseInt(args[3]);
-        this.scoreTeam1 = Integer.parseInt(args[4]);
-        this.scoreTeam2 = Integer.parseInt(args[5]);
+        this.scoreTeam1 = Integer.parseInt(args[2]);
+        this.scoreTeam2 = Integer.parseInt(args[3]);
+        this.team1Id = Integer.parseInt(args[4]);
+        this.team2Id = Integer.parseInt(args[5]);
+        this.type = args[6];
     }
 
     //GETTERS
@@ -80,6 +80,6 @@ public class Game  implements IdBounded, FileBounded {
     public Integer getId(){return id;}
     @Override
     public String fileFormat(){
-        return "%d,%d,%d,%d,%d,%s,%s".formatted(id, team1Id, team2Id, scoreTeam1, scoreTeam2, date, type);
+        return "%d,%s,%d,%d,%d,%d,%s".formatted(id, date, scoreTeam1, scoreTeam2, team1Id, team2Id, type);
     }
 }
