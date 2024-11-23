@@ -24,8 +24,8 @@ public class PlayerService {
         /*
          * Check Foreign_keys constraints
          */
-        Integer teamId = player.getId();
-        if(repT.get(teamId) != null){
+        Integer teamId = player.getTeamId();
+        if(repT.get(teamId) == null){
             throw new InexistenteInstance("\033[31mException raised in Add_Player transaction. Team_Foreign_Key violation, Team inexistante.\033[0m");
         }
         repP.add(player);
