@@ -17,8 +17,7 @@ public class Season implements IdBounded, FileBounded{
 
     public Season(String[] args){
         this.id = Integer.parseInt(args[0]);
-        MAX_ID = MAX_ID > id ? MAX_ID : id;
-        MAX_ID++;
+        MAX_ID = MAX_ID > id ? MAX_ID : 1+id;
         this.year = Integer.parseInt(args[1]);
 
     }

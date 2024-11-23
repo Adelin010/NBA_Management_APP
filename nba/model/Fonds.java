@@ -10,7 +10,7 @@ public class Fonds implements IdBounded, FileBounded{
     protected long dealAmount;
     protected Integer teamId;
     //Constructors
-    public Fonds(int id, Integer sponsorId, Integer team, long dealAmount) {
+    public Fonds(Integer sponsorId, Integer team, long dealAmount) {
         this.id = Fonds.MAX_ID;
         Fonds.MAX_ID++;
         this.sponsorId = sponsorId;
@@ -19,8 +19,7 @@ public class Fonds implements IdBounded, FileBounded{
     }
     public Fonds(String[] args){
         this.id = Integer.parseInt(args[0]);
-        MAX_ID = MAX_ID > id ? MAX_ID : id;
-        MAX_ID++;
+        MAX_ID = MAX_ID > id ? MAX_ID : id+1;
         this.sponsorId = "null".equals(args[1]) ? null : Integer.parseInt(args[1]);
         this.teamId = "null".equals(args[2]) ? null : Integer.parseInt(args[2]);
         this.dealAmount = Long.parseLong(args[3]);

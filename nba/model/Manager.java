@@ -9,12 +9,6 @@ public class Manager implements IdBounded, FileBounded{
     protected Integer id;
     protected String name;
     protected Integer teamId;
-    public Manager(int id, String name, Integer teamId) {
-        this.id = Manager.MAX_ID;
-        Manager.MAX_ID++;
-        this.name = name;
-        this.teamId = teamId;
-    }
     public Manager(String name, Integer teamId){
         this.id = Manager.MAX_ID;
         Manager.MAX_ID++;
@@ -23,8 +17,7 @@ public class Manager implements IdBounded, FileBounded{
     }
     public Manager(String[] args){
         this.id = Integer.parseInt(args[0]);
-        MAX_ID = MAX_ID > id ? MAX_ID : id;
-        MAX_ID++;
+        MAX_ID = MAX_ID > id ? MAX_ID : id+1;
         this.name = args[1];
         this.teamId = "null".equals(args[2]) ? null : Integer.parseInt(args[2]);
     }

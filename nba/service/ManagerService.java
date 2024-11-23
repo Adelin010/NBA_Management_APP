@@ -47,6 +47,15 @@ public class ManagerService {
         return null;
     }
 
+    public Manager getByTeamId(Integer teamId){
+        List<Manager> managers = repM.getAll();
+        for(Manager m: managers){
+            if(m.getTeamId() == teamId)
+                return m;
+        }
+        return null;
+    }
+
     public void delete(Integer id)throws IdOutOfRangeException{
         if(id >= Manager.getMaxId()){
             throw new IdOutOfRangeException("\033[31mId out of bound for the Delete_Manager transaction...\033[0m");

@@ -24,10 +24,13 @@ public class PlayerController {
     public List<NBAPlayer> getAll(){
         return ps.getAll();
     }
-    public NBAPlayer getByName(String name){
+    public List<NBAPlayer> getByName(String name){
         return ps.getByName(name);
     }
     public void delete(Integer id){
         ps.delete(id);
+    }
+    public List<NBAPlayer> sortByAge(){
+        return ps.sortByAge();
     }
 }
