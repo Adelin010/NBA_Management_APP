@@ -1,7 +1,6 @@
 package nba.controller;
 
 import java.util.List;
-
 import nba.model.Manager;
 import nba.service.ManagerService;
 

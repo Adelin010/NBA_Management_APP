@@ -10,6 +10,7 @@ import nba.interfaces.FileBounded;
 import nba.interfaces.IdBounded;
 
 
+
 public class FWriter<T extends IdBounded & FileBounded> {
     private final String FNAME;
     private final Class<T> type;

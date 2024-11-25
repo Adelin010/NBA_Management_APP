@@ -2,11 +2,16 @@ package nba.ui;
 
 import java.util.Scanner;
 
+import nba.controller.TeamController;
+import nba.model.NBATeam;
+
 public class TeamMenu {
     private Scanner in;
+    private final TeamController tc;
 
-    public TeamMenu(Scanner in){
+    public TeamMenu(Scanner in, TeamController tc){
         this.in = in;
+        this.tc = tc;
     }
 
     public void run(){
@@ -14,6 +19,48 @@ public class TeamMenu {
             boolean response = display();
             if(!response)
                 break;
+        }
+    }
+
+    public void getById(){
+        System.out.print("Id: ");
+        Integer id = in.nextInt();
+        try{
+            System.out.println(tc.getById(id));
+        }catch(Exception exp){
+            exp.printStackTrace();
+        }
+    }
+
+    public void getByName(){
+        System.out.print("name: ");
+        String name = in.next();
+        try{
+            System.out.println(tc.getByName(name));
+        }catch(Exception exp){
+            exp.printStackTrace();
+        }
+    }
+
+    public void add(){
+        System.out.print("name: ");
+        String name = in.next();
+        System.out.print("conference_id: ");
+        Integer id = in.nextInt();
+        try{
+            tc.add(name, id);
+        }catch(Exception exp){
+            exp.printStackTrace();
+        }
+    }
+
+    public void delete(){
+        System.out.print("id: ");
+        Integer id = in.nextInt();
+        try{
+            tc.delete(id);
+        }catch(Exception exp){
+            exp.printStackTrace();
         }
     }
 
@@ -31,15 +78,19 @@ public class TeamMenu {
         int option = in.nextInt();
         switch(option){
             case 1:{
+                add();
                 break;
             }
             case 2:{
+                getById();
                 break;
             }
             case 3:{
+                getByName();
                 break;
             }
             case 4:{
+                delete();
                 break;
             }
             case -1:{

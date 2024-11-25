@@ -2,11 +2,15 @@ package nba.ui;
 
 import java.util.Scanner;
 
+import nba.controller.AdvancedController;
+
 public class AdvancedMenu {
     private final Scanner in;
+    private final AdvancedController advC;
 
-    public AdvancedMenu(Scanner in){
+    public AdvancedMenu(Scanner in, AdvancedController advC){
         this.in = in;
+        this.advC = advC;
     }
 
     public void run(){
@@ -14,6 +18,18 @@ public class AdvancedMenu {
             boolean response = display();
             if(!response)
                 break;
+        }
+    }
+
+    public void getManagerWinning(){
+        System.out.print("Enter the game id: ");
+        Integer id = in.nextInt();
+        try{
+            System.out.print(advC.managerWinningTeam(id));
+
+        }catch(Exception exp){
+            exp.printStackTrace();
+            System.out.print(exp.getMessage());
         }
     }
 
@@ -34,6 +50,7 @@ public class AdvancedMenu {
                 break;
             }
             case 2:{
+                getManagerWinning();
                 break;
             }
             case 3:{
