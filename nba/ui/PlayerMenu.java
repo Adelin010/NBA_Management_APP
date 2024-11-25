@@ -1,13 +1,19 @@
 package nba.ui;
 
+import java.util.List;
 import java.util.Scanner;
+
+import nba.controller.PlayerController;
+import nba.model.NBAPlayer;
 
 public class PlayerMenu {
     
     private final Scanner in;
+    private final PlayerController pc;
 
-    public PlayerMenu(Scanner in){
+    public PlayerMenu(Scanner in, PlayerController pc){
         this.in = in;
+        this.pc = pc;
     }
 
     public void run(){
@@ -18,14 +24,26 @@ public class PlayerMenu {
         }
     }
 
+    public void sortByAge(){
+        List<NBAPlayer> players = pc.sortByAge();
+        try{
+            for(NBAPlayer p: players)
+                System.out.println(p);
+        }catch(Exception exp){
+            exp.printStackTrace();
+
+        }
+    }
+
     private boolean display(){
         String menu ="""
         \033[32m
             1)Add PLayer
             2)Get PLayer By Id
             3)Get Player By Name
-            4)Delete Player
-            5)Quit(-1)
+            4)Sort By Age
+            5)Delete Player
+            6)Quit(-1)
             * Your choice:  \033[0m
                 """;
         System.out.print(menu);
@@ -41,6 +59,10 @@ public class PlayerMenu {
                 break;
             }
             case 4:{
+                sortByAge();
+                break;
+            }
+            case 5:{
                 break;
             }
             case -1:{

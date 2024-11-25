@@ -1,7 +1,6 @@
 package nba.service;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import nba.error.InexistenteInstance;
 import nba.model.*;

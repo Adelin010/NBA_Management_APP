@@ -2,7 +2,6 @@ package nba;
 
 import nba.test.*;
 import nba.ui.MainMenu;
-import java.util.Scanner;
 
 public class Driver{
     public static void main(String[] args) {
@@ -21,8 +20,7 @@ public class Driver{
         /*
          * Run in normal mode
          */
-        Scanner in = new Scanner(System.in);
-        MainMenu mainMenu = new MainMenu(in);
+        MainMenu mainMenu = new MainMenu();
         mainMenu.run();
     }
 
