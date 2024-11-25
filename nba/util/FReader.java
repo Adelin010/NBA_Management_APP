@@ -8,12 +8,23 @@ import java.util.List;
 
 import nba.interfaces.*;
 
+/**
+ * Util class for reading from the file and instantiate each entry 
+ */
 public class FReader<T extends IdBounded & FileBounded> {
     public final String FNAME;
     private final RandomAccessFile in;
     private final Class<T> type;
     private Constructor<T> constructor;
 
+    /**
+     * The filename as a string and the class type for intantianting a entity 
+     * @param fname
+     * @param type
+     * @throws IOException
+     * @throws NoSuchMethodException
+     * @throws SecurityException
+     */
     public FReader(String fname, Class<T> type) throws IOException,NoSuchMethodException, SecurityException{
         FNAME = fname;
         in = new RandomAccessFile(FNAME, "r");
@@ -21,7 +32,11 @@ public class FReader<T extends IdBounded & FileBounded> {
         this.constructor = this.type.getDeclaredConstructor(String[].class);
         
     }
-
+    /**
+     * List all the entries in the file each row(entry) <=> each instance
+     * @return
+     * @throws IOException
+     */
     public List<T> initListElements()throws IOException{
         //read the line with the schema of the file
         List<T> instances = new ArrayList<>();
@@ -40,7 +55,12 @@ public class FReader<T extends IdBounded & FileBounded> {
         }
         return instances;
     }  
-    
+    /**
+     * get the kth entry which is equal in logic with get by id
+     * @param k
+     * @return
+     * @throws IOException
+     */
     public T getKthEntry(int k) throws IOException{
         //set the reader to the begging of the file
         in.seek(0);

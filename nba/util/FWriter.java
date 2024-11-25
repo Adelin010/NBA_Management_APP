@@ -10,18 +10,31 @@ import nba.interfaces.FileBounded;
 import nba.interfaces.IdBounded;
 
 
-
+/**
+ * Util Class for writting in the file, replace or update the files
+ */
 public class FWriter<T extends IdBounded & FileBounded> {
     private final String FNAME;
     private final Class<T> type;
     private BufferedWriter out;
-
+    /**
+     * Constructor expect filename and class type 
+     * @param fname
+     * @param type
+     * @throws IOException
+     * @throws NoSuchMethodException
+     * @throws SecurityException
+     */
     public FWriter(String fname, Class<T> type)throws IOException, NoSuchMethodException, SecurityException{
         FNAME = fname;
         this.type = type;
         
     }
-    
+    /**
+     * Append the text which should be in a data format at the end of the file
+     * @param text
+     * @throws IOException
+     */
     public void append(String text)throws IOException{
         //create the link
         FileWriter fr =  new FileWriter(FNAME, true);
@@ -31,10 +44,20 @@ public class FWriter<T extends IdBounded & FileBounded> {
         fr.close();
     }
 
+    /**
+     * Delete the line which has the id
+     * @param lineNumber
+     * @throws IOException
+     */
     public void delete(int lineNumber)throws IOException{
         update(lineNumber, "");
     }
-
+    /**
+     * Replace the line with id with a new line that has the good data
+     * @param lineNumber
+     * @param text
+     * @throws IOException
+     */
     public void update(int lineNumber, String text)throws IOException{
         change(lineNumber, text);
     }
@@ -46,7 +69,11 @@ public class FWriter<T extends IdBounded & FileBounded> {
         return type;
     }
     
-    //Private methods for internal usage
+    /**
+     * Private util method to open a connection to the file for writting
+     * @param content
+     * @throws IOException
+     */
     private void write(String content)throws IOException{
         FileWriter fr = new FileWriter(FNAME);
         out = new BufferedWriter(fr);
@@ -55,7 +82,13 @@ public class FWriter<T extends IdBounded & FileBounded> {
         fr.close();
     }
 
-
+    /**
+     * Change funvtion is private and servers for both replacing a line for the update- transaction
+     * and also for the deleting transaction
+     * @param lineNumber
+     * @param text
+     * @throws IOException
+     */
     private void change(int lineNumber, String text)throws IOException{
         //Read the file until the line we need to replace
         BufferedReader bfr = new BufferedReader(new FileReader(FNAME));
