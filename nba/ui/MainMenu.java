@@ -59,7 +59,7 @@ public class MainMenu {
         gc = new GameController(gs);
         //Intance main
         this.in = new Scanner(System.in);
-        mm =  new ManagerMenu(in);
+        mm =  new ManagerMenu(in,mc);
         tm = new TeamMenu(in, tc);
         pm = new PlayerMenu(in, pc);
         adv = new AdvancedMenu(in, advc);

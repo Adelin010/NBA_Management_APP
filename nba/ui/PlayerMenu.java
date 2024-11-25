@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import nba.controller.PlayerController;
+import nba.error.IdOutOfRangeException;
+import nba.error.InexistenteInstance;
 import nba.model.NBAPlayer;
 
 public class PlayerMenu {
-    
+
     private final Scanner in;
     private final PlayerController pc;
 
@@ -21,6 +23,69 @@ public class PlayerMenu {
             boolean response = display();
             if(!response)
                 break;
+        }
+    }
+    public void add() {
+        System.out.print("Enter player name: ");
+        String name = in.next();
+        System.out.print("Enter player age: ");
+        int age = in.nextInt();
+        System.out.print("Enter player salary: ");
+        double salary = in.nextDouble();
+        System.out.print("Enter player position: ");
+        String position = in.next();
+        System.out.print("Enter player points: ");
+        int points = in.nextInt();
+        System.out.print("Enter player rebounds: ");
+        int rebounds = in.nextInt();
+        System.out.print("Enter player assists: ");
+        int assists = in.nextInt();
+        System.out.print("Enter team ID: ");
+        int teamId = in.nextInt();
+
+        NBAPlayer player = new NBAPlayer(name, age, salary, position, points, rebounds, assists, teamId);
+
+        try {
+            pc.add(player.getName(), player.getAge(), player.getSalary(), player.getPosition(),player.getPoints(), player.getRebounds(), player.getAssists(), teamId);
+            System.out.println("Player added successfully.");
+        } catch (InexistenteInstance exp) {
+            exp.printStackTrace();
+            System.out.println(exp.getMessage());
+        }
+    }
+    public void getById() {
+        System.out.print("Enter Player ID: ");
+        Integer id = in.nextInt();
+        NBAPlayer player = pc.getById(id);
+        if (player != null) {
+            System.out.println("Player: " + player);
+        } else {
+            System.out.println("No player found");
+        }
+    }
+    public void getByName() {
+        System.out.print("Enter Player name: ");
+        String name = in.next();
+        List<NBAPlayer> players = pc.getByName(name);
+        if (players != null && !players.isEmpty()) {
+            System.out.println("Player:");
+            for (NBAPlayer player : players) {
+                System.out.println(player);
+            }
+        } else {
+            System.out.println("No players found");
+        }
+    }
+    public void delete() {
+        System.out.print("Enter Player to delete: ");
+        Integer id = in.nextInt();
+
+        try {
+            pc.delete(id);
+            System.out.println("Player deleted successfully");
+        } catch (IdOutOfRangeException exp) {
+            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         }
     }
 
@@ -50,12 +115,15 @@ public class PlayerMenu {
         int option = in.nextInt();
         switch(option){
             case 1:{
+                add();
                 break;
             }
             case 2:{
+                getById();
                 break;
             }
             case 3:{
+                getByName();
                 break;
             }
             case 4:{
@@ -63,6 +131,7 @@ public class PlayerMenu {
                 break;
             }
             case 5:{
+                delete();
                 break;
             }
             case -1:{
