@@ -26,6 +26,7 @@ public class GameMenu {
         }
     }
 
+
     public void sortByDate(){
         List<Game> games = gc.sortByDate();
         try{
