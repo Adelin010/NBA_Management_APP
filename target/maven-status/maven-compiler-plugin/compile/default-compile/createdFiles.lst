@@ -30,6 +30,7 @@ com/example/nba/util/FWriter.class
 com/example/nba/error/IdOutOfRangeException.class
 com/example/nba/ui/ManagerMenu.class
 com/example/nba/interfaces/CustomException.class
+com/example/nba/error/DBCredentialsException.class
 com/example/nba/ui/GameMenu.class
 com/example/nba/model/NBAPlayer.class
 com/example/nba/model/Sponsor.class
@@ -39,4 +40,5 @@ com/example/nba/controller/PlayerController.class
 com/example/nba/interfaces/IdBounded.class
 com/example/nba/ui/PlayerMenu.class
 com/example/nba/model/NBATeam.class
+com/example/nba/repo/RepoDB.class
 com/example/nba/controller/AdvancedController.class
