@@ -1,5 +1,8 @@
 package com.example.nba.test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.List;
 
 import com.example.nba.util.*;
@@ -12,8 +15,8 @@ public class TestIOFile {
 
 
     public void testFiles()throws Exception{
-        FReader<NBATeam> fr = new FReader<>("assets/db/team.txt", NBATeam.class);
-        FReader<NBAPlayer> fr2 = new FReader<>("assets/db/player.txt", NBAPlayer.class);
+        FReader<NBATeam> fr = new FReader<>("src/resource/db/team.txt", NBATeam.class);
+        FReader<NBAPlayer> fr2 = new FReader<>("src/resource/db/player.txt", NBAPlayer.class);
 
         //test all players
         List<NBAPlayer> players = fr2.initListElements();
@@ -44,8 +47,8 @@ public class TestIOFile {
         }
 
 
-        FWriter<NBAPlayer> fw = new FWriter<>("assets/db/player.txt", NBAPlayer.class);
-        FWriter<NBATeam> fw2 = new FWriter<>("assets/db/team.txt", NBATeam.class);
+        FWriter<NBAPlayer> fw = new FWriter<>("src/resource/db/player.txt", NBAPlayer.class);
+        FWriter<NBATeam> fw2 = new FWriter<>("src/resource/db/team.txt", NBATeam.class);
 
         fw.append("9,Alehandro9,26,126.07,PG,3");
         fw.delete(5);
@@ -110,13 +113,14 @@ public class TestIOFile {
         System.out.println(advc.managerWinningTeam(2));
     }
 
+
     public void test()throws Exception{
         //testFiles();
-        Repo<NBATeam> rt = new RepoFile<>("assets/db/team.txt", NBATeam.class);
-        Repo<NBAPlayer> rp = new RepoFile<>("assets/db/player.txt", NBAPlayer.class);
-        Repo<Conference> rc = new RepoFile<>("assets/db/coference.txt", Conference.class);
-        Repo<Game> rg = new RepoFile<>("assets/db/game.txt", Game.class);
-        Repo<Manager> rm = new RepoFile<>("assets/db/manager.txt", Manager.class);
+        Repo<NBATeam> rt = new RepoFile<>("src/resource/db/team.txt", NBATeam.class);
+        Repo<NBAPlayer> rp = new RepoFile<>("src/resource/db/player.txt", NBAPlayer.class);
+        Repo<Conference> rc = new RepoFile<>("src/resource/db/conference.txt", Conference.class);
+        Repo<Game> rg = new RepoFile<>("src/resource/db/game.txt", Game.class);
+        Repo<Manager> rm = new RepoFile<>("src/resource/db/manager.txt", Manager.class);
 
         ManagerService ms = new ManagerService(rm, rt);
         GameService gs  = new GameService(rg, rt);
@@ -130,9 +134,22 @@ public class TestIOFile {
         GameController gc = new GameController(gs);
         AdvancedController advc = new AdvancedController(advs);
 
-        testSort(pc, gc);
-        testAdvanced(advc);
-        testController(pc, mc, tc, gc);
+        // testSort(pc, gc);
+        // testAdvanced(advc);
+        // testController(pc, mc, tc, gc);
+
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String username = "petru";
+        String pass = "Slugterra#10";
+
+        Class.forName("org.postgresql.Driver");
+        Connection con = DriverManager.getConnection(url, username, pass);
+        Statement s = con.createStatement();
+        System.out.println(s.execute("select * from Added"));
+
+        con.close();
+
+        // db.close();
 
     }
 

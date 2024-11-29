@@ -7,6 +7,7 @@
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/enums/GameTypes.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/enums/Positions.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/error/AlreadyExistingException.java
+/home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/error/DBCredentialsException.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/error/IdOutOfRangeException.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/error/InexistenteInstance.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/interfaces/CustomException.java
@@ -23,6 +24,7 @@
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/model/Season.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/model/Sponsor.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/repo/Repo.java
+/home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/repo/RepoDB.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/repo/RepoFile.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/repo/RepoMem.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/service/AdvancedService.java
