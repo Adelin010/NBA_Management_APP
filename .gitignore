@@ -2,6 +2,8 @@
 /build
 /.idea
 /out
+/target
+
 
 ./NBA_Management_APP.iml
 ./source.txt
