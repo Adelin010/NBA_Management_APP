@@ -27,8 +27,8 @@ public class NBAPlayer extends Player{
         MAX_ID = id >= MAX_ID ? id+1 : MAX_ID;
         name = args[1];
         age = Integer.parseInt(args[2]);
-        salary = Double.parseDouble(args[3]);
-        position = args[4];
+        position = args[3];
+        salary = Double.parseDouble(args[4]);
         points = Integer.parseInt(args[5]);
         rebounds = Integer.parseInt(args[6]);
         assists = Integer.parseInt(args[7]);
@@ -121,7 +121,12 @@ public class NBAPlayer extends Player{
     
     //OVERRIDE FOR THE INTERFACE
     public String fileFormat(){
-        return "%d,%s,%d,%.2f,%s,%d,%d,%d,%d".formatted(id, name, age, salary, position,points,rebounds, assists ,teamId);
+        return "%d,%s,%d,%s,%.2f,%d,%d,%d,%d".formatted(id, name, age,position, salary,points,rebounds, assists ,teamId);
+    }
+
+    @Override 
+    public String valuesof(){
+        return "('%s', %d, '%s', %.2f, %d, %d, %d, %d)".formatted(name, age, position, salary, points, rebounds, assists, teamId);
     }
 }
 

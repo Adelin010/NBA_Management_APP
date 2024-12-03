@@ -13,8 +13,8 @@ public class GameController {
         this.gs = gs;
     }
 
-    public void add(String date, int scoreTeam1, int scoreTeam2, Integer team1Id, Integer team2Id, String type)throws InexistenteInstance{
-        Game player = new Game(date, scoreTeam1, scoreTeam2, team1Id, team2Id, type);
+    public void add(String date, int scoreTeam1, int scoreTeam2, Integer team1Id, Integer team2Id, String type, Integer seasonId)throws InexistenteInstance{
+        Game player = new Game(date, scoreTeam1, scoreTeam2, team1Id, team2Id, type, seasonId);
         gs.add(player);
     }
 

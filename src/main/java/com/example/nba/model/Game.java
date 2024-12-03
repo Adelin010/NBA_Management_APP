@@ -3,7 +3,7 @@ package com.example.nba.model;
 import com.example.nba.interfaces.*;
 
 
-public class Game  implements IdBounded, FileBounded {
+public class Game  implements IdBounded, FileBounded, StreamedValues {
     //FIELDS
     protected static int MAX_ID = 1;
     protected Integer id;
@@ -13,9 +13,10 @@ public class Game  implements IdBounded, FileBounded {
     protected int scoreTeam1;
     protected int scoreTeam2;
     protected String type;
+    protected Integer seasonId;
 
     //CONSTRUCTOR
-    public Game(String date, int scoreTeam1, int scoreTeam2, int team1Id, int team2Id, String type){
+    public Game(String date, int scoreTeam1, int scoreTeam2, int team1Id, int team2Id, String type, int seasonId){
         this.id = Game.MAX_ID;
         Game.MAX_ID++;
         this.date = date;
@@ -24,6 +25,7 @@ public class Game  implements IdBounded, FileBounded {
         this.scoreTeam1 = scoreTeam1;
         this.scoreTeam2 = scoreTeam2;
         this.type = type;
+        this.seasonId = seasonId;
     }
 
     public Game(String[] args){
@@ -35,11 +37,15 @@ public class Game  implements IdBounded, FileBounded {
         this.team1Id = Integer.parseInt(args[4]);
         this.team2Id = Integer.parseInt(args[5]);
         this.type = args[6];
+        this.seasonId = Integer.parseInt(args[7]);
     }
 
     //GETTERS
     public static int getMaxId(){
         return MAX_ID;
+    }
+    public int getSeasonId(){
+        return seasonId;
     }
 
     public Integer[] getTeamsId(){
@@ -81,5 +87,10 @@ public class Game  implements IdBounded, FileBounded {
     @Override
     public String fileFormat(){
         return "%d,%s,%d,%d,%d,%d,%s".formatted(id, date, scoreTeam1, scoreTeam2, team1Id, team2Id, type);
+    }
+
+    @Override 
+    public String valuesof(){
+        return "(%d, %d, %d, %d, '%s', %d)".formatted(team1Id, team2Id, scoreTeam1, scoreTeam2, type,seasonId );
     }
 }

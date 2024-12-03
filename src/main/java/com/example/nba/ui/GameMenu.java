@@ -7,6 +7,7 @@ import com.example.nba.error.IdOutOfRangeException;
 import com.example.nba.error.InexistenteInstance;
 import com.example.nba.model.Game;
 
+
 import com.example.nba.controller.GameController;
 
 public class GameMenu {
@@ -56,8 +57,10 @@ public class GameMenu {
          Integer team2Id = in.nextInt();
          System.out.print("Enter game type: ");
          String type = in.next();
+         System.out.print("Enter the season ID: ");
+         Integer seasonId = in.nextInt();
          try{
-             gc.add(date, scoreTeam1, scoreTeam2, team1Id, team2Id, type);
+             gc.add(date, scoreTeam1, scoreTeam2, team1Id, team2Id, type, seasonId);
              System.out.println("Game added successfully.");
          } catch (InexistenteInstance exp) {
              exp.printStackTrace();

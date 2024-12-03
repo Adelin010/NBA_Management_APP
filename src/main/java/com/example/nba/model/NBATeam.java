@@ -3,7 +3,7 @@ package com.example.nba.model;
 import com.example.nba.interfaces.*;
 
 
-public class NBATeam implements IdBounded, FileBounded{
+public class NBATeam implements IdBounded, FileBounded, StreamedValues{
     //FIELDS
     protected static int MAX_ID = 1;
     protected Integer id;
@@ -70,6 +70,11 @@ public class NBATeam implements IdBounded, FileBounded{
     @Override 
     public String fileFormat(){
         return "%d,%s,%d".formatted(id, name, conferenceId);
+    }
+
+    @Override 
+    public String valuesof(){
+        return "('%s', %d)".formatted(name, conferenceId);
     }
 
 }

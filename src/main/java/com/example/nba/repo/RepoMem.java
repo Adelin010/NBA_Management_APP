@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 import com.example.nba.interfaces.*;
 
-public class RepoMem<T extends IdBounded & FileBounded> implements Repo<T>{
+public class RepoMem<T extends IdBounded & FileBounded & StreamedValues> implements Repo<T>{
 
     private Map<Integer,T> data = new TreeMap<>();
 

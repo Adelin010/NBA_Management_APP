@@ -3,11 +3,11 @@ package com.example.nba.model;
 
 import com.example.nba.interfaces.*;
 
-public class Sponsor implements IdBounded, FileBounded{
+public class Sponsor implements IdBounded, FileBounded, StreamedValues{
     //FIELDS
     protected static int MAX_ID = 1;
     protected Integer id;
-    private String name;
+    protected String name;
 
     //CONSTRUCTORS
     public Sponsor(int id,String sponsorName) {
@@ -54,5 +54,9 @@ public class Sponsor implements IdBounded, FileBounded{
     @Override 
     public String fileFormat(){
         return "%d,%s".formatted(id, name);
+    }
+    @Override 
+    public String valuesof(){
+        return "('%s')".formatted(name);
     }
 }
