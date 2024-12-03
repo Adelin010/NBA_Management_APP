@@ -2,13 +2,13 @@ package com.example.nba.model;
 
 import com.example.nba.interfaces.*;
 
-public class Conference implements IdBounded, FileBounded {
+public class Conference implements IdBounded, FileBounded, StreamedValues {
     //Fields
     protected static int MAX_ID = 1;
     protected Integer id;
-    private String name;
+    protected String name;
     //Constructors
-    public Conference(int id, String conferenceName) {
+    public Conference(String conferenceName) {
         this.id = Conference.MAX_ID;
         Conference.MAX_ID++;
         this.name = conferenceName;
@@ -47,5 +47,9 @@ public class Conference implements IdBounded, FileBounded {
     @Override
     public String fileFormat(){
         return "%d,%s".formatted(id, name);
+    }
+    @Override 
+    public String valuesof(){
+        return "('%s')".formatted(name);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.nba.interfaces.*;
 import com.example.nba.util.*;
 
-public class RepoFile<T extends IdBounded & FileBounded> implements Repo<T> {
+public class RepoFile<T extends IdBounded & FileBounded & StreamedValues> implements Repo<T> {
 
     private  FReader<T> fr = null;
     private  FWriter<T> fw = null;

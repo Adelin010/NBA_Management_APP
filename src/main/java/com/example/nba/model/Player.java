@@ -3,7 +3,7 @@ package com.example.nba.model;
 import com.example.nba.interfaces.*;
 
 
-public abstract class Player implements IdBounded, FileBounded{
+public abstract class Player implements IdBounded, FileBounded, StreamedValues{
     //FIELDS
     protected Integer id;
     protected String name;

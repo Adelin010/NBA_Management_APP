@@ -4,6 +4,7 @@ com/example/nba/model/Manager.class
 com/example/nba/service/AdvancedService.class
 com/example/nba/service/ManagerService.class
 com/example/nba/service/PlayerService.class
+com/example/nba/interfaces/StreamedValues.class
 com/example/nba/interfaces/FileBounded.class
 com/example/nba/service/TeamService.class
 com/example/nba/model/Game.class
@@ -16,7 +17,6 @@ com/example/nba/enums/GameTypes.class
 com/example/nba/controller/ManagerController.class
 com/example/nba/model/Fonds.class
 com/example/nba/ui/AdvancedMenu.class
-com/example/nba/test/TestIOFile.class
 com/example/nba/controller/GameController.class
 com/example/nba/service/GameService$ComparatorByDate.class
 com/example/nba/repo/RepoMem.class

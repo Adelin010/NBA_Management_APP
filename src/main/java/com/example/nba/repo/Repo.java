@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @param <T> The type of objects stored in the repository
  */
-public interface Repo<T extends IdBounded & FileBounded> {
+public interface Repo<T extends IdBounded & FileBounded & StreamedValues> {
     /**
      * Creates a new object in the repository.
      *

@@ -14,6 +14,7 @@
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/interfaces/FileBounded.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/interfaces/IdBounded.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/interfaces/PrintStackFunctionalInterface.java
+/home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/interfaces/StreamedValues.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/model/Conference.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/model/Fonds.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/model/Game.java
@@ -32,7 +33,6 @@
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/service/ManagerService.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/service/PlayerService.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/service/TeamService.java
-/home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/test/TestIOFile.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/ui/AdvancedMenu.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/ui/GameMenu.java
 /home/petruadelin/Uni/Java/NBA_Management_APP/src/main/java/com/example/nba/ui/MainMenu.java

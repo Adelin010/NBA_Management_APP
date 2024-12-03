@@ -2,7 +2,7 @@ package com.example.nba.model;
 
 import com.example.nba.interfaces.*;
 
-public class Fonds implements IdBounded, FileBounded{
+public class Fonds implements IdBounded, FileBounded, StreamedValues{
     //Fields
     protected static int MAX_ID = 1;
     protected Integer id;
@@ -64,5 +64,10 @@ public class Fonds implements IdBounded, FileBounded{
     @Override 
     public String fileFormat(){
         return "%d,%d,%d,%d".formatted(id, sponsorId, teamId, dealAmount);
+    }
+
+    @Override 
+    public String valuesof(){
+        return "(%d, %d, %d)".formatted(teamId, sponsorId, dealAmount);
     }
 }
