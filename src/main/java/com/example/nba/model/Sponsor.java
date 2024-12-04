@@ -10,9 +10,14 @@ public class Sponsor implements IdBounded, FileBounded, StreamedValues{
     protected String name;
 
     //CONSTRUCTORS
-    public Sponsor(int id,String sponsorName) {
+    public Sponsor(String sponsorName) {
         this.id = Sponsor.MAX_ID;
         Sponsor.MAX_ID++;
+        this.name = sponsorName;
+    }
+
+    public Sponsor(Integer id, String sponsorName) {
+        this.id = id;
         this.name = sponsorName;
     }
 

@@ -17,6 +17,13 @@ public class Fonds implements IdBounded, FileBounded, StreamedValues{
         this.dealAmount = dealAmount;
         this.teamId = team;
     }
+
+    public Fonds(Integer id, Integer sponsorId, Integer team, long dealAmount) {
+        this.id = id;
+        this.sponsorId = sponsorId;
+        this.dealAmount = dealAmount;
+        this.teamId = team;
+    }
     public Fonds(String[] args){
         this.id = Integer.parseInt(args[0]);
         MAX_ID = MAX_ID > id ? MAX_ID : id+1;

@@ -15,6 +15,12 @@ public class Manager implements IdBounded, FileBounded, StreamedValues{
         this.name = name;
         this.teamId = teamId;
     }
+
+    public Manager(Integer id, String name, Integer teamId){
+        this.id = id;
+        this.name = name;
+        this.teamId = teamId;
+    }
     public Manager(String[] args){
         this.id = Integer.parseInt(args[0]);
         MAX_ID = MAX_ID > id ? MAX_ID : id+1;

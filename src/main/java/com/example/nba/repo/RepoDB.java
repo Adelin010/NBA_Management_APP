@@ -51,7 +51,6 @@ public class RepoDB<T extends IdBounded & FileBounded & StreamedValues> implemen
     public void add(T obj) {
         try{
             String q = "insert into %s values %s".formatted(table, obj.valuesof());
-            System.err.println(q);
             Statement s = connection.createStatement();
             s.executeUpdate(q);
         }catch(Exception ex){
@@ -71,52 +70,51 @@ public class RepoDB<T extends IdBounded & FileBounded & StreamedValues> implemen
      */
     @Override
     public void update(T obj) {
-        T oldObj = this.get(obj.getId());
-        String[] attrOld = oldObj.fileFormat().split(",");
-        String[] attrNew = obj.fileFormat().split(",");
-        System.out.println(attrNew);
+        T old = this.get(obj.getId());
+        String[] oldArrg = old.fileFormat().split(","); 
+        String[] objArrg = obj.fileFormat().split(",");
         try{
-            String[] colNames = this.getColNames();
-            String q1 = """
-                    update %s
-                    set %s = ?
-                    where id = %d
-                    """;
-
-            PreparedStatement stat =null;
+            Statement st = connection.createStatement();
+            String query = "update %s set %s = '%s' where id = %d";
+            String query2 = "update %s set %s = %d where id = %d";
+            String query3 = "update %s set %s = %.2f where id = %d";
+            int id = Integer.parseInt(objArrg[0]);
+            String[] cols = this.getColNames();
             connection.setAutoCommit(false);
-            //Starting with the index on 1 to jump over id which is the same
-            for(int i = 1; i < attrNew.length; ++i){
-                if(attrOld[i].equals(attrNew[i]))
-                    continue;
-                //Integer case
-                if(attrNew[i].matches("-?\\d+")){
-                    q1 = q1.formatted(table, colNames[i], Integer.parseInt(attrOld[0]));
-                    stat = connection.prepareStatement(q1);
-                    stat.setInt(1, Integer.parseInt(attrNew[i]));
-                    stat.addBatch();
-                }
-                //Double case
-                else if(attrNew[i].matches("-?\\d+(\\.\\d+)?")){
-                    stat = connection.prepareStatement(q1);
-                    stat.setDouble(1, Double.parseDouble(attrNew[i]));
-                    stat.addBatch();
-                }
-                else{
-                    q1 = q1.formatted(table, colNames[i], Integer.parseInt(attrOld[0]));
-                    stat = connection.prepareStatement(q1);
-                    stat.setString(1, attrNew[i]);
-                    stat.addBatch();
-                }                
-            }
+            for(int i = 1; i < cols.length; ++i){
+                if(!oldArrg[i].equals(objArrg[i])){
+                    //create the update statement 
+                    int kindOfColumn = this.kindOfText(objArrg[i]);
+                    System.err.println(kindOfColumn);
+                    if(kindOfColumn == 2){
+                        //varchar column case
+                        String pre = query.formatted(table, cols[i], objArrg[i], id);
+                        System.err.println(pre);
+                        st.addBatch(pre);
+                        //set the new value
 
-            stat.executeBatch();
-            stat.executeBatch();
+                    }else if(kindOfColumn == 1){
+                        //Numeric column case
+                        String pre = query3.formatted(table, cols[i], Double.parseDouble(objArrg[i]), id);
+                        System.err.println(pre);
+                        st.addBatch(pre);
+                        //set the new value
+                    }else if (kindOfColumn == 0){
+                        //varchar column case
+                        String pre = query2.formatted(table, cols[i], Integer.parseInt(objArrg[i]), id);
+                        System.err.println(pre);
+                        st.addBatch(pre);
+                        //set the new value
+                    }                        
+                }
+            }
+            st.executeBatch();
             connection.commit();
             connection.setAutoCommit(true);
-        }catch(Exception ex){
-            System.err.println(ex.getMessage());
-            ex.printStackTrace();
+
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     
 
@@ -262,6 +260,23 @@ public class RepoDB<T extends IdBounded & FileBounded & StreamedValues> implemen
             colNames[i] = meta.getColumnName(i+1);
         }
         return colNames;
+    }
+
+    /**
+     * 
+     * @param s
+     * @return an int that represents what kind of text the String is 
+     * if ret = 0 it is a INT
+     * if ret = 1 it is a DOUBLE
+     * if ret = 2 it is a Regular text
+     */
+    private short kindOfText(String s){ 
+        if(s.matches("^[-]?[0-9]+$"))
+            return 0;
+        else if (s.matches("^[-]?[0-9]+\\.[0-9]+$"))
+            return 1;
+        else 
+            return 2;
     }
     
 }

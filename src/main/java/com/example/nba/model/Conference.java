@@ -13,6 +13,11 @@ public class Conference implements IdBounded, FileBounded, StreamedValues {
         Conference.MAX_ID++;
         this.name = conferenceName;
     }
+
+    public Conference(Integer id, String conferenceName) {
+        this.id = id;
+        this.name = conferenceName;
+    }
     public Conference(String[] args){
         this.id = Integer.parseInt(args[0]);
         MAX_ID = MAX_ID > id ? MAX_ID : id+1;

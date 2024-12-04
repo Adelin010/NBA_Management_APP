@@ -16,6 +16,12 @@ public class NBATeam implements IdBounded, FileBounded, StreamedValues{
         this.name = name;
         conferenceId = confId;
     }
+
+    public NBATeam(Integer id, String name, Integer confId) {
+        this.id = id;
+        this.name = name;
+        conferenceId = confId;
+    }
     public NBATeam(String[] args){
         this.id = Integer.parseInt(args[0]);
         MAX_ID = id >= MAX_ID ? id+1 : MAX_ID;
