@@ -28,6 +28,17 @@ public class Game  implements IdBounded, FileBounded, StreamedValues {
         this.seasonId = seasonId;
     }
 
+    public Game(Integer id, String date, int scoreTeam1, int scoreTeam2, int team1Id, int team2Id, String type, int seasonId){
+        this.id = id;
+        this.date = date;
+        this.team1Id = team1Id;
+        this.team2Id = team2Id;
+        this.scoreTeam1 = scoreTeam1;
+        this.scoreTeam2 = scoreTeam2;
+        this.type = type;
+        this.seasonId = seasonId;
+    }
+
     public Game(String[] args){
         this.id = Integer.parseInt(args[0]);
         MAX_ID = MAX_ID > id ? MAX_ID : id+1;

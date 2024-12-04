@@ -22,6 +22,16 @@ public class NBAPlayer extends Player{
 
     }
 
+    public NBAPlayer(Integer id,String name, int age, double salary, String position) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+        this.position = position;
+        this.teamId = -1;
+
+    }
+
     public NBAPlayer(String[] args){
         id = Integer.parseInt(args[0]);
         MAX_ID = id >= MAX_ID ? id+1 : MAX_ID;

@@ -10,9 +10,15 @@ public class Season implements IdBounded, FileBounded, StreamedValues{
     protected String name;
 
     //CONSTRUCTORS
-    public Season(int id ,String name,int year) {
+    public Season(String name,int year) {
         this.id = Season.MAX_ID;
         Season.MAX_ID++;
+        this.year = year;
+        this.name = name;
+    }
+
+    public Season(Integer id, String name,int year) {
+        this.id = id;
         this.year = year;
         this.name = name;
     }
