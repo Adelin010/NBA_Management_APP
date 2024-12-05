@@ -1,5 +1,4 @@
-package com.example.nba.gui;
-
+package com.example.nba.menus;
 import com.example.nba.controller.*;
 import com.example.nba.model.*;
 import com.example.nba.service.*;
@@ -12,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import static javafx.application.Application.launch;
 
 public class MainMenuGUI extends Application {
     private final PlayerMenuGUI pm;

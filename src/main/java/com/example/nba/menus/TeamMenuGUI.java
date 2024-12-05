@@ -1,4 +1,4 @@
-package com.example.nba.gui;
+package com.example.nba.menus;
 import com.example.nba.controller.TeamController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -6,6 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import static javafx.application.Application.launch;
+
 public class TeamMenuGUI extends Application {
     private TeamController teamController;
     public TeamMenuGUI(TeamController teamController) {

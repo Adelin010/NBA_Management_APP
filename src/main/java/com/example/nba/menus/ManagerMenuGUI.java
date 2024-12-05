@@ -1,5 +1,4 @@
-
-package com.example.nba.gui;
+package com.example.nba.menus;
 import com.example.nba.controller.ManagerController;
 import com.example.nba.model.Manager;
 import com.example.nba.model.NBATeam;
@@ -17,6 +16,8 @@ import javafx.stage.Stage;
 import com.example.nba.controller.PlayerController;
 import com.example.nba.model.NBAPlayer;
 import java.util.List;
+
+import static javafx.application.Application.launch;
 
 public class ManagerMenuGUI extends Application {
     private ManagerController managerController;
@@ -124,4 +125,5 @@ public class ManagerMenuGUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }

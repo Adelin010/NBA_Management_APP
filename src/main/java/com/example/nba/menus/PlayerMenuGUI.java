@@ -1,4 +1,4 @@
-package com.example.nba.gui;
+package com.example.nba.menus;
 import com.example.nba.model.NBATeam;
 import com.example.nba.repo.Repo;
 import com.example.nba.repo.RepoMem;
@@ -14,16 +14,14 @@ import javafx.stage.Stage;
 import com.example.nba.controller.PlayerController;
 import com.example.nba.model.NBAPlayer;
 import java.util.List;
-
 import static javafx.application.Application.launch;
-
-public class PlayerMenuGUI {
+public class PlayerMenuGUI extends Application {
     private PlayerController playerController;
 
     public PlayerMenuGUI(PlayerController pc) {
         playerController = pc;
     }
-
+    @Override
     public void start(Stage stage) {
         Repo<NBAPlayer> playerRepo = new RepoMem<>();
         Repo<NBATeam> teamRepo = new RepoMem<>();

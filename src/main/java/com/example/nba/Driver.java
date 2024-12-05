@@ -1,6 +1,6 @@
 package com.example.nba;
 
-import com.example.nba.gui.MainMenuGUI;
+import com.example.nba.menus.MainMenuGUI;
 import com.example.nba.ui.MainMenu;
 import javafx.application.Application;
 
@@ -23,8 +23,8 @@ public class Driver{
         /*
          * Run in normal mode
          */
-        MainMenu mainMenu = new MainMenu();
-        mainMenu.run();
+//        MainMenu mainMenu = new MainMenu();
+//        mainMenu.run();
         MainMenuGUI menu = new MainMenuGUI();
         Application.launch(MainMenuGUI.class, args);
 
