@@ -1,192 +1,237 @@
 package com.example.nba.menus;
-import com.example.nba.model.NBATeam;
-import com.example.nba.repo.Repo;
-import com.example.nba.repo.RepoMem;
-import com.example.nba.service.PlayerService;
-import javafx.application.Application;
+import com.example.nba.controller.PlayerController;
+import com.example.nba.error.IdOutOfRangeException;
+import com.example.nba.error.InexistenteInstance;
+import com.example.nba.model.NBAPlayer;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.example.nba.controller.PlayerController;
-import com.example.nba.model.NBAPlayer;
+import javafx.util.Duration;
 import java.util.List;
-import static javafx.application.Application.launch;
-public class PlayerMenuGUI extends Application {
-    private PlayerController playerController;
+public class PlayerMenuGUI {
+    private final PlayerController playerController;
+    private Stage primaryStage;
 
-    public PlayerMenuGUI(PlayerController pc) {
-        playerController = pc;
-    }
-    @Override
-    public void start(Stage stage) {
-        Repo<NBAPlayer> playerRepo = new RepoMem<>();
-        Repo<NBATeam> teamRepo = new RepoMem<>();
-        playerController = new PlayerController(new PlayerService(playerRepo, teamRepo));
+    public PlayerMenuGUI(PlayerController pc) {this.playerController = pc;}
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         BorderPane root = new BorderPane();
-        VBox sideBar = new VBox(20);
-        sideBar.setAlignment(Pos.TOP_CENTER);
-        sideBar.setStyle("-fx-background-color: #2f4f4f; -fx-padding: 20px;");
-        Button addPlayerButton = new Button("Add Player");
-        Button viewPlayerButton = new Button("View Player by ID");
-        Button viewPlayerByNameButton = new Button("View Player by Name");
-        Button deletePlayerButton = new Button("Delete Player");
-        Button sortByAgeButton = new Button("Sort Players by Age");
-        Button backButton = new Button("Back to Main Menu");
-        addPlayerButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-text-fill: white;");
-        viewPlayerButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-text-fill: white;");
-        viewPlayerByNameButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-text-fill: white;");
-        deletePlayerButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-text-fill: white;");
-        sortByAgeButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-text-fill: white;");
-        backButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-background-color: #d9534f; -fx-text-fill: white;");
-        sideBar.getChildren().addAll(addPlayerButton, viewPlayerButton, viewPlayerByNameButton, deletePlayerButton, sortByAgeButton, backButton);
-        StackPane centerArea = new StackPane();
-        Text welcomeText = new Text("Player Menu");
-        welcomeText.setFont(Font.font("Arial", 24));
-        centerArea.getChildren().add(welcomeText);
-        root.setCenter(centerArea);
-        root.setLeft(sideBar);
-        addPlayerButton.setOnAction(e -> openAddPlayer(centerArea));
-        viewPlayerButton.setOnAction(e -> openViewPlayerById(centerArea));
-        viewPlayerByNameButton.setOnAction(e -> openViewPlayerByName(centerArea));
-        deletePlayerButton.setOnAction(e -> openDeletePlayer(centerArea));
-        sortByAgeButton.setOnAction(e -> openSortByAge(centerArea));
-        backButton.setOnAction(e -> stage.close());
-
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image("file:/C:/Users/blaja/Downloads/PlayerBack.jpg", 800, 600, false, true),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT
+        );
+        root.setBackground(new Background(backgroundImage));
+        VBox sidebar = createAnimatedSidebar(primaryStage);
+        root.setLeft(sidebar);
+        StackPane mainContent = new StackPane();
+        mainContent.setAlignment(Pos.CENTER);
+        mainContent.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-background-radius: 15px;");
+        root.setCenter(mainContent);
         Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Player Menu - NBA Management System");
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setTitle("Player Menu - NBA Management System");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
-    private void openAddPlayer(StackPane centerArea) {
-        VBox addPlayerLayout = new VBox(10);
-        addPlayerLayout.setAlignment(Pos.CENTER);
-        addPlayerLayout.setStyle("-fx-padding: 20px;");
+
+    private VBox createAnimatedSidebar(Stage stage) {
+        VBox sidebar = new VBox(15);
+        sidebar.setAlignment(Pos.TOP_CENTER);
+        sidebar.setStyle(
+                "-fx-background-color: rgba(46, 46, 46, 0.7); " +  // Keep the original color but reduce transparency (no darkening)
+                        "-fx-padding: 20px;" +
+                        "-fx-background-radius: 15px;" +
+                        "-fx-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);" // Soft shadow for depth
+        );
+        sidebar.setPrefWidth(220);
+
+        // Title text with custom font and color
+        Label title = new Label("Player Menu");
+        title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #f1c40f;");
+
+        // Create sidebar items
+        Text addPlayerText = createSidebarText("Add Player", () -> openAddPlayer(stage));
+        Text viewPlayerByIdText = createSidebarText("View Player by ID", () -> openViewPlayerById(stage));
+        Text viewPlayerByNameText = createSidebarText("View Player by Name", () -> openViewPlayerByName(stage));
+        Text deletePlayerText = createSidebarText("Delete Player", () -> openDeletePlayer(stage));
+        Text sortByAgeText = createSidebarText("Sort Players by Age", () -> openSortByAge(stage));
+        Text backButtonText = createSidebarText("Back to Main Menu", this::goToMainMenu);
+
+        sidebar.getChildren().addAll(title, addPlayerText, viewPlayerByIdText, viewPlayerByNameText, deletePlayerText, sortByAgeText, backButtonText);
+
+        // Sidebar slide-in animation
+        TranslateTransition slideIn = new TranslateTransition(Duration.seconds(0.5), sidebar);
+        slideIn.setFromX(-220);
+        slideIn.setToX(0);
+        slideIn.play();
+
+        return sidebar;
+    }
+    private Text createSidebarText(String text, Runnable action) {
+        Text labelText = new Text(text);
+        labelText.setStyle("-fx-font-size: 16px; -fx-fill: white; -fx-font-family: 'Arial';");
+        labelText.setOnMouseEntered(e -> labelText.setStyle("-fx-fill: #f39c12; -fx-font-weight: bold;"));
+        labelText.setOnMouseExited(e -> labelText.setStyle("-fx-fill: white; -fx-font-weight: normal;"));
+        labelText.setOnMouseClicked(e -> action.run());
+        return labelText;
+    }
+    private void openAddPlayer(Stage stage) {
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+        Label header = new Label("Add Player");
+        header.setFont(new Font("Arial", 22));
+        header.setStyle("-fx-text-fill: #f1c40f;");
         TextField nameField = new TextField();
         nameField.setPromptText("Enter Player Name");
+        nameField.setStyle("-fx-font-size: 14px; -fx-padding: 8px; -fx-background-radius: 8px;");
         TextField ageField = new TextField();
         ageField.setPromptText("Enter Player Age");
-        TextField salaryField = new TextField();
-        salaryField.setPromptText("Enter Player Salary");
-        TextField positionField = new TextField();
-        positionField.setPromptText("Enter Player Position");
-        TextField pointsField = new TextField();
-        pointsField.setPromptText("Enter Player Points");
-        TextField reboundsField = new TextField();
-        reboundsField.setPromptText("Enter Player Rebounds");
-        TextField assistsField = new TextField();
-        assistsField.setPromptText("Enter Player Assists");
+        ageField.setStyle("-fx-font-size: 14px; -fx-padding: 8px; -fx-background-radius: 8px;");
         TextField teamIdField = new TextField();
         teamIdField.setPromptText("Enter Team ID");
+        teamIdField.setStyle("-fx-font-size: 14px; -fx-padding: 8px; -fx-background-radius: 8px;");
         Button submitButton = new Button("Add Player");
+        submitButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px; -fx-background-radius: 10px;");
+        Label resultLabel = new Label();
+        resultLabel.setStyle("-fx-text-fill: white;");
         submitButton.setOnAction(e -> {
-            try {
+            try{
                 String name = nameField.getText();
                 int age = Integer.parseInt(ageField.getText());
-                double salary = Double.parseDouble(salaryField.getText());
-                String position = positionField.getText();
-                int points = Integer.parseInt(pointsField.getText());
-                int rebounds = Integer.parseInt(reboundsField.getText());
-                int assists = Integer.parseInt(assistsField.getText());
                 int teamId = Integer.parseInt(teamIdField.getText());
-
-                playerController.add(name, age, salary, position, points, rebounds, assists, teamId);
-            } catch (Exception ex) {
+                playerController.add(name, age, 0.0, "Default Position", 0, 0, 0, teamId);
+                resultLabel.setText("Player added successfully!");
+            }catch (InexistenteInstance ex) {
+                resultLabel.setText("Error: " + ex.getMessage());
+            }catch (NumberFormatException ex) {
+                resultLabel.setText("Invalid input format.");
+            }catch (Exception ex) {
+                resultLabel.setText("Error adding player: " + ex.getMessage());
             }
         });
-        addPlayerLayout.getChildren().addAll(nameField, ageField, salaryField, positionField, pointsField, reboundsField, assistsField, teamIdField, submitButton);
-        centerArea.getChildren().setAll(addPlayerLayout);
+
+        layout.getChildren().addAll(header, nameField, ageField, teamIdField, submitButton, resultLabel);
+        layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 15px;");
+
+        stage.setScene(new Scene(layout, 400, 300));
     }
-    private void openViewPlayerById(StackPane centerArea) {
-        VBox viewPlayerLayout = new VBox(10);
-        viewPlayerLayout.setAlignment(Pos.CENTER);
-        viewPlayerLayout.setStyle("-fx-padding: 20px;");
+    private void openViewPlayerById(Stage stage) {
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+        Label header = new Label("View Player by ID");
+        header.setFont(new Font("Arial", 18));
+        header.setStyle("-fx-text-fill: white;");
         TextField idField = new TextField();
         idField.setPromptText("Enter Player ID");
         Button searchButton = new Button("Search");
         Label resultLabel = new Label();
+        resultLabel.setStyle("-fx-text-fill: white;");
         searchButton.setOnAction(e -> {
-            try {
+            try{
                 int id = Integer.parseInt(idField.getText());
                 NBAPlayer player = playerController.getById(id);
-                if (player != null) {
-                    resultLabel.setText(player.toString());
-                } else {
-                    resultLabel.setText("No player found with ID " + id);
-                }
-            } catch (Exception ex) {
+                resultLabel.setText(player != null ? player.toString() : "No player found with ID " + id);
+            }catch (Exception ex) {
+                resultLabel.setText("Error fetching player: " + ex.getMessage());
             }
         });
-        viewPlayerLayout.getChildren().addAll(idField, searchButton, resultLabel);
-        centerArea.getChildren().setAll(viewPlayerLayout);
+        layout.getChildren().addAll(header, idField, searchButton, resultLabel);
+        layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
+        stage.setScene(new Scene(layout, 400, 300));
     }
-    private void openViewPlayerByName(StackPane centerArea) {
-        VBox viewPlayerLayout = new VBox(10);
-        viewPlayerLayout.setAlignment(Pos.CENTER);
-        viewPlayerLayout.setStyle("-fx-padding: 20px;");
+    private void openViewPlayerByName(Stage stage) {
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+        Label header = new Label("View Player by Name");
+        header.setFont(new Font("Arial", 18));
+        header.setStyle("-fx-text-fill: white;");
         TextField nameField = new TextField();
         nameField.setPromptText("Enter Player Name");
         Button searchButton = new Button("Search");
-        TextArea resultArea = new TextArea();
-        resultArea.setEditable(false);
+        Label resultLabel = new Label();
+        resultLabel.setStyle("-fx-text-fill: white;");
         searchButton.setOnAction(e -> {
-            String name = nameField.getText();
-            List<NBAPlayer> players = playerController.getByName(name);
-            if (players != null && !players.isEmpty()) {
-                StringBuilder sb = new StringBuilder();
-                for (NBAPlayer player : players) {
-                    sb.append(player.toString()).append("\n");
+            try{
+                String name = nameField.getText();
+                List<NBAPlayer> players = playerController.getByName(name);
+                if (players != null && !players.isEmpty()) {
+                    StringBuilder result = new StringBuilder();
+                    for (NBAPlayer player : players) {
+                        result.append(player.toString()).append("\n");
+                    }
+                    resultLabel.setText(result.toString());
+                } else {
+                    resultLabel.setText("No players found with name " + name);
                 }
-                resultArea.setText(sb.toString());
-            } else {
-                resultArea.setText("No players found with name " + name);
+            }catch (Exception ex) {
+                resultLabel.setText("Error fetching players: " + ex.getMessage());
             }
         });
-        viewPlayerLayout.getChildren().addAll(nameField, searchButton, resultArea);
-        centerArea.getChildren().setAll(viewPlayerLayout);
+        layout.getChildren().addAll(header, nameField, searchButton, resultLabel);
+        layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
+        stage.setScene(new Scene(layout, 400, 300));
     }
-    private void openDeletePlayer(StackPane centerArea) {
-        VBox deletePlayerLayout = new VBox(10);
-        deletePlayerLayout.setAlignment(Pos.CENTER);
-        deletePlayerLayout.setStyle("-fx-padding: 20px;");
+    private void openDeletePlayer(Stage stage) {
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+        Label header = new Label("Delete Player");
+        header.setFont(new Font("Arial", 18));
+        header.setStyle("-fx-text-fill: white;");
         TextField idField = new TextField();
         idField.setPromptText("Enter Player ID to Delete");
         Button deleteButton = new Button("Delete");
         Label resultLabel = new Label();
+        resultLabel.setStyle("-fx-text-fill: white;");
         deleteButton.setOnAction(e -> {
-            try {
+            try{
                 int id = Integer.parseInt(idField.getText());
                 playerController.delete(id);
-                resultLabel.setText("Player with ID " + id + " deleted successfully.");
-            } catch (Exception ex) {
-                resultLabel.setText("Failed to delete player. Ensure the ID is valid.");
+                resultLabel.setText("Player deleted successfully.");
+            }catch (IdOutOfRangeException ex) {
+                resultLabel.setText("Error: " + ex.getMessage());
+            }catch (Exception ex) {
+                resultLabel.setText("Error deleting player: " + ex.getMessage());
             }
         });
-        deletePlayerLayout.getChildren().addAll(idField, deleteButton, resultLabel);
-        centerArea.getChildren().setAll(deletePlayerLayout);
+        layout.getChildren().addAll(header, idField, deleteButton, resultLabel);
+        layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
+        stage.setScene(new Scene(layout, 400, 300));
     }
-    private void openSortByAge(StackPane centerArea) {
-        VBox sortPlayerLayout = new VBox(10);
-        sortPlayerLayout.setAlignment(Pos.CENTER);
-        sortPlayerLayout.setStyle("-fx-padding: 20px;");
-        TextArea sortedPlayersArea = new TextArea();
-        sortedPlayersArea.setEditable(false);
-        Button sortButton = new Button("Sort Players by Age");
+    private void openSortByAge(Stage stage) {
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+        Label header = new Label("Sort Players by Age");
+        header.setFont(new Font("Arial", 18));
+        header.setStyle("-fx-text-fill: white;");
+        Button sortButton = new Button("Sort");
+        Label resultLabel = new Label();
+        resultLabel.setStyle("-fx-text-fill: white;");
         sortButton.setOnAction(e -> {
-            List<NBAPlayer> sortedPlayers = playerController.sortByAge();
-            StringBuilder sb = new StringBuilder();
-            for (NBAPlayer player : sortedPlayers) {
-                sb.append(player.toString()).append("\n");
+            try{
+                List<NBAPlayer> sortedPlayers = playerController.sortByAge();
+                StringBuilder result = new StringBuilder();
+                for (NBAPlayer player : sortedPlayers) {
+                    result.append(player.toString()).append("\n");
+                }
+                resultLabel.setText(result.toString());
+            }catch (Exception ex) {
+                resultLabel.setText("Error sorting players: " + ex.getMessage());
             }
-            sortedPlayersArea.setText(sb.toString());
         });
-        sortPlayerLayout.getChildren().addAll(sortButton, sortedPlayersArea);
-        centerArea.getChildren().setAll(sortPlayerLayout);
+        layout.getChildren().addAll(header, sortButton, resultLabel);
+        layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
+        stage.setScene(new Scene(layout, 400, 300));
     }
-    public static void main(String[] args) {
-        launch(args);
+    private void goToMainMenu() {
+        MainMenuGUI mainMenu = new MainMenuGUI();
+        mainMenu.start(primaryStage);
     }
 }
