@@ -13,7 +13,7 @@ import com.example.nba.repo.RepoDB;
 public class TestDB {
     
     @Test
-    public static void TestGetMethods()throws Exception{
+    public void TestGetMethods()throws Exception{
         String url = "jdbc:sqlserver://localhost;databaseName=NBA;user=SA;password=Slugterra#10;encrypt=true;trustServerCertificate=true";
         Repo<NBATeam> rt = new RepoDB<>(url, NBATeam.class, "Team");
         NBATeam t1 = rt.get(2);

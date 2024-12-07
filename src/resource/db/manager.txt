@@ -1,3 +1,6 @@
 [id | name | team_id]
 1,Manager1,2
-2,Manager2,1
+2,Blj,2
+3,Mihai,3
+4,Blaj,4
+5,eu,2
