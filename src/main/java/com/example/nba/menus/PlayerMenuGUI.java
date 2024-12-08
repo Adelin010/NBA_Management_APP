@@ -46,33 +46,25 @@ public class PlayerMenuGUI {
         VBox sidebar = new VBox(15);
         sidebar.setAlignment(Pos.TOP_CENTER);
         sidebar.setStyle(
-                "-fx-background-color: rgba(46, 46, 46, 0.7); " +  // Keep the original color but reduce transparency (no darkening)
+                "-fx-background-color: rgba(46, 46, 46, 0.7); " +
                         "-fx-padding: 20px;" +
                         "-fx-background-radius: 15px;" +
-                        "-fx-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);" // Soft shadow for depth
+                        "-fx-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);"
         );
         sidebar.setPrefWidth(220);
-
-        // Title text with custom font and color
         Label title = new Label("Player Menu");
         title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #f1c40f;");
-
-        // Create sidebar items
         Text addPlayerText = createSidebarText("Add Player", () -> openAddPlayer(stage));
         Text viewPlayerByIdText = createSidebarText("View Player by ID", () -> openViewPlayerById(stage));
         Text viewPlayerByNameText = createSidebarText("View Player by Name", () -> openViewPlayerByName(stage));
         Text deletePlayerText = createSidebarText("Delete Player", () -> openDeletePlayer(stage));
         Text sortByAgeText = createSidebarText("Sort Players by Age", () -> openSortByAge(stage));
         Text backButtonText = createSidebarText("Back to Main Menu", this::goToMainMenu);
-
         sidebar.getChildren().addAll(title, addPlayerText, viewPlayerByIdText, viewPlayerByNameText, deletePlayerText, sortByAgeText, backButtonText);
-
-        // Sidebar slide-in animation
         TranslateTransition slideIn = new TranslateTransition(Duration.seconds(0.5), sidebar);
         slideIn.setFromX(-220);
         slideIn.setToX(0);
         slideIn.play();
-
         return sidebar;
     }
     private Text createSidebarText(String text, Runnable action) {
@@ -100,6 +92,8 @@ public class PlayerMenuGUI {
         teamIdField.setStyle("-fx-font-size: 14px; -fx-padding: 8px; -fx-background-radius: 8px;");
         Button submitButton = new Button("Add Player");
         submitButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px; -fx-background-radius: 10px;");
+        Button backButton = new Button("Back to Player Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         submitButton.setOnAction(e -> {
@@ -109,18 +103,13 @@ public class PlayerMenuGUI {
                 int teamId = Integer.parseInt(teamIdField.getText());
                 playerController.add(name, age, 0.0, "Default Position", 0, 0, 0, teamId);
                 resultLabel.setText("Player added successfully!");
-            }catch (InexistenteInstance ex) {
-                resultLabel.setText("Error: " + ex.getMessage());
-            }catch (NumberFormatException ex) {
-                resultLabel.setText("Invalid input format.");
-            }catch (Exception ex) {
-                resultLabel.setText("Error adding player: " + ex.getMessage());
+            }catch(InexistenteInstance ex) {resultLabel.setText("Error: " + ex.getMessage());
+            }catch(NumberFormatException ex) {resultLabel.setText("Invalid input format.");
+            }catch (Exception ex) {resultLabel.setText("Error adding player: " + ex.getMessage());
             }
         });
-
-        layout.getChildren().addAll(header, nameField, ageField, teamIdField, submitButton, resultLabel);
+        layout.getChildren().addAll(header, nameField, ageField, teamIdField, submitButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 15px;");
-
         stage.setScene(new Scene(layout, 400, 300));
     }
     private void openViewPlayerById(Stage stage) {
@@ -132,6 +121,8 @@ public class PlayerMenuGUI {
         TextField idField = new TextField();
         idField.setPromptText("Enter Player ID");
         Button searchButton = new Button("Search");
+        Button backButton = new Button("Back to Player Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         searchButton.setOnAction(e -> {
@@ -143,7 +134,7 @@ public class PlayerMenuGUI {
                 resultLabel.setText("Error fetching player: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, idField, searchButton, resultLabel);
+        layout.getChildren().addAll(header, idField, searchButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -156,10 +147,12 @@ public class PlayerMenuGUI {
         TextField nameField = new TextField();
         nameField.setPromptText("Enter Player Name");
         Button searchButton = new Button("Search");
+        Button backButton = new Button("Back to Player Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         searchButton.setOnAction(e -> {
-            try{
+            try {
                 String name = nameField.getText();
                 List<NBAPlayer> players = playerController.getByName(name);
                 if (players != null && !players.isEmpty()) {
@@ -171,11 +164,11 @@ public class PlayerMenuGUI {
                 } else {
                     resultLabel.setText("No players found with name " + name);
                 }
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 resultLabel.setText("Error fetching players: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, nameField, searchButton, resultLabel);
+        layout.getChildren().addAll(header, nameField, searchButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -188,6 +181,8 @@ public class PlayerMenuGUI {
         TextField idField = new TextField();
         idField.setPromptText("Enter Player ID to Delete");
         Button deleteButton = new Button("Delete");
+        Button backButton = new Button("Back to Player Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         deleteButton.setOnAction(e -> {
@@ -195,13 +190,12 @@ public class PlayerMenuGUI {
                 int id = Integer.parseInt(idField.getText());
                 playerController.delete(id);
                 resultLabel.setText("Player deleted successfully.");
-            }catch (IdOutOfRangeException ex) {
-                resultLabel.setText("Error: " + ex.getMessage());
+            }catch (IdOutOfRangeException ex) {resultLabel.setText("Error: " + ex.getMessage());
             }catch (Exception ex) {
                 resultLabel.setText("Error deleting player: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, idField, deleteButton, resultLabel);
+        layout.getChildren().addAll(header, idField, deleteButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -212,6 +206,8 @@ public class PlayerMenuGUI {
         header.setFont(new Font("Arial", 18));
         header.setStyle("-fx-text-fill: white;");
         Button sortButton = new Button("Sort");
+        Button backButton = new Button("Back to Player Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         sortButton.setOnAction(e -> {
@@ -226,11 +222,11 @@ public class PlayerMenuGUI {
                 resultLabel.setText("Error sorting players: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, sortButton, resultLabel);
+        layout.getChildren().addAll(header, sortButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
-    private void goToMainMenu() {
+    private void goToMainMenu(){
         MainMenuGUI mainMenu = new MainMenuGUI();
         mainMenu.start(primaryStage);
     }

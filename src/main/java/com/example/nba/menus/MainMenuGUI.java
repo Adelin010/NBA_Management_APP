@@ -20,6 +20,7 @@ public class MainMenuGUI extends Application {
     private final PlayerMenuGUI pm;
     private final TeamMenuGUI tm;
     private final ManagerMenuGUI mm;
+    private final AdvancedMenuGUI am;
 
     private final Repo<Manager> rm;
     private final Repo<NBAPlayer> rp;
@@ -30,10 +31,12 @@ public class MainMenuGUI extends Application {
     private final ManagerController mc;
     private final TeamController tc;
     private final PlayerController pc;
+    private final AdvancedController ac;
 
     private final PlayerService ps;
     private final TeamService ts;
     private final ManagerService ms;
+    private final AdvancedService advS;
 
     public MainMenuGUI() {
         String url = "jdbc:sqlserver://localhost;databaseName=NBA;user=blaj;password=AndreiBlaj17;encrypt=true;trustServerCertificate=true;";
@@ -65,15 +68,20 @@ public class MainMenuGUI extends Application {
         ms = new ManagerService(rm, rt);
         ps = new PlayerService(rp, rt);
         ts = new TeamService(rt, rc);
+        advS = new AdvancedService(rg, rp, rt, rm);
+
 
         mc = new ManagerController(ms);
         pc = new PlayerController(ps);
         tc = new TeamController(ts);
+        ac = new AdvancedController(advS);
 
         pm = new PlayerMenuGUI(pc);
         tm = new TeamMenuGUI(tc);
         mm = new ManagerMenuGUI(mc);
+        am = new AdvancedMenuGUI(ac);
     }
+
     @Override
     public void start(Stage primaryStage) {
         BackgroundImage backgroundImage = new BackgroundImage(
@@ -105,12 +113,15 @@ public class MainMenuGUI extends Application {
         Button playerButton = createMenuButton("Player Menu");
         Button teamButton = createMenuButton("Team Menu");
         Button managerButton = createMenuButton("Manager Menu");
+        Button advancedButton = createMenuButton("Advanced Menu");
         Button quitButton = createQuitButton();
+
         playerButton.setOnAction(e -> openPlayerMenu(primaryStage));
         teamButton.setOnAction(e -> openTeamMenu(primaryStage));
         managerButton.setOnAction(e -> openManagerMenu(primaryStage));
+        advancedButton.setOnAction(e -> openAdvancedMenu(primaryStage));
         quitButton.setOnAction(e -> primaryStage.close());
-        menuBox.getChildren().addAll(title, playerButton, teamButton, managerButton, quitButton);
+        menuBox.getChildren().addAll(title, playerButton, teamButton, managerButton, advancedButton, quitButton);
         HBox layout = new HBox();
         layout.getChildren().add(menuBox);
         layout.setAlignment(Pos.CENTER_RIGHT);
@@ -122,6 +133,7 @@ public class MainMenuGUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
     private Button createMenuButton(String text) {
         Button button = new Button(text);
         button.setStyle(
@@ -154,6 +166,7 @@ public class MainMenuGUI extends Application {
         ));
         return button;
     }
+
     private Button createQuitButton() {
         Button quitButton = new Button("Quit");
         quitButton.setStyle(
@@ -180,8 +193,11 @@ public class MainMenuGUI extends Application {
         ));
         return quitButton;
     }
-    private void openPlayerMenu(Stage stage) {pm.start(stage);}
-    private void openTeamMenu(Stage stage) {tm.start(stage);}
-    private void openManagerMenu(Stage stage) {mm.start(stage);}
-    public static void main(String[] args) {launch(args);}
+
+    private void openPlayerMenu(Stage stage) { pm.start(stage); }
+    private void openTeamMenu(Stage stage) { tm.start(stage); }
+    private void openManagerMenu(Stage stage) { mm.start(stage); }
+    private void openAdvancedMenu(Stage stage) { am.start(stage); }
+
+    public static void main(String[] args) { launch(args); }
 }

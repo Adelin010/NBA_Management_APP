@@ -82,6 +82,8 @@ public class ManagerMenuGUI {
         TextField teamIdField = new TextField();
         teamIdField.setPromptText("Enter Team ID");
         Button submitButton = new Button("Add Manager");
+        Button backButton = new Button("Back to Manager Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         submitButton.setOnAction(e -> {
@@ -94,7 +96,7 @@ public class ManagerMenuGUI {
                 resultLabel.setText("Error adding manager: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, nameField, teamIdField, submitButton, resultLabel);
+        layout.getChildren().addAll(header, nameField, teamIdField, submitButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -107,6 +109,8 @@ public class ManagerMenuGUI {
         TextField idField = new TextField();
         idField.setPromptText("Enter Manager ID");
         Button searchButton = new Button("Search");
+        Button backButton = new Button("Back to Manager Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         searchButton.setOnAction(e -> {
@@ -118,7 +122,7 @@ public class ManagerMenuGUI {
                 resultLabel.setText("Error fetching manager: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, idField, searchButton, resultLabel);
+        layout.getChildren().addAll(header, idField, searchButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -131,18 +135,20 @@ public class ManagerMenuGUI {
         TextField nameField = new TextField();
         nameField.setPromptText("Enter Manager Name");
         Button searchButton = new Button("Search");
+        Button backButton = new Button("Back to Manager Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         searchButton.setOnAction(e -> {
-            try{
+            try {
                 String name = nameField.getText();
                 Manager manager = managerController.getByName(name);
                 resultLabel.setText(manager != null ? manager.toString() : "No manager found with name " + name);
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 resultLabel.setText("Error fetching manager: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, nameField, searchButton, resultLabel);
+        layout.getChildren().addAll(header, nameField, searchButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -155,18 +161,20 @@ public class ManagerMenuGUI {
         TextField idField = new TextField();
         idField.setPromptText("Enter Manager ID to Delete");
         Button deleteButton = new Button("Delete");
+        Button backButton = new Button("Back to Manager Menu");
+        backButton.setOnAction(e -> start(stage));
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         deleteButton.setOnAction(e -> {
-            try{
+            try {
                 int id = Integer.parseInt(idField.getText());
                 managerController.delete(id);
                 resultLabel.setText("Manager with ID " + id + " deleted successfully.");
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 resultLabel.setText("Error deleting manager: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, idField, deleteButton, resultLabel);
+        layout.getChildren().addAll(header, idField, deleteButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
