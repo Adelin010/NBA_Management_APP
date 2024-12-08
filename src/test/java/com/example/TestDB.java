@@ -14,7 +14,7 @@ public class TestDB {
     
     @Test
     public void TestGetMethods()throws Exception{
-        String url = "jdbc:sqlserver://localhost;databaseName=NBA;user=SA;password=Slugterra#10;encrypt=true;trustServerCertificate=true";
+        String url = System.getenv("DB_URL");
         Repo<NBATeam> rt = new RepoDB<>(url, NBATeam.class, "Team");
         NBATeam t1 = rt.get(2);
         assertEquals(t1.getId(), 2);
