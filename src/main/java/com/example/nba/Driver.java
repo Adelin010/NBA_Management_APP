@@ -28,7 +28,7 @@ public class Driver{
         MainMenuGUI menu = new MainMenuGUI();
         Application.launch(MainMenuGUI.class, args);
 
-        String connectionURL = "jdbc:sqlserver://localhost;databaseName=NBA;user=SA;password=Slugterra#10;encrypt=true;trustServerCertificate=true";
+        String connectionURL = System.getenv("DB_URL");
     }
 
 }
