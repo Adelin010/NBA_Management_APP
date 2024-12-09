@@ -85,6 +85,7 @@ public class TeamMenuGUI {
         TextField conferenceIdField = new TextField();
         conferenceIdField.setPromptText("Enter Conference ID");
         Button submitButton = new Button("Add Team");
+        Button backButton = new Button("Back to Team Menu");
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         submitButton.setOnAction(e -> {
@@ -93,11 +94,11 @@ public class TeamMenuGUI {
                 int conferenceId = Integer.parseInt(conferenceIdField.getText());
                 teamController.add(name, conferenceId);
                 resultLabel.setText("Team added successfully!");
-            }catch (Exception ex) {
-                resultLabel.setText("Error adding team: " + ex.getMessage());
+            }catch (Exception ex) {resultLabel.setText("Error adding team: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, nameField, conferenceIdField, submitButton, resultLabel);
+        backButton.setOnAction(e -> start(stage));
+        layout.getChildren().addAll(header, nameField, conferenceIdField, submitButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -110,6 +111,7 @@ public class TeamMenuGUI {
         TextField idField = new TextField();
         idField.setPromptText("Enter Team ID");
         Button searchButton = new Button("Search");
+        Button backButton = new Button("Back to Team Menu");
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         searchButton.setOnAction(e -> {
@@ -121,7 +123,8 @@ public class TeamMenuGUI {
                 resultLabel.setText("Error fetching team: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, idField, searchButton, resultLabel);
+        backButton.setOnAction(e -> start(stage));
+        layout.getChildren().addAll(header, idField, searchButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -134,18 +137,20 @@ public class TeamMenuGUI {
         TextField nameField = new TextField();
         nameField.setPromptText("Enter Team Name");
         Button searchButton = new Button("Search");
+        Button backButton = new Button("Back to Team Menu");
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         searchButton.setOnAction(e -> {
-            try{
+            try {
                 String name = nameField.getText();
                 NBATeam team = teamController.getByName(name);
                 resultLabel.setText(team != null ? team.toString() : "No team found with name " + name);
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 resultLabel.setText("Error fetching team: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, nameField, searchButton, resultLabel);
+        backButton.setOnAction(e -> start(stage));
+        layout.getChildren().addAll(header, nameField, searchButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
@@ -158,6 +163,7 @@ public class TeamMenuGUI {
         TextField idField = new TextField();
         idField.setPromptText("Enter Team ID to Delete");
         Button deleteButton = new Button("Delete");
+        Button backButton = new Button("Back to Team Menu");
         Label resultLabel = new Label();
         resultLabel.setStyle("-fx-text-fill: white;");
         deleteButton.setOnAction(e -> {
@@ -165,11 +171,11 @@ public class TeamMenuGUI {
                 int id = Integer.parseInt(idField.getText());
                 teamController.delete(id);
                 resultLabel.setText("Team with ID " + id + " deleted successfully.");
-            }catch (Exception ex) {
-                resultLabel.setText("Error deleting team: " + ex.getMessage());
+            }catch (Exception ex) {resultLabel.setText("Error deleting team: " + ex.getMessage());
             }
         });
-        layout.getChildren().addAll(header, idField, deleteButton, resultLabel);
+        backButton.setOnAction(e -> start(stage));
+        layout.getChildren().addAll(header, idField, deleteButton, resultLabel, backButton);
         layout.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20px; -fx-background-radius: 10px;");
         stage.setScene(new Scene(layout, 400, 300));
     }
