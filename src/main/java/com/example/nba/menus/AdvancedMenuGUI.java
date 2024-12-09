@@ -22,7 +22,7 @@ public class AdvancedMenuGUI extends Application {
         this.primaryStage = primaryStage;
         BorderPane root = new BorderPane();
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image("file:/C:/Users/blaja/Downloads/PlayerBack.jpg", 800, 600, false, true),
+                new Image("images/nba-court.jpeg", 800, 600, false, true),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,

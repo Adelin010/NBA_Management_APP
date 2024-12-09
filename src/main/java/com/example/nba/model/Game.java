@@ -43,10 +43,10 @@ public class Game  implements IdBounded, FileBounded, StreamedValues {
         this.id = Integer.parseInt(args[0]);
         MAX_ID = MAX_ID > id ? MAX_ID : id+1;
         this.date = args[1];
-        this.scoreTeam1 = Integer.parseInt(args[2]);
-        this.scoreTeam2 = Integer.parseInt(args[3]);
-        this.team1Id = Integer.parseInt(args[4]);
-        this.team2Id = Integer.parseInt(args[5]);
+        this.scoreTeam1 = Integer.parseInt(args[4]);
+        this.scoreTeam2 = Integer.parseInt(args[5]);
+        this.team1Id = Integer.parseInt(args[2]);
+        this.team2Id = Integer.parseInt(args[3]);
         this.type = args[6];
         this.seasonId = Integer.parseInt(args[7]);
     }
