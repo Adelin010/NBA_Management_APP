@@ -28,6 +28,7 @@ public class AdvancedService {
         if(game == null)
             throw new InexistenteInstance("No Game existing for the managerWinningTeam to fetch...");
         
+        System.out.println(game);
         //Get the winning team
         Integer teamId;
         {

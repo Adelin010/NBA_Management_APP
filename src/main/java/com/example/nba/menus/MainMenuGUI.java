@@ -39,7 +39,7 @@ public class MainMenuGUI extends Application {
     private final AdvancedService advS;
 
     public MainMenuGUI() {
-        String url = "jdbc:sqlserver://localhost;databaseName=NBA;user=blaj;password=AndreiBlaj17;encrypt=true;trustServerCertificate=true;";
+        String url = System.getenv("DB_URL");
         try{
             rm = new RepoDB<>(url, Manager.class, "Manager");
         }catch (Exception e) {
@@ -85,7 +85,7 @@ public class MainMenuGUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image("file:/C:/Users/blaja/Downloads/MainMenuBack.jpg", 800, 600, false, true),
+                new Image("images/ball.jpeg", 800, 600, false, true),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
