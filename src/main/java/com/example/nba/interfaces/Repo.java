@@ -1,7 +1,6 @@
-package com.example.nba.repos;
+package com.example.nba.interfaces;
 
 import java.util.List;
-import com.example.nba.interfaces.Entity;
 
 /**
  * An interface that defines the basic CRUD operations for a repository.

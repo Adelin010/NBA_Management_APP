@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.nba.interfaces.Entity;
+import com.example.nba.interfaces.Repo;
 
 
 public class RepoMemory<T extends Entity> implements Repo<T>{

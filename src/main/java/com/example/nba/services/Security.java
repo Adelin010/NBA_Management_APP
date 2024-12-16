@@ -1,7 +1,8 @@
 package com.example.nba.services;
 
+import com.example.nba.interfaces.Repo;
 import com.example.nba.model.Manager;
-import com.example.nba.repos.Repo;
+
 import java.util.List;
 
 public class Security {

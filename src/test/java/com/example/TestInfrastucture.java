@@ -5,8 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.example.nba.interfaces.Repo;
 import com.example.nba.model.*;
 import com.example.nba.repos.*;
+import com.example.nba.services.PlayerS;
 import com.example.nba.services.Security;
 
 public class TestInfrastucture{
@@ -103,5 +106,41 @@ public class TestInfrastucture{
         assertFalse(sec.auth("man", "man12345"));
         assertFalse(sec.auth("man3", "man123"));
         assertTrue(sec.auth("man2", "man12345"));
+    }
+
+    @Test
+    public void testServiceMethods(){
+        //Player Service in memory
+        Repo<NBAPlayer> rp = new RepoMemory<>();
+        Repo<NBATeam> rt = new RepoMemory<>();
+
+        String[] arg5 = {"1","Team","3"};
+        NBATeam team = new NBATeam(arg5);
+        rt.add(team);
+        PlayerS ps = new PlayerS(rp, rt);
+        String[] args4 = {"1", "man", "22", "P","2134.00","21","23","12","1"};
+        NBAPlayer p = new NBAPlayer(args4);
+        String[] args5 = {"2", "man", "25", "P","2134.00","21","23","12","1"};
+        NBAPlayer p2 = new NBAPlayer(args5);
+        String[] args6 = {"3", "man", "32", "P","2134.00","21","23","12","1"};
+        NBAPlayer p3 = new NBAPlayer(args6);
+        String[] args7 = {"4", "man", "22", "P","2134.00","21","23","12","1"};
+        NBAPlayer p4 = new NBAPlayer(args7);
+        String[] args8 = {"5", "man", "21", "P","2134.00","21","23","12","1"};
+        NBAPlayer p5 = new NBAPlayer(args8);
+
+        ps.add(p);
+        ps.add(p5);
+        ps.add(p4);
+        ps.add(p2);
+        ps.add(p3);
+
+        int age = -1;
+        for(NBAPlayer i :ps.sortByAge()) {
+            assertTrue(age <= i.getAge());
+            age = i.getAge();
+        }  
+        
+
     }
 }
