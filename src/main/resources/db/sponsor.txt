@@ -1,0 +1,5 @@
+[id | name | age | email | pf]
+1,Converse,converse@gmail.com,1
+2,Cola,45,cola@gmail.com,1
+3,Nike,35,nike@gmail.com,1
+4,Adidas,50,adidas@gmail.com,1

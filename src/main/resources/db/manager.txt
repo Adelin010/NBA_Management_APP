@@ -1,0 +1,5 @@
+[id | name | age | teamId]
+1,Michael Gates,45,1
+2,Adelin Cojocaru,38,2
+3,Andrei Blaj,50,3
+4,Mario Lopez,42,4

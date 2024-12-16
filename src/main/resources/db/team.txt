@@ -1,0 +1,5 @@
+[id | name | conferenceId]
+1,Lakers,1
+2,Chicago Bulls,2
+3,Golden State Warriors,1
+4,Boston Celtics,2
