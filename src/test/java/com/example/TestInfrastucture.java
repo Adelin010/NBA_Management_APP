@@ -1,12 +1,15 @@
 package com.example;
 
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import com.example.nba.model.*;
+import com.example.nba.repos.*;
+import com.example.nba.services.Security;
 
-public class TestModel{
+public class TestInfrastucture{
     
     @Test
     public void testModel(){
@@ -26,10 +29,10 @@ public class TestModel{
         assertTrue("1,date,2,1,123,213,type,1".equals(g.seq(false)));
         assertTrue("date,2,1,123,213,type,1".equals(g.seq(true)));  
         //Manager
-        String[] args3 = {"1", "man", "22", "1"};
+        String[] args3 = {"1", "man","man1234", "22", "1"};
         Manager m = new Manager(args3);
-        assertTrue("1,man,22,1".equals(m.seq(false)));
-        assertTrue("man,22,1".equals(m.seq(true)));  
+        assertTrue("1,man,man1234,22,1".equals(m.seq(false)));
+        assertTrue("man,man1234,22,1".equals(m.seq(true)));  
         //Player
         String[] args4 = {"1", "man", "22", "P","2134.00","21","23","12","1"};
         NBAPlayer p = new NBAPlayer(args4);
@@ -50,6 +53,55 @@ public class TestModel{
         Sponsor sp = new Sponsor(args7);
         assertTrue("1,Alex,20,email,1".equals(sp.seq(false)));
         assertTrue("Alex,20,email,1".equals(sp.seq(true)));
+
+    }
+
+    @Test 
+    public void testRepoMemory(){
+        Repo<Manager> mr = new RepoMemory<>();
         
+        String[] args3 = {"1", "man","man1234", "22", "1"};
+        Manager m = new Manager(args3);
+        mr.add(m);
+        /*
+         * Check for add/get method
+         */
+        Manager temp = mr.get(m.getId());
+        assertTrue(temp != null);
+        assertTrue(temp.getAge() == m.getAge());
+        assertTrue(temp.getName().equals(m.getName()));
+        assertTrue(temp.getTeamId() == m.getTeamId());
+        /*
+         * Check for update method
+         */
+        m.setName("man2");
+        mr.update(m);
+        temp = mr.get(m.getId());
+        assertTrue(temp.getName().equals(m.getName()));
+        /*
+         * Check for delete method
+         */
+        mr.delete(m.getId());
+        temp = mr.get(m.getId());
+        assertTrue(temp == null);
+    }
+
+    @Test
+    public void testLogin(){
+        Repo<Manager> mr = new RepoMemory<>();
+        
+        String[] args3 = {"1", "man","man1234", "22", "1"};
+        Manager m = new Manager(args3);
+        mr.add(m);
+
+        String[] args4 = {"2", "man2","man12345", "22", "1"};
+        Manager m2 = new Manager(args4);
+        mr.add(m2);
+
+        Security sec = new Security(mr);
+        assertTrue(sec.auth("man", "man1234"));
+        assertFalse(sec.auth("man", "man12345"));
+        assertFalse(sec.auth("man3", "man123"));
+        assertTrue(sec.auth("man2", "man12345"));
     }
 }

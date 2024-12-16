@@ -1,6 +1,0 @@
-[id | name | conference_id(FK)]
-1,BlajTeam,1
-2,AdelinTeam,1
-3,TrascauTeam,1
-8,Bulls,1
-14,Bulls,1
