@@ -118,15 +118,15 @@ public class TestInfrastucture{
         NBATeam team = new NBATeam(arg5);
         rt.add(team);
         PlayerS ps = new PlayerS(rp, rt);
-        String[] args4 = {"1", "man", "22", "P","2134.00","21","23","12","1"};
+        String[] args4 = {"1", "man1", "22", "P","2134.00","21","23","12","1"};
         NBAPlayer p = new NBAPlayer(args4);
-        String[] args5 = {"2", "man", "25", "P","2134.00","21","23","12","1"};
+        String[] args5 = {"2", "man3", "25", "P","21134.00","21","23","12","1"};
         NBAPlayer p2 = new NBAPlayer(args5);
-        String[] args6 = {"3", "man", "32", "P","2134.00","21","23","12","1"};
+        String[] args6 = {"3", "man2", "32", "P","11334.00","21","23","12","1"};
         NBAPlayer p3 = new NBAPlayer(args6);
-        String[] args7 = {"4", "man", "22", "P","2134.00","21","23","12","1"};
+        String[] args7 = {"4", "man1", "22", "P","32134.00","21","23","12","1"};
         NBAPlayer p4 = new NBAPlayer(args7);
-        String[] args8 = {"5", "man", "21", "P","2134.00","21","23","12","1"};
+        String[] args8 = {"5", "man", "21", "P","12134.00","21","23","12","1"};
         NBAPlayer p5 = new NBAPlayer(args8);
 
         ps.add(p);
@@ -135,12 +135,74 @@ public class TestInfrastucture{
         ps.add(p2);
         ps.add(p3);
 
+        /*
+         * Sorted by Age
+         */
         int age = -1;
         for(NBAPlayer i :ps.sortByAge()) {
             assertTrue(age <= i.getAge());
             age = i.getAge();
         }  
-        
+        /*
+         * Filter by interval age
+         */
+        int start = 25;
+        int end = -1;
+        for(var i : ps.filterByAgeInterval(start, end)){
+            assertTrue(i.getAge() >= start);
+        }
 
+        start = 25;
+        end = 30;
+        for(var i : ps.filterByAgeInterval(start, end)){
+            assertTrue(i.getAge() >= start && i.getAge() <= end);
+        }
+
+        start = -1;
+        end = 30;
+        for(var i : ps.filterByAgeInterval(start, end)){
+            assertTrue(i.getAge() >= start && i.getAge() <= end);
+        }
+        /*
+         * Filter by interval salary
+         */
+
+         double startS = 20000.00;
+         double endS = -1;
+         for(var i : ps.filterBySalaryInterval(startS, endS)){
+             assertTrue(i.getSalary() >= startS);
+         }
+ 
+         startS = 10000.00;
+         endS = 30000.00;
+         for(var i : ps.filterBySalaryInterval(startS, endS)){
+             assertTrue(i.getSalary() >= startS && i.getSalary() <= endS);
+         }
+ 
+         startS = -1;
+         endS = 30000.00;
+         for(var i : ps.filterBySalaryInterval(startS, endS)){
+             assertTrue(i.getSalary() >= startS && i.getSalary() <= endS);
+         }
+        startS = -1;
+        endS = 10.00;
+        assertTrue(ps.filterBySalaryInterval(startS, endS).isEmpty());
+
+        /*
+         * Sort by Salary
+         */
+        double salary = 0.00;
+        for(NBAPlayer i :ps.sortBySalary()) {
+            assertTrue(salary <= i.getSalary());
+            salary = i.getSalary();
+
+        }  
+        /*
+         * Get by Name
+         */
+        String name = "man1";
+        for(var i: ps.getByName(name)){
+            assertTrue(i.getName().equals(name));
+        }
     }
 }

@@ -7,7 +7,7 @@
         <VBox spacing="20" alignment="CENTER">
             <children>
                 <Label text="Welcome to the Manager Menu!" style="-fx-font-size: 18px;" />
-                <Button text="Proceed to Manager Menu" onAction="#openManagerMenu" />
+                <!-- <Button text="Proceed to Manager Menu" onAction="#openManagerMenu" /> -->
                 <Button text="Logout" onAction="#handleLogout" />
             </children>
         </VBox>
