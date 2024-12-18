@@ -4,13 +4,18 @@ package com.example;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import org.junit.Test;
 
+import com.example.nba.error.InexistenteInstance;
 import com.example.nba.interfaces.Repo;
 import com.example.nba.model.*;
 import com.example.nba.repos.*;
-import com.example.nba.services.PlayerS;
-import com.example.nba.services.Security;
+import com.example.nba.services.*;
 
 public class TestInfrastucture{
     
@@ -113,11 +118,24 @@ public class TestInfrastucture{
         //Player Service in memory
         Repo<NBAPlayer> rp = new RepoMemory<>();
         Repo<NBATeam> rt = new RepoMemory<>();
+        Repo<Manager> rm = new RepoMemory<>();
+        Repo<Sponsor> rsp = new RepoMemory<>();
+        Repo<Game> rg = new RepoMemory<>();
+
+        PlayerS ps = new PlayerS(rp, rt);
+        ManagerS ms = new ManagerS(rm, rt);
+        SponsorS ss = new SponsorS(rsp);
+        GameS gs = new GameS(rt, rg);
 
         String[] arg5 = {"1","Team","3"};
         NBATeam team = new NBATeam(arg5);
+        String[] arg51 = {"2", "Team2", "4"};
+        NBATeam team2 = new NBATeam(arg51);
+        String[] arg52 = {"3", "Team3", "4"};
+        NBATeam team3 = new NBATeam(arg52);
         rt.add(team);
-        PlayerS ps = new PlayerS(rp, rt);
+        rt.add(team2);
+        rt.add(team3);
         String[] args4 = {"1", "man1", "22", "P","2134.00","21","23","12","1"};
         NBAPlayer p = new NBAPlayer(args4);
         String[] args5 = {"2", "man3", "25", "P","21134.00","21","23","12","1"};
@@ -204,5 +222,64 @@ public class TestInfrastucture{
         for(var i: ps.getByName(name)){
             assertTrue(i.getName().equals(name));
         }
+
+        /*
+         * Test Manager functions
+         */
+        String[] args3 = {"1", "man","man1234", "22", "10"};
+        Manager m = new Manager(args3);
+        try{
+            ms.add(m);
+
+        }catch(InexistenteInstance a){
+            System.out.println("Team id is not good!!!");
+            m.setTeamId(1);
+            ms.add(m);
+
+        }
+
+        String[] args1 = {"2", "man","man12345", "22", "1"};
+        Manager m2 = new Manager(args1);
+        ms.add(m2);
+
+        for(var man: ms.getByName("man")){
+            assertTrue(man.getName().equals("man"));
+        }
+
+
+        /*
+         * Sponsor service
+         */
+        String[] args11 = {"1", "Alex", "20", "email", "1"};
+        Sponsor sp = new Sponsor(args11);
+        String[] args12 = {"2", "Cola", "20", "email", "0"};
+        Sponsor sp2 = new Sponsor(args12);
+        ss.add(sp2);
+        ss.add(sp);
+
+        for(var s: ss.getTheCompanies()){
+            assertFalse(s.isPF());
+        }
+
+        /*
+         * Checking the operation for the game service
+         */
+        String[] args2 = {"1", "12-03-2024", "2", "1", "123", "213", "type", "1"};
+        Game g = new Game(args2);
+        String[] args21 = {"2", "10-03-2024", "2", "1", "123", "213", "type", "1"};
+        Game g1 = new Game(args21);
+        String[] args22 = {"3", "12-04-2024", "2", "1", "123", "213", "type", "1"};
+        Game g2 = new Game(args22);
+        gs.add(g);
+        gs.add(g1);
+        gs.add(g2);
+
+        List<Game> games = gs.sortByDate();
+        System.out.println(games);
+
+        System.out.println(gs.getGamesPerTeam("Team3").size());
+        assertTrue(gs.getGamesPerTeam("Team3").size() == 0);
+        assertTrue(gs.getGamesPerTeam("Team").size() == 3);
+
     }
 }

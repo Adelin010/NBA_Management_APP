@@ -65,12 +65,12 @@ public class TeamS {
     /*
      * Get By Name 
      */
-    public List<NBATeam> getByName(String name){
+    public NBATeam getByName(String name){
         if(isQ){
             return null;
         }else{
             var list = rt.getAll();
-            return list.stream().filter((var t) -> t.getName().equals(name)).collect(Collectors.toList());
+            return list.stream().filter((var t) -> t.getName().equals(name)).findFirst().orElse(null);
         }
     }
 }

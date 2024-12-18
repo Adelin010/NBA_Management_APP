@@ -1,7 +1,7 @@
 package com.example.nba.repos;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import com.example.nba.interfaces.Entity;
 import com.example.nba.interfaces.Repo;
@@ -9,9 +9,9 @@ import com.example.nba.interfaces.Repo;
 
 public class RepoMemory<T extends Entity> implements Repo<T>{
     /** Memory container where to save */ 
-    private final HashMap<Integer, T> data;
+    private final TreeMap<Integer, T> data;
     public RepoMemory(){
-        data = new HashMap<>();
+        data = new TreeMap<>();
         /*
          * Connection to the DB created to instantiate the information in RAM
          */
