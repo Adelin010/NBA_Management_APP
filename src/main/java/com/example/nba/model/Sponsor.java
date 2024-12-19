@@ -26,7 +26,7 @@ public class Sponsor extends Person{
         id = Integer.parseInt(args[0]);
         MAX_ID = MAX_ID > id ? MAX_ID : 1+id;
         name = args[1];
-        age = Integer.parseInt(args[2]);
+        age = args[2].equals("null") ? 0 : Integer.parseInt(args[2]);
         email = args[3];
         pf = Integer.parseInt(args[4]);
     }

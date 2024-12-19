@@ -3,5 +3,3 @@
 2,Stephen Curry,36,PG,900000,21000,4500,3000,2
 3,Kawhi Leonard,32,SF,800000,18000,4000,2500,3
 4,Giannis Antetokounmpo,29,PF,1100000,30000,7000,3500,4
-
-

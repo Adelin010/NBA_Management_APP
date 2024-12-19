@@ -1,4 +1,7 @@
+create database NBA;
+
 use NBA;
+
 
 
 create table Conference(
@@ -12,7 +15,7 @@ create table Team(
     name varchar(255) not null,
     conference_id int,
     constraint Primary_Key_Team primary key(id),
-    constraint Foreign_Key_Conference foreign key(conference_id) references Conference(id)
+    constraint Foreign_Key_Conference_Team foreign key(conference_id) references Conference(id)
 );
 
 create table Player(
@@ -35,11 +38,21 @@ create table Player(
 create table Manager(
     id int identity(1, 1),
     name varchar(255),
+    password varchar(255) not null,
     age int,
     team_id int,
     constraint Primary_Key_Manager primary key(id),
-    constraint Foreign_Key_Team foreign key(team_id) references Team(id)
+    constraint Foreign_Key_Team_Manager foreign key(team_id) references Team(id)
 );
+
+
+create table Season(
+    id int identity(1, 1),
+    name varchar(255) not null,
+    year int,
+    constraint Primary_Key_Season primary key(id)
+);
+
 
 create table Game(
 
@@ -52,9 +65,9 @@ create table Game(
     game_type varchar(255),
     season_id int,
     constraint Primary_Key_Game primary key(id),
-    constraint ForKey_Team1 foreign key(team1_id) references Team(id),
-    constraint ForKey_Team2 foreign key(team1_id) references Team(id),
-    constraint ForKey_Season foreign key(season_id) references Season(id) on delete cascade
+    constraint ForKey_Team1_Game foreign key(team1_id) references Team(id),
+    constraint ForKey_Team2_Game foreign key(team1_id) references Team(id),
+    constraint ForKey_Season_Game foreign key(season_id) references Season(id) on delete cascade
 
 );
 
@@ -63,16 +76,9 @@ create table Sponsor(
     id int identity(1, 1),
     name varchar(255) not null,
     age int,
-    email varchar(255),
+    email varchar(255) not null,
     pf int,
     constraint Primary_Key_Sponsor primary key(id)
-);
-
-create table Season(
-    id int identity(1, 1),
-    name varchar(255) not null,
-    year int,
-    constraint Primary_Key_Season primary key(id)
 );
 
 create table Found(
@@ -81,8 +87,8 @@ create table Found(
     sponsor_id int not null,
     amount int,
     constraint Primary_Key_Found primary key(id),
-    constraint ForKey_Team foreign key(team_id) references Team(id),
-    constraint ForKey_Sponsor foreign key(sponsor_id) references Sponsor(id),
+    constraint ForKey_Team_Found foreign key(team_id) references Team(id),
+    constraint ForKey_Sponsor_Found foreign key(sponsor_id) references Sponsor(id),
 );
 
 
@@ -90,7 +96,7 @@ insert into Conference values ('East'), ('West')
 
 insert into Team values ('Lakers', 1), ('Chicago Bulls', 2), ('Golden State Warrios', 1), ('Boston Celtics', 2)
 
-insert into Manager values ('Michael Gates', 45,1), ('Adelin Cojocaru', 38,2), ('Andrei Blaj', 50,3), ('Mario Lopez', 42,4)
+insert into Manager values ('Michael Gates', 'michael1234', 45,1), ('Adelin Cojocaru', 'adelin1234', 38,2), ('Andrei Blaj', 'andrei1234', 50,3), ('Mario Lopez', 'mario1234', 42,4)
 
 insert into Season values ('NBA2023',2023),('NBA2024',2024)
 
@@ -105,12 +111,17 @@ values(1, 3, 121, 119, 'RS', 1), (2, 3, 121, 119, 'RS', 1), (1, 5, 123, 120, 'RS
 
 insert into Sponsor
 values
-    ('Converse', NULL, 'converse@gmail.com', 0),
-    ('Cola', 45, 'cola@gmail.com', 1),
-    ('Nike', 35, 'nike@gmail.com', 1),
-    ('Adidas', 50, 'adidas@gmail.com', 1);
+    ('Converse', null, 'converse@gmail.com', 0),
+    ('Cola', null, 'cola@gmail.com', 0),
+    ('Nike', null, 'nike@gmail.com', 0),
+    ('Adidas', null, 'adidas@gmail.com', 0),
+    ('Alex Bidonici', 34, 'alexbidonici12@gmail.com', 1);
 
-insert into Found values(1, 2, 3000.00), (5, 2, 4000.00), (4, 1, 12000.00);
+insert into Found values(1, 2, 3000.00), (3, 2, 4000.00), (4, 1, 12000.00);
 
 select * from Found
 
+
+
+use master;
+drop database NBA

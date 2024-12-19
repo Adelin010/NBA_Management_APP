@@ -4,9 +4,9 @@ package com.example;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Test;
@@ -16,6 +16,8 @@ import com.example.nba.interfaces.Repo;
 import com.example.nba.model.*;
 import com.example.nba.repos.*;
 import com.example.nba.services.*;
+import com.example.nba.util.FileHandlerUtil;
+import com.example.nba.util.LoaderInfo;
 
 public class TestInfrastucture{
     
@@ -281,5 +283,95 @@ public class TestInfrastucture{
         assertTrue(gs.getGamesPerTeam("Team3").size() == 0);
         assertTrue(gs.getGamesPerTeam("Team").size() == 3);
 
+    }
+
+
+    @Test
+    public void testLoaderInMemory()throws Exception{
+        String url = System.getenv("DB_URL");
+        System.out.println(url);
+        Connection conn = null;
+        try{
+            conn = DriverManager.getConnection(url);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        Repo<NBATeam> rt = new RepoMemory<>();
+        Repo<NBAPlayer> rp = new RepoMemory<>();
+        Repo<Manager> rm = new RepoMemory<>();
+        Repo<Found> rf = new RepoMemory<>();
+        Repo<Game> rg = new RepoMemory<>();
+        Repo<Sponsor> rsp = new RepoMemory<>();
+        Repo<Season> rs = new RepoMemory<>();
+        Repo<Conference> rc = new RepoMemory<>();
+
+        LoaderInfo<Conference> loaderC = new LoaderInfo<>(conn, rc, 1, Conference.class, "Conference");
+        loaderC.init();
+        LoaderInfo<NBATeam> loaderT = new LoaderInfo<>(conn, rt, 1, NBATeam.class, "Team");
+        loaderT.init();
+        LoaderInfo<Sponsor> loaderSp = new LoaderInfo<>(conn, rsp, 1, Sponsor.class, "Sponsor");
+        loaderSp.init();
+        LoaderInfo<Manager> loaderM = new LoaderInfo<>(conn, rm, 1, Manager.class, "Manager");
+        loaderM.init();
+        LoaderInfo<NBAPlayer> loaderP = new LoaderInfo<>(conn, rp, 1, NBAPlayer.class, "Player");
+        loaderP.init();
+        LoaderInfo<Season> loaderS = new LoaderInfo<>(conn, rs, 1, Season.class, "Season");
+        loaderS.init();
+        LoaderInfo<Game> loaderG = new LoaderInfo<>(conn, rg, 1, Game.class, "Game");
+        loaderG.init();
+        LoaderInfo<Found> loaderF = new LoaderInfo<>(conn, rf, 1, Found.class, "Found");
+        loaderF.init();
+
+
+        //Test Teams
+        String[] teamNames = {"Lakers", "Chicago Bulls", "Golden State Warrios", "Boston Celtics"};
+        int i = 0;
+        for(NBATeam t: rt.getAll()){
+            System.out.println(t);
+            assertTrue(t.getName().equals(teamNames[i]));
+            i++;
+        }
+
+        //Test Conferences
+        String[] Conf = {"East", "West"};
+        i = 0;
+        for(Conference c: rc.getAll()){
+            assertTrue(c.getName().equals(Conf[i]));
+            i++;
+        }
+
+        //Test the sponsors
+        String[] spons = {"Convers", "Cola", "Nike", "Adidas", "Alex Bidonici"};
+        i = 0;
+        for(Sponsor s: rsp.getAll()){
+            s.getName().equals(spons[i]);
+            i++;
+        }
+
+        //Test the Managers
+        String[] managers = {"Michael Gates", "Adelin Cojocaru", "Andrei Blaj", "Mario Lopez"};
+        i = 0;
+        for(Manager m: rm.getAll()){
+            m.getName().equals(managers[i]);
+            i++;
+        }
+    }
+
+
+    @Test
+    public void testFileRepo()throws Exception{
+        // Repo<Conference> rf = new RepoMemory<>();
+        FileHandlerUtil<Conference> fh = new FileHandlerUtil<>(Conference.class, "db/Conference.txt");
+        // Conference c = new Conference(3, "AddedConf1");
+        // fh.addObject(c);
+        // Conference c3 = new Conference(4, "AddedConf2");
+        // fh.addObject(c3);
+        Conference c2 = fh.getObject(3);
+        c2.setName("Refactored");
+        System.out.println(c2);
+        fh.updateObject(c2);
+        // System.out.println(fh.getObject(3));
+        
     }
 }
