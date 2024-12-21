@@ -13,17 +13,16 @@ public class LoaderInfo<T extends Entity> {
 
     private final Connection conn;
     private final Repo<T> repo;
-    private final int option;
     private final String table;
     private final Class<T> type;
 
-    public LoaderInfo(Connection conn, Repo<T> repo, int option, Class<T> type, String table){
+    public LoaderInfo(Connection conn, Repo<T> repo, Class<T> type, String table){
         this.conn = conn;
         this.repo = repo;
-        this.option = option;
         this.type = type;
         this.table = table;
     }
+
     
     private void load()throws Exception{
  
@@ -40,12 +39,7 @@ public class LoaderInfo<T extends Entity> {
                 System.out.println(arg);
             T obj = constr.newInstance((Object)args);
             System.out.println(obj);
-            if(option == 1){
-                //In memory addition in the Repo
-                repo.add(obj);
-            }else if(option == 2){
-                //In File writting for the object
-            }
+            repo.add(obj);
         }       
        
     }

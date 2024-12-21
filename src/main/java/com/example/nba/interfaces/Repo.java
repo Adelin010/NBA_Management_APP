@@ -13,7 +13,7 @@ public interface Repo<T extends Entity> {
      *
      * @param obj The object to create.
      */
-    void add(T obj);
+    void add(T obj) ;
      /**
      * Updates an existing object in the repository.
      *

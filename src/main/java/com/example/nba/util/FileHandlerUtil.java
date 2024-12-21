@@ -7,8 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.net.URL;
-
-
+import java.util.ArrayList;
+import java.util.List;
 import java.io.BufferedReader;
 
 public class FileHandlerUtil<T extends Entity> {
@@ -49,10 +49,9 @@ public class FileHandlerUtil<T extends Entity> {
      */
     private void writeLine(T object, boolean append)throws IOException{
         String fileSource = fileUrl.getFile();
-        bfw = new BufferedWriter(new FileWriter(fileSource, append));
         //add a new object in the file
         if(append){
-            System.out.println(object.seq(false));
+            bfw = new BufferedWriter(new FileWriter(fileSource, append));
             bfw.append(object.seq(false) + "\n");
             bfw.close();
             return;
@@ -61,10 +60,9 @@ public class FileHandlerUtil<T extends Entity> {
         String lines = "";
         String line = "";
         int id = object.getId(), i = 1;
-        System.out.println(id);
         bfr = new BufferedReader(new FileReader(fileSource));
-        System.out.println(bfr);
-        System.out.println(bfr.readLine());
+        lines += bfr.readLine();
+        lines += "\n";
         while((line = bfr.readLine()) != null){
             System.out.println("BEGGING: " + lines);
             if(id == i){
@@ -77,9 +75,9 @@ public class FileHandlerUtil<T extends Entity> {
             System.out.println("AFTER: " + lines);
             i++;
         }
-
-        bfw.write(lines);
         bfr.close();
+        bfw = new BufferedWriter(new FileWriter(fileSource));
+        bfw.write(lines);
         bfw.close();
     }
 
@@ -96,7 +94,49 @@ public class FileHandlerUtil<T extends Entity> {
     }
 
     public void updateObject(T Object) throws IOException{
-        writeLine(Object, false);
+        writeLine(Object, false );
+    
     }
+    public void removeObject(Integer id)throws IOException{
+        int i = 1;
+        String lines = "", line = "";
+        bfr = new BufferedReader(new FileReader(fileUrl.getFile()));
+        lines += bfr.readLine() + "\n";
+        while((line = bfr.readLine()) != null){
+            if(id == i){
+                i++;
+                continue;
+            }
+            //appends the current line to the new one 
+            if(i > id){
+                //all the object after the removed one must have a 
+                String[] args = line.split(",");
+                Integer id_ = Integer.parseInt((args[0]));
+                id_ -= 1;
+                args[0] = Integer.toString(id_);
+                line = String.join(",", args);
+            }
+            lines += line + "\n";
+            i++;
+        }
+        bfr.close();
+        bfw = new BufferedWriter(new FileWriter(fileUrl.getFile()));
+        bfw.write(lines);
+        bfw.close();
+    }
+
+    public List<T> getAllObjects() throws Exception{
+        String line = "";
+        ArrayList<T> array = new ArrayList<>();
+        bfr = new BufferedReader(new FileReader(fileUrl.getFile()));
+        //read the schema line
+        bfr.readLine();
+        Constructor<T> constr = type.getDeclaredConstructor(String[].class);
+        while((line = bfr.readLine()) != null){
+            array.add(constr.newInstance((Object)line.split(",")));
+        }
+        return array;
+    }
+
     
 }

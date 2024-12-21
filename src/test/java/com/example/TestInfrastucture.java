@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.SQLRecoverableException;
 import java.util.List;
 
 import org.junit.Test;
@@ -16,6 +17,7 @@ import com.example.nba.interfaces.Repo;
 import com.example.nba.model.*;
 import com.example.nba.repos.*;
 import com.example.nba.services.*;
+import com.example.nba.util.DBUtil;
 import com.example.nba.util.FileHandlerUtil;
 import com.example.nba.util.LoaderInfo;
 
@@ -306,21 +308,21 @@ public class TestInfrastucture{
         Repo<Season> rs = new RepoMemory<>();
         Repo<Conference> rc = new RepoMemory<>();
 
-        LoaderInfo<Conference> loaderC = new LoaderInfo<>(conn, rc, 1, Conference.class, "Conference");
+        LoaderInfo<Conference> loaderC = new LoaderInfo<>(conn, rc, Conference.class, "Conference");
         loaderC.init();
-        LoaderInfo<NBATeam> loaderT = new LoaderInfo<>(conn, rt, 1, NBATeam.class, "Team");
+        LoaderInfo<NBATeam> loaderT = new LoaderInfo<>(conn, rt, NBATeam.class, "Team");
         loaderT.init();
-        LoaderInfo<Sponsor> loaderSp = new LoaderInfo<>(conn, rsp, 1, Sponsor.class, "Sponsor");
+        LoaderInfo<Sponsor> loaderSp = new LoaderInfo<>(conn, rsp, Sponsor.class, "Sponsor");
         loaderSp.init();
-        LoaderInfo<Manager> loaderM = new LoaderInfo<>(conn, rm, 1, Manager.class, "Manager");
+        LoaderInfo<Manager> loaderM = new LoaderInfo<>(conn, rm, Manager.class, "Manager");
         loaderM.init();
-        LoaderInfo<NBAPlayer> loaderP = new LoaderInfo<>(conn, rp, 1, NBAPlayer.class, "Player");
+        LoaderInfo<NBAPlayer> loaderP = new LoaderInfo<>(conn, rp, NBAPlayer.class, "Player");
         loaderP.init();
-        LoaderInfo<Season> loaderS = new LoaderInfo<>(conn, rs, 1, Season.class, "Season");
+        LoaderInfo<Season> loaderS = new LoaderInfo<>(conn, rs, Season.class, "Season");
         loaderS.init();
-        LoaderInfo<Game> loaderG = new LoaderInfo<>(conn, rg, 1, Game.class, "Game");
+        LoaderInfo<Game> loaderG = new LoaderInfo<>(conn, rg, Game.class, "Game");
         loaderG.init();
-        LoaderInfo<Found> loaderF = new LoaderInfo<>(conn, rf, 1, Found.class, "Found");
+        LoaderInfo<Found> loaderF = new LoaderInfo<>(conn, rf, Found.class, "Found");
         loaderF.init();
 
 
@@ -328,7 +330,6 @@ public class TestInfrastucture{
         String[] teamNames = {"Lakers", "Chicago Bulls", "Golden State Warrios", "Boston Celtics"};
         int i = 0;
         for(NBATeam t: rt.getAll()){
-            System.out.println(t);
             assertTrue(t.getName().equals(teamNames[i]));
             i++;
         }
@@ -361,17 +362,76 @@ public class TestInfrastucture{
 
     @Test
     public void testFileRepo()throws Exception{
-        // Repo<Conference> rf = new RepoMemory<>();
         FileHandlerUtil<Conference> fh = new FileHandlerUtil<>(Conference.class, "db/Conference.txt");
-        // Conference c = new Conference(3, "AddedConf1");
-        // fh.addObject(c);
-        // Conference c3 = new Conference(4, "AddedConf2");
-        // fh.addObject(c3);
-        Conference c2 = fh.getObject(3);
-        c2.setName("Refactored");
+        Conference c = new Conference(3, "AddedConf1");
+        fh.addObject(c);
+        Conference c3 = new Conference(4, "AddedConf2");
+        fh.addObject(c3);
+        Conference c2 = fh.getObject(4);
+        c2.setName("Reupdated");
         System.out.println(c2);
         fh.updateObject(c2);
-        // System.out.println(fh.getObject(3));
+        fh.removeObject(2);
+        for(Conference conf: fh.getAllObjects())
+            System.out.println(conf);
         
     }
+
+    @Test
+    public void testLoaderInFile() throws Exception{
+        String url = System.getenv("DB_URL");
+        System.out.println(url);
+        Connection conn = null;
+        try{
+            conn = DriverManager.getConnection(url);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        Repo<NBATeam> rt = new RepoFiles<>(NBATeam.class, "db/Team.txt");
+        Repo<NBAPlayer> rp = new RepoFiles<>(NBAPlayer.class, "db/Player.txt");
+        Repo<Manager> rm = new RepoFiles<>(Manager.class, "db/Manager.txt");
+        Repo<Found> rf = new RepoFiles<>(Found.class, "db/Found.txt");
+        Repo<Game> rg = new RepoFiles<>(Game.class, "db/Game.txt");
+        Repo<Sponsor> rsp = new RepoFiles<>(Sponsor.class, "db/Sponsor.txt");
+        Repo<Season> rs = new RepoFiles<>(Season.class, "db/Season.txt");
+        Repo<Conference> rc = new RepoFiles<>(Conference.class, "db/Conference.txt");
+
+        LoaderInfo<Conference> loaderC = new LoaderInfo<>(conn, rc, Conference.class, "Conference");
+        loaderC.init();
+        LoaderInfo<NBATeam> loaderT = new LoaderInfo<>(conn, rt, NBATeam.class, "Team");
+        loaderT.init();
+        LoaderInfo<Sponsor> loaderSp = new LoaderInfo<>(conn, rsp, Sponsor.class, "Sponsor");
+        loaderSp.init();
+        LoaderInfo<Manager> loaderM = new LoaderInfo<>(conn, rm, Manager.class, "Manager");
+        loaderM.init();
+        LoaderInfo<NBAPlayer> loaderP = new LoaderInfo<>(conn, rp, NBAPlayer.class, "Player");
+        loaderP.init();
+        LoaderInfo<Season> loaderS = new LoaderInfo<>(conn, rs, Season.class, "Season");
+        loaderS.init();
+        LoaderInfo<Game> loaderG = new LoaderInfo<>(conn, rg, Game.class, "Game");
+        loaderG.init();
+        LoaderInfo<Found> loaderF = new LoaderInfo<>(conn, rf, Found.class, "Found");
+        loaderF.init();
+
+
+    }
+
+    @Test 
+    public void testDBRepo()throws SQLException, Exception{
+        String url = System.getenv("DB_URL");
+        Connection conn = null;
+        try{
+            conn = DriverManager.getConnection(url);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        DBUtil<NBATeam> db = new DBUtil<>(conn, NBATeam.class, "Team");
+        NBATeam t = new NBATeam("Alexis", 2);
+        // db.addObject(t);
+        System.out.println(db.getObject(2));
+        
+    }
+
+
 }

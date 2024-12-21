@@ -1,6 +1,1 @@
 [id | name | age | email | pf]
-1,Converse,0,converse@gmail.com,0
-2,Cola,0,cola@gmail.com,0
-3,Nike,0,nike@gmail.com,0
-4,Adidas,0,adidas@gmail.com,0
-5,Alex Bernici,34,alexB@gmail.com,1

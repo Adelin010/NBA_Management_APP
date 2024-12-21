@@ -21,19 +21,19 @@ public class RepoMemory<T extends Entity> implements Repo<T>{
         data.putIfAbsent(obj.getId(), obj);
     }
     @Override
-    public void update(T obj) {
+    public void update(T obj)  {
         data.replace(obj.getId(), obj);
     }
     @Override
-    public T get(Integer id) {
+    public T get(Integer id){
         return data.get(id);
     }
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id){
         data.remove(id);
     }
     @Override
-    public List<T> getAll() {
+    public List<T> getAll(){
         return data.values().stream().toList();
     }
 
