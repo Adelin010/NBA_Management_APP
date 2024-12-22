@@ -39,17 +39,7 @@ public class DBUtil<T extends Entity> {
         Statement st = conn.createStatement();
         String query = "select * from %s where id = %d".formatted(table, id);
         ResultSet res = st.executeQuery(query);
-        int length = res.getMetaData().getColumnCount();
-        System.out.println(length);
-        String[] args = new String[length];
-        res.next();
-        for(int i = 0; i < length; ++i){
-            String arg = res.getString(i+1);
-            System.out.println(arg);
-            args[i] = arg == null ? "null" : arg;
-        }
-        Constructor<T> constr = type.getDeclaredConstructor(String[].class);
-        return constr.newInstance((Object)args);
+        return instatiate(res).get(0);
     }
 
     public void updateObject(T obj)throws SQLException, Exception{
@@ -97,18 +87,65 @@ public class DBUtil<T extends Entity> {
 
     public List<T> getAllObjects() throws Exception{
         String query = "select * from %s".formatted(table);
-        ArrayList<T> list = new ArrayList<>();
         var res = conn.createStatement().executeQuery(query);
-        int length = res.getMetaData().getColumnCount();
-        Constructor<T> constr = type.getDeclaredConstructor(String[].class);
-        while(res.next()){
-            String[] values = new String[length];
-            for(int i = 0; i < length; ++i){
-                values[i] = res.getString(i+1);
-            }
-            list.add(constr.newInstance((Object)values));
+        return instatiate(res);
+    }
+
+
+    
+    public <G> List<T> getByColumn(String column, G val)throws SQLException, Exception{ 
+        String query;
+        if(val instanceof String){
+            query = "select * from %s where %s like '%s'".formatted(table, column, val);
+        }else if(val instanceof Double){
+            query = "select * from %s where %s = %.2f".formatted(table, column, val);
+        }else{
+            query = "select * from %s where %s = %d".formatted(table, column, val);
         }
-        return list;
+        var res = conn.createStatement().executeQuery(query);    
+        return instatiate(res);    
+    }
+
+    public <G> List<T> getByRange(String column, G start, G end)throws SQLException, Exception{
+        String query = "";
+        if(start instanceof Integer){
+            query = "select * from %s where %s between %d and %d".formatted(table, column, start, end);
+        }else if(start instanceof Double){
+            query = "select * from %s where %s between %.2f and %.2f".formatted(table, column, start, end);
+        }
+        var res = conn.createStatement().executeQuery(query);
+        return instatiate(res);
+    } 
+
+    public List<T> sortByColumn(String column, boolean desc)throws SQLException, Exception{
+        String q = "select * from %s order by %s ".formatted(table, column);
+        q += desc ? "ASC" : "DESC";
+        var res = conn.createStatement().executeQuery(q);
+        return instatiate(res);
+    }
+
+    public List<T> getByLogicalOr(String[] cond)throws SQLException, Exception{
+        String query = "select * from %s where ".formatted(table);
+        for(int i = 0; i < cond.length; ++i){
+            if(i != 0)
+                query += " or ";
+            query += cond[i];
+        }
+        System.out.println(query);
+        var res = conn.createStatement().executeQuery(query);    
+        return instatiate(res);    
+    }
+
+    public List<T> getByLogicalAnd(String[] cond)throws SQLException, Exception{
+        String query = "select * from %s where ".formatted(table);
+        for(int i = 0; i < cond.length; ++i){
+            if(i != 0)
+                query += " and ";
+            query += cond[i];
+        }
+        System.out.println(query);
+        var res = conn.createStatement().executeQuery(query);    
+        return instatiate(res);    
     }
 
 
@@ -120,6 +157,23 @@ public class DBUtil<T extends Entity> {
         else 
             return 2;
     }
+
+    public List<T> instatiate(ResultSet r)throws SQLException, Exception{
+        ArrayList<T> list = new ArrayList<>();
+        Constructor<T> constr = type.getDeclaredConstructor(String[].class);  
+        int length = r.getMetaData().getColumnCount();
+        String[] values = new String[length];
+        while(r.next()){
+            for(int i = 0; i < length; ++i){
+                String arg = r.getString(i+1);
+                values[i] = arg == null ? "null" : arg;
+            }
+            list.add(constr.newInstance((Object)values));
+        }
+        return list;
+    }
+
+    
 
     
 }

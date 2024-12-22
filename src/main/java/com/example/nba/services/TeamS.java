@@ -56,7 +56,8 @@ public class TeamS {
      */
     public List<NBATeam> getTheConferenceList(Integer conferenceId){
         if(isQ){
-            return null;
+            return ((RepoDB<NBATeam>)rt).getByColumn("conference_id", conferenceId);
+          
         }else{
             var list = rt.getAll();
             return list.stream().filter((var t) -> t.getConferenceId() == conferenceId).collect(Collectors.toList());
@@ -67,7 +68,10 @@ public class TeamS {
      */
     public NBATeam getByName(String name){
         if(isQ){
-            return null;
+            var list = ((RepoDB<NBATeam>)rt).getByColumn("name", name);
+            if(list.size() == 0)
+                return null;
+            else return list.get(0);
         }else{
             var list = rt.getAll();
             return list.stream().filter((var t) -> t.getName().equals(name)).findFirst().orElse(null);

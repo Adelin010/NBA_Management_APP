@@ -1,6 +1,5 @@
 package com.example;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -429,13 +428,60 @@ public class TestInfrastucture{
         DBUtil<NBATeam> db = new DBUtil<>(conn, NBATeam.class, "Team");
         NBATeam t = new NBATeam("Alexis", 2);
         db.addObject(t);
-        System.out.println(db.getObject(6));
-        System.out.println(db.getObject(7));
+        System.out.println(db.getObject(8));
         
-        db.removeObject(6);
-        db.removeObject(7);   
+        db.removeObject(8);
         for(var elem: db.getAllObjects()){
             System.out.println(elem);
         }
+    }
+
+    @Test
+    public void testIndependetDBMethods() throws SQLException, Exception{
+        String url = System.getenv("DB_URL");
+        Connection conn = null;
+        try{
+            conn = DriverManager.getConnection(url);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        DBUtil<NBATeam> db = new DBUtil<>(conn, NBATeam.class, "Team");
+        for(var t: db.getByColumn("conference_id", 2)) 
+            System.out.println(t);
+
+        DBUtil<NBAPlayer> dbp = new DBUtil<>(conn, NBAPlayer.class, "Player");
+        for(var p: dbp.getByColumn("salary", 800000.00))
+            System.out.println(p);
+
+        for(var p: dbp.getByRange("salary", 800000.00, 900000.00))
+            System.out.println(p);
+
+        for(var p: dbp.sortByColumn("salary", true))
+            System.out.println(p);
+
+        String[] cond = {"position like 'PF'", "points > 20000"};
+        for(var v: dbp.getByLogicalOr(cond))
+            System.out.println(v);
+
+        String[] cond2 = {"position like 'PF'", "points >= 30000"};
+        for(var v: dbp.getByLogicalAnd(cond2))
+            System.out.println(v);
+    }
+
+    @Test
+    public void testRepoDBSpecial(){
+        String url = System.getenv("DB_URL");
+        Connection conn = null;
+        try{
+            conn = DriverManager.getConnection(url);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        RepoDB<Found> rf = new RepoDB<>(conn, Found.class, "Found");
+        for(var f: rf.getTeamFounds("Lakers"))
+            System.out.println(f);
+        RepoDB<Game> rg = new RepoDB<>(conn, Game.class, "Game");
+        for(var f: rg.getGamesPerTeam("Lakers"))
+            System.out.println(f);
     }
 }

@@ -126,7 +126,7 @@ public class PlayerS {
 
     public List<NBAPlayer> getByName(String name){
         if(isQ){
-            return null;
+            return ((RepoDB<NBAPlayer>)rp).getByColumn("name", name);
         }else{
             var list = rp.getAll();
             return list.stream().filter((var p) -> p.getName().equals(name)).collect(Collectors.toList());

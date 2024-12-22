@@ -93,7 +93,7 @@ public class GameS {
 
     public List<Game> getGamesPerTeam(String teamName){
         if(isQ){
-            return null;
+            return ((RepoDB<Game>)rg).getGamesPerTeam(teamName);
         }else{
             //check if the team is real
             NBATeam t = rt.getAll().stream().filter((var team) -> team.getName().equals(teamName)).findFirst().orElse(null);

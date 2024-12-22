@@ -54,7 +54,10 @@ public class SeasonS {
             throw new AttributeFaultedException("The year %d for the SeasonS::getByYear() method is not in the correct range...".formatted(year));
 
         if(isQ){
-            return null;
+            var list = ((RepoDB<Season>)rs).getByColumn("year", year);
+            if(list.size() == 0)
+                return null;
+            else return list.get(0);
         }else{
             for(var s: rs.getAll()){
                 if(s.getYear() == year)
@@ -69,7 +72,11 @@ public class SeasonS {
      */
     public Season getByName(String name){
         if(isQ){
-            return null;
+            var list = ((RepoDB<Season>)rs).getByColumn("name", name);
+            if(list.size() == 0)
+                return null;
+            else return list.get(0);
+
         }else{
             for(var s: rs.getAll()){
                 if(s.getName().equals(name))

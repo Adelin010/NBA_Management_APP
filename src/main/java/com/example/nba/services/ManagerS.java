@@ -62,7 +62,7 @@ public class ManagerS {
      */
     public List<Manager> getByName(String name){
         if(isQ){
-            return null;
+            return ((RepoDB<Manager>)rm).getByColumn("name", name);
         }else{
             var list = rm.getAll();
             return list.stream().filter((var p) -> p.getName().equals(name)).collect(Collectors.toList());

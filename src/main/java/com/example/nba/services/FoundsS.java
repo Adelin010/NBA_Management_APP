@@ -67,8 +67,8 @@ public class FoundsS {
      * @throws AttributeFaultedException
      */
     public List<Found> getTeamFounds(String teamName)throws AttributeFaultedException{
-        if(isQ){
-            return null;
+        if(rf instanceof RepoDB){
+            return ((RepoDB<Found>)rf).getTeamFounds(teamName);
         }else{
             //check if the team is real
             NBATeam t = rt.getAll().stream().filter((var team) -> team.getName().equals(teamName)).findFirst().orElse(null);
@@ -82,7 +82,7 @@ public class FoundsS {
 
     public List<Found> getSponsorFounds(String sponsorName){
         if(isQ){
-            return null;
+            return ((RepoDB<Found>)rf).getSponsorFound(sponsorName);
         }else{
             //check if the team is real
             NBATeam t = rt.getAll().stream().filter((var team) -> team.getName().equals(sponsorName)).findFirst().orElse(null);
