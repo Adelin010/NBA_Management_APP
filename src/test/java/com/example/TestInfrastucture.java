@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.SQLRecoverableException;
 import java.util.List;
 
 import org.junit.Test;
@@ -426,12 +425,17 @@ public class TestInfrastucture{
         }catch(SQLException e){
             e.printStackTrace();
         }
+        System.out.println(conn);
         DBUtil<NBATeam> db = new DBUtil<>(conn, NBATeam.class, "Team");
         NBATeam t = new NBATeam("Alexis", 2);
-        // db.addObject(t);
-        System.out.println(db.getObject(2));
+        db.addObject(t);
+        System.out.println(db.getObject(6));
+        System.out.println(db.getObject(7));
         
+        db.removeObject(6);
+        db.removeObject(7);   
+        for(var elem: db.getAllObjects()){
+            System.out.println(elem);
+        }
     }
-
-
 }
