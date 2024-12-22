@@ -1,17 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.nba.menus.LoginController">
-    <children>
-        <VBox spacing="10" alignment="CENTER">
-            <children>
-                <Label text="NBA Management System - Login" style="-fx-font-size: 16px;" />
-                <TextField fx:id="usernameField" promptText="Username" />
-                <PasswordField fx:id="passwordField" promptText="Password" />
-                <Button text="Login" onAction="#handleLogin" />
-                <Label fx:id="loginStatusLabel" textFill="red" />
-            </children>
+<StackPane styleClass="main-container" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1">
+    <stylesheets>
+        <URL value="@login.css" />
+    </stylesheets>
+
+    <!-- Main Horizontal Layout -->
+    <HBox maxWidth="700" maxHeight="400" styleClass="login-panel">
+        <padding>
+            <Insets bottom="30" left="30" right="30" top="30" />
+        </padding>
+
+        <!-- Left Section: Logo and Title -->
+        <VBox spacing="25" alignment="CENTER" styleClass="left-panel">
+            <!-- Logo Section -->
+            <StackPane styleClass="logo-container">
+                <VBox alignment="CENTER" spacing="8">
+                    <Text styleClass="logo-text" text="NBA" />
+                    <Line styleClass="logo-underline" />
+                </VBox>
+            </StackPane>
+
+            <!-- Title Section -->
+            <VBox alignment="CENTER" spacing="5">
+                <Text styleClass="title" text="Management" textAlignment="CENTER">
+                    <font>
+                        <Font name="Helvetica Bold" size="22.0" />
+                    </font>
+                </Text>
+                <Text styleClass="subtitle" text="System">
+                    <font>
+                        <Font name="Helvetica" size="20.0" />
+                    </font>
+                </Text>
+            </VBox>
         </VBox>
-    </children>
-</AnchorPane>
+
+        <!-- Right Section: Login Form -->
+        <VBox spacing="20" alignment="CENTER" styleClass="form-container">
+            <VBox spacing="12">
+                <!-- Username Section -->
+                <VBox spacing="10">
+                    <Label styleClass="field-label" text="Username" />
+                    <TextField fx:id="usernameField" promptText="Enter your username" styleClass="input-field" />
+                </VBox>
+
+                <!-- Password Section -->
+                <VBox spacing="10">
+                    <Label styleClass="field-label" text="Password" />
+                    <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="input-field" />
+                </VBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <CheckBox styleClass="remember-me" text="Remember Me" />
+                </HBox>
+
+                <Button styleClass="login-button" text="LOG IN" />
+                <Label fx:id="loginStatusLabel" styleClass="error-label" />
+            </VBox>
+        </VBox>
+    </HBox>
+</StackPane>
