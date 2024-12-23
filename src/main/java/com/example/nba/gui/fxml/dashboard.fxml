@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.nba.menus.DashboardController">
-    <children>
-        <VBox spacing="20" alignment="CENTER">
-            <children>
-                <Label text="Welcome to the Manager Menu!" style="-fx-font-size: 18px;" />
-                <!-- <Button text="Proceed to Manager Menu" onAction="#openManagerMenu" /> -->
-                <Button text="Logout" onAction="#handleLogout" />
-            </children>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<HBox stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefHeight="440.0" prefWidth="200.0" styleClass="sidebar">
+        <HBox alignment="CENTER" spacing="10" styleClass="logo-container">
+            <Label styleClass="app-logo" text="NBA Manager">
+                <font>
+                    <Font size="22.0" />
+                </font>
+            </Label>
+            <Region styleClass="logo-underline" />
+        </HBox>
+        <VBox prefHeight="66.0" prefWidth="180.0" spacing="10">
+            <padding>
+                <Insets bottom="20" top="20" />
+            </padding>
+            <TextField fx:id="searchField" prefHeight="40.0" promptText="Search..." styleClass="search-field" />
         </VBox>
-    </children>
-</AnchorPane>
+
+        <VBox styleClass="nav-menu">
+            <Label fx:id="dashboardBtn" styleClass="nav-item, nav-item-active" text="Dashboard" />
+            <Label fx:id="playerMenuBtn" styleClass="nav-item" text="Players" />
+            <Label fx:id="teamMenuBtn" styleClass="nav-item" text="Teams" />
+            <Label fx:id="gameMenuBtn" styleClass="nav-item" text="Games" />
+            <Label fx:id="statsBtn" styleClass="nav-item" text="Statistics" />
+            <Label fx:id="schedulesBtn" styleClass="nav-item" text="Schedules" />
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS" />
+
+        <VBox spacing="15">
+            <Label fx:id="settingsBtn" styleClass="footer-item" text="Settings" />
+            <Label fx:id="helpBtn" styleClass="footer-item" text="Help Center" />
+        </VBox>
+    </VBox>
+
+    <VBox styleClass="main-content" HBox.hgrow="ALWAYS">
+        <HBox styleClass="content-header">
+            <VBox>
+                <Label fx:id="pageTitle" styleClass="page-title" text="Dashboard Overview" />
+                <Label styleClass="page-subtitle" text="Welcome back, Manager" />
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+        </HBox>
+    </VBox>
+</HBox>

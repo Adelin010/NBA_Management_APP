@@ -1,0 +1,83 @@
+.main-container {
+    -fx-background-color: linear-gradient(to right, #1d1d1d, #3b3b3b);
+}
+.login-panel {
+    -fx-background-color: rgba(255, 255, 255, 0.97);
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 25, 0, 0, 0);
+}
+.left-panel {
+    -fx-background-color: linear-gradient(to bottom, #e53935, #b71c1c);
+    -fx-background-radius: 15 0 0 15;
+    -fx-padding: 20;
+}
+.logo-container {
+    -fx-background-color: white;
+    -fx-background-radius: 50%;
+    -fx-min-width: 80;
+    -fx-min-height: 80;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.4), 10, 0, 0, 0);
+}
+.logo-text {
+    -fx-fill: #e53935;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+.logo-underline {
+    -fx-stroke: #e53935;
+    -fx-stroke-width: 2;
+    -fx-opacity: 0.8;
+    -fx-stroke-line-cap: round;
+}
+.title {
+    -fx-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+.subtitle {
+    -fx-fill: white;
+    -fx-font-size: 16px;
+}
+
+.form-container {
+    -fx-padding: 20;
+}
+.input-field {
+    -fx-pref-height: 35;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 2;
+    -fx-padding: 5 10 5 10;
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+}
+.input-field:focused {
+    -fx-border-color: #e53935;
+    -fx-effect: dropshadow(gaussian, rgba(230, 57, 55, 0.3), 5, 0, 0, 0);
+}
+.login-button {
+    -fx-background-color: linear-gradient(to bottom right, #e53935, #b71c1c);
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(230, 57, 55, 0.4), 12, 0, 0, 0);
+}
+.login-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #f54141, #c62828);
+}
+.login-button:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #b71c1c, #8e0000);
+}
+.field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #444444;
+}
+.error-label {
+    -fx-text-fill: #e53935;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
