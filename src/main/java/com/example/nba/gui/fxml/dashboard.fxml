@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<HBox stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox stylesheets="@dashboard.css" fx:controller="com.example.nba.gui.pages.DashboardController" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <VBox prefHeight="440.0" prefWidth="200.0" styleClass="sidebar">
         <HBox alignment="CENTER" spacing="10" styleClass="logo-container">
             <Label styleClass="app-logo" text="NBA Manager">
