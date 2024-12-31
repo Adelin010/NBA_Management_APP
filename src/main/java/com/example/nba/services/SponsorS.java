@@ -1,6 +1,5 @@
 package com.example.nba.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import static java.util.function.Predicate.not;
@@ -54,7 +53,10 @@ public class SponsorS {
      */
     public Sponsor getByName(String name){
         if(isQ){
-            return null;
+            var list = ((RepoDB<Sponsor>)rs).getByColumn("name", name);
+            if(list.size() == 0)
+                return null;
+            else return list.get(0);
         }else{
             var list = rs.getAll();
             return list.stream().filter((var sponsor) -> sponsor.getName().equals(name)).findFirst().orElse(null);
@@ -74,7 +76,10 @@ public class SponsorS {
         int startI = start == -1 ? 0 : start;
 
         if(isQ){
-            return new ArrayList<>();
+            var list = ((RepoDB<Sponsor>)rs).getByRange("age", start, end);
+            if(list.size() == 0)
+                return null;
+            else return list;
         }else{
             var players = rs.getAll();
             return players.stream().filter((var sponsor) -> (sponsor.getAge() >= startI && sponsor.getAge() <= endI)).collect(Collectors.toList());
@@ -83,7 +88,10 @@ public class SponsorS {
 
     public List<Sponsor> getTheCompanies(){
         if(isQ){
-            return null;
+            var list = ((RepoDB<Sponsor>)rs).getByColumn("pf", 0);
+            if(list.size() == 0)
+                return null;
+            else return list;
         }else{
             return rs.getAll().stream().filter(not(Sponsor::isPF)).collect(Collectors.toList());
         }
