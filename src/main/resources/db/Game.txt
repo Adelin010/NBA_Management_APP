@@ -1,0 +1,1 @@
+[id | date | team1Id | team2Id | scoreTeam1 | scoreTeam2 | type | seasonId]

@@ -2,8 +2,8 @@ package com.example.nba.repos;
 
 import java.util.HashMap;
 import java.util.List;
-
 import com.example.nba.interfaces.Entity;
+import com.example.nba.interfaces.Repo;
 
 
 public class RepoMemory<T extends Entity> implements Repo<T>{
@@ -31,8 +31,9 @@ public class RepoMemory<T extends Entity> implements Repo<T>{
     public void delete(Integer id) {
         data.remove(id);
     }
+    
     @Override
-    public List<T> getAll() {
+    public List<T> getAll(){
         return data.values().stream().toList();
     }
 

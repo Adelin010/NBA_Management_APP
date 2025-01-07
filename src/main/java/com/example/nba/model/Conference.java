@@ -34,6 +34,7 @@ public class Conference implements Entity {
     public void setName(String conferenceName) {
         this.name = conferenceName;
     }  
+    
     //To String methods
     public String toString(){
         String res = """

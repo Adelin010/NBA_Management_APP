@@ -1,28 +1,26 @@
 package com.example.nba.model;
 
-
-
 public class Manager extends Person{
     //FIELDS
     protected static int MAX_ID = 1;
     protected Integer teamId;
     protected String password;
 
-    public Manager(String name,String pass, int age, Integer teamId){
+    public Manager(String name,String password ,int age, Integer teamId){
         this.id = Manager.MAX_ID;
         Manager.MAX_ID++;
         this.name = name;
         this.teamId = teamId;
         this.age = age;
-        this.password = pass;
+        this.password = password;
     }
 
-    public Manager(Integer id, String name,String pass, int age, Integer teamId){
+    public Manager(Integer id,String password, String name,int age, Integer teamId){
         this.id = id;
         this.name = name;
         this.age = age;
         this.teamId = teamId;
-        this.password = pass;
+        this.password = password;
     }
     public Manager(String[] args){
         this.id = Integer.parseInt(args[0]);
@@ -43,18 +41,21 @@ public class Manager extends Person{
         return this.password;
     }
     //Setters  
+    public String getPassword(){return password;}
+    //Setters  
     public void setTeamId(Integer teamId) {this.teamId = teamId;}
-    public void setPassword(String pass){this.password = pass;}
+    public void setPassword(String password){this.password = password;}
     //Usefull functions
     public String toString() {
         String res = """
             {
                 id: %d,
                 name: %s,
+                password: %s,
                 age: %d,
                 teamId: %d
             }
-                """.formatted(id, name, age, teamId);
+                """.formatted(id, name,password, age, teamId);
         return res;
     }
 
