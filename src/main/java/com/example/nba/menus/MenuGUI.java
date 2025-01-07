@@ -144,9 +144,25 @@ public class MenuGUI extends Application{
     private void showAddFoundForm() {
         VBox form = createFormLayout("Add New Found");
 
-        TextField nameField = new TextField();
-        nameField.setMaxWidth(250);
-        nameField.setPromptText("Found Name");
+        TextField amountField = new TextField();
+        amountField.setMaxWidth(250);
+        amountField.setPromptText("Found Amount");
+
+        TextField dateField = new TextField();
+        dateField.setMaxWidth(250);
+        dateField.setPromptText("Date (YYYY-MM-DD)");
+
+        ComboBox<String> teamComboBox = new ComboBox<>();
+        teamComboBox.setMaxWidth(250);
+        teamComboBox.setPromptText("Select Team");
+        List<NBATeam> teams = controller.getAllTeams();
+        teams.forEach(team -> teamComboBox.getItems().add(team.getName() + " (ID: " + team.getId() + ")"));
+
+        ComboBox<String> sponsorComboBox = new ComboBox<>();
+        sponsorComboBox.setMaxWidth(250);
+        sponsorComboBox.setPromptText("Select Sponsor");
+        List<Sponsor> sponsors = controller.getAllSponsors();
+        sponsors.forEach(sponsor -> sponsorComboBox.getItems().add(sponsor.getName() + " (ID: " + sponsor.getId() + ")"));
 
         Button submitButton = createButton("Add Found");
         Label messageLabel = new Label();
@@ -154,17 +170,47 @@ public class MenuGUI extends Application{
 
         submitButton.setOnAction(e -> {
             try {
-                String name = nameField.getText();
-                Found found = new Found(name);
+                double amount = Double.parseDouble(amountField.getText());
+                String date = dateField.getText();
+
+                String teamSelection = teamComboBox.getValue();
+                String sponsorSelection = sponsorComboBox.getValue();
+
+                if (teamSelection == null || sponsorSelection == null) {
+                    throw new IllegalArgumentException("Please select both team and sponsor");
+                }
+
+                int teamId = Integer.parseInt(teamSelection.substring(
+                        teamSelection.indexOf("ID: ") + 4,
+                        teamSelection.length() - 1
+                ));
+
+                int sponsorId = Integer.parseInt(sponsorSelection.substring(
+                        sponsorSelection.indexOf("ID: ") + 4,
+                        sponsorSelection.length() - 1
+                ));
+
+                Found found = new Found(amount, date, teamId, sponsorId);
                 controller.addFound(found);
                 messageLabel.setText("Found added successfully!");
-                nameField.clear();
+
+                amountField.clear();
+                dateField.clear();
+                teamComboBox.setValue(null);
+                sponsorComboBox.setValue(null);
             } catch (Exception ex) {
                 messageLabel.setText("Error adding found: " + ex.getMessage());
             }
         });
 
-        form.getChildren().addAll(nameField, submitButton, messageLabel);
+        form.getChildren().addAll(
+                amountField,
+                dateField,
+                teamComboBox,
+                sponsorComboBox,
+                submitButton,
+                messageLabel
+        );
         contentArea.getChildren().setAll(form);
     }
 
@@ -206,17 +252,41 @@ public class MenuGUI extends Application{
     private void showAddGameForm() {
         VBox form = createFormLayout("Add New Game");
 
-        TextField homeTeamField = new TextField();
-        homeTeamField.setMaxWidth(250);
-        homeTeamField.setPromptText("Home Team");
-
-        TextField awayTeamField = new TextField();
-        awayTeamField.setMaxWidth(250);
-        awayTeamField.setPromptText("Away Team");
-
         TextField dateField = new TextField();
         dateField.setMaxWidth(250);
-        dateField.setPromptText("Game Date");
+        dateField.setPromptText("Date (YYYY-MM-DD)");
+
+        ComboBox<String> team1ComboBox = new ComboBox<>();
+        team1ComboBox.setMaxWidth(250);
+        team1ComboBox.setPromptText("Select Home Team");
+
+        ComboBox<String> team2ComboBox = new ComboBox<>();
+        team2ComboBox.setMaxWidth(250);
+        team2ComboBox.setPromptText("Select Away Team");
+
+        List<NBATeam> teams = controller.getAllTeams();
+        teams.forEach(team -> {
+            String teamDisplay = team.getName() + " (ID: " + team.getId() + ")";
+            team1ComboBox.getItems().add(teamDisplay);
+            team2ComboBox.getItems().add(teamDisplay);
+        });
+
+        TextField scoreTeam1Field = new TextField();
+        scoreTeam1Field.setMaxWidth(250);
+        scoreTeam1Field.setPromptText("Home Team Score");
+
+        TextField scoreTeam2Field = new TextField();
+        scoreTeam2Field.setMaxWidth(250);
+        scoreTeam2Field.setPromptText("Away Team Score");
+
+        ComboBox<String> typeComboBox = new ComboBox<>();
+        typeComboBox.setMaxWidth(250);
+        typeComboBox.setPromptText("Game Type");
+        typeComboBox.getItems().addAll("Regular", "Playoff", "Final");
+
+        TextField seasonIdField = new TextField();
+        seasonIdField.setMaxWidth(250);
+        seasonIdField.setPromptText("Season ID");
 
         Button submitButton = createButton("Add Game");
         Label messageLabel = new Label();
@@ -224,21 +294,57 @@ public class MenuGUI extends Application{
 
         submitButton.setOnAction(e -> {
             try {
-                String homeTeam = homeTeamField.getText();
-                String awayTeam = awayTeamField.getText();
+                if (dateField.getText().isEmpty() || team1ComboBox.getValue() == null ||
+                        team2ComboBox.getValue() == null || scoreTeam1Field.getText().isEmpty() ||
+                        scoreTeam2Field.getText().isEmpty() || typeComboBox.getValue() == null ||
+                        seasonIdField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("All fields must be filled");
+                }
+
+                String team1Selection = team1ComboBox.getValue();
+                String team2Selection = team2ComboBox.getValue();
+
+                int team1Id = Integer.parseInt(team1Selection.substring(
+                        team1Selection.indexOf("ID: ") + 4,
+                        team1Selection.length() - 1
+                ));
+                int team2Id = Integer.parseInt(team2Selection.substring(
+                        team2Selection.indexOf("ID: ") + 4,
+                        team2Selection.length() - 1
+                ));
+
                 String date = dateField.getText();
-                Game game = new Game(homeTeam, awayTeam, date);
+                int scoreTeam1 = Integer.parseInt(scoreTeam1Field.getText());
+                int scoreTeam2 = Integer.parseInt(scoreTeam2Field.getText());
+                String type = typeComboBox.getValue();
+                int seasonId = Integer.parseInt(seasonIdField.getText());
+
+                Game game = new Game(date, scoreTeam1, scoreTeam2, team1Id, team2Id, type, seasonId);
                 controller.addGame(game);
                 messageLabel.setText("Game added successfully!");
-                homeTeamField.clear();
-                awayTeamField.clear();
+
                 dateField.clear();
+                team1ComboBox.setValue(null);
+                team2ComboBox.setValue(null);
+                scoreTeam1Field.clear();
+                scoreTeam2Field.clear();
+                typeComboBox.setValue(null);
+                seasonIdField.clear();
             } catch (Exception ex) {
                 messageLabel.setText("Error adding game: " + ex.getMessage());
             }
         });
-
-        form.getChildren().addAll(homeTeamField, awayTeamField, dateField, submitButton, messageLabel);
+        form.getChildren().addAll(
+                dateField,
+                team1ComboBox,
+                scoreTeam1Field,
+                team2ComboBox,
+                scoreTeam2Field,
+                typeComboBox,
+                seasonIdField,
+                submitButton,
+                messageLabel
+        );
         contentArea.getChildren().setAll(form);
     }
 
@@ -274,13 +380,33 @@ public class MenuGUI extends Application{
         nameField.setMaxWidth(250);
         nameField.setPromptText("Player Name");
 
+        TextField ageField = new TextField();
+        ageField.setMaxWidth(250);
+        ageField.setPromptText("Player Age");
+
+        TextField salaryField = new TextField();
+        salaryField.setMaxWidth(250);
+        salaryField.setPromptText("Player Salary");
+
         TextField positionField = new TextField();
         positionField.setMaxWidth(250);
         positionField.setPromptText("Player Position");
 
-        TextField teamField = new TextField();
-        teamField.setMaxWidth(250);
-        teamField.setPromptText("Player Team");
+        TextField pointsField = new TextField();
+        pointsField.setMaxWidth(250);
+        pointsField.setPromptText("Points");
+
+        TextField reboundsField = new TextField();
+        reboundsField.setMaxWidth(250);
+        reboundsField.setPromptText("Rebounds");
+
+        TextField assistsField = new TextField();
+        assistsField.setMaxWidth(250);
+        assistsField.setPromptText("Assists");
+
+        TextField teamIdField = new TextField();
+        teamIdField.setMaxWidth(250);
+        teamIdField.setPromptText("Team ID");
 
         Button submitButton = createButton("Add Player");
         Label messageLabel = new Label();
@@ -289,20 +415,36 @@ public class MenuGUI extends Application{
         submitButton.setOnAction(e -> {
             try {
                 String name = nameField.getText();
+                int age = Integer.parseInt(ageField.getText());
+                double salary = Double.parseDouble(salaryField.getText());
                 String position = positionField.getText();
-                String team = teamField.getText();
-                Player player = new Player(name, position, team);
+                int points = Integer.parseInt(pointsField.getText());
+                int rebounds = Integer.parseInt(reboundsField.getText());
+                int assists = Integer.parseInt(assistsField.getText());
+                int teamId = Integer.parseInt(teamIdField.getText());
+
+                NBAPlayer player = new NBAPlayer(name, age, salary, position, points, rebounds, assists, teamId);
                 controller.addPlayer(player);
                 messageLabel.setText("Player added successfully!");
+
                 nameField.clear();
+                ageField.clear();
+                salaryField.clear();
                 positionField.clear();
-                teamField.clear();
+                pointsField.clear();
+                reboundsField.clear();
+                assistsField.clear();
+                teamIdField.clear();
             } catch (Exception ex) {
                 messageLabel.setText("Error adding player: " + ex.getMessage());
             }
         });
 
-        form.getChildren().addAll(nameField, positionField, teamField, submitButton, messageLabel);
+        form.getChildren().addAll(
+                nameField, ageField, salaryField, positionField,
+                pointsField, reboundsField, assistsField, teamIdField,
+                submitButton, messageLabel
+        );
         contentArea.getChildren().setAll(form);
     }
 
@@ -338,9 +480,17 @@ public class MenuGUI extends Application{
         nameField.setMaxWidth(250);
         nameField.setPromptText("Manager Name");
 
-        TextField teamField = new TextField();
-        teamField.setMaxWidth(250);
-        teamField.setPromptText("Manager Team");
+        TextField passwordField = new PasswordField();
+        passwordField.setMaxWidth(250);
+        passwordField.setPromptText("Password");
+
+        TextField ageField = new TextField();
+        ageField.setMaxWidth(250);
+        ageField.setPromptText("Age");
+
+        TextField teamIdField = new TextField();
+        teamIdField.setMaxWidth(250);
+        teamIdField.setPromptText("Team ID");
 
         Button submitButton = createButton("Add Manager");
         Label messageLabel = new Label();
@@ -349,18 +499,22 @@ public class MenuGUI extends Application{
         submitButton.setOnAction(e -> {
             try {
                 String name = nameField.getText();
-                String team = teamField.getText();
-                Manager manager = new Manager(name, team);
+                String password = passwordField.getText();
+                int age = Integer.parseInt(ageField.getText());
+                Integer teamId = Integer.parseInt(teamIdField.getText());
+                Manager manager = new Manager(name, password, age, teamId);
                 controller.addManager(manager);
                 messageLabel.setText("Manager added successfully!");
                 nameField.clear();
-                teamField.clear();
+                passwordField.clear();
+                ageField.clear();
+                teamIdField.clear();
             } catch (Exception ex) {
                 messageLabel.setText("Error adding manager: " + ex.getMessage());
             }
         });
 
-        form.getChildren().addAll(nameField, teamField, submitButton, messageLabel);
+        form.getChildren().addAll(nameField, passwordField, ageField, teamIdField, submitButton, messageLabel);
         contentArea.getChildren().setAll(form);
     }
 
@@ -396,9 +550,9 @@ public class MenuGUI extends Application{
         nameField.setMaxWidth(250);
         nameField.setPromptText("Team Name");
 
-        TextField cityField = new TextField();
-        cityField.setMaxWidth(250);
-        cityField.setPromptText("Team City");
+        TextField conferenceIdField = new TextField();
+        conferenceIdField.setMaxWidth(250);
+        conferenceIdField.setPromptText("Conference ID");
 
         Button submitButton = createButton("Add Team");
         Label messageLabel = new Label();
@@ -407,18 +561,18 @@ public class MenuGUI extends Application{
         submitButton.setOnAction(e -> {
             try {
                 String name = nameField.getText();
-                String city = cityField.getText();
-                Team team = new Team(name, city);
+                Integer conferenceId = Integer.parseInt(conferenceIdField.getText());
+                NBATeam team = new NBATeam(name, conferenceId);
                 controller.addTeam(team);
                 messageLabel.setText("Team added successfully!");
                 nameField.clear();
-                cityField.clear();
+                conferenceIdField.clear();
             } catch (Exception ex) {
                 messageLabel.setText("Error adding team: " + ex.getMessage());
             }
         });
 
-        form.getChildren().addAll(nameField, cityField, submitButton, messageLabel);
+        form.getChildren().addAll(nameField, conferenceIdField, submitButton, messageLabel);
         contentArea.getChildren().setAll(form);
     }
 
