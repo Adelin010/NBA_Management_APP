@@ -175,7 +175,7 @@ public class MenuGUI extends Application{
 
         submitButton.setOnAction(e -> {
             try {
-                double amount = Double.parseDouble(amountField.getText());
+                long amount = Long.parseLong(amountField.getText());
                 String date = dateField.getText();
 
                 String teamSelection = teamComboBox.getValue();
@@ -195,7 +195,7 @@ public class MenuGUI extends Application{
                         sponsorSelection.length() - 1
                 ));
 
-                Found found = new Found(amount, date, teamId, sponsorId);
+                Found found = new Found(sponsorId, teamId, amount);
                 controller.addFound(found);
                 messageLabel.setText("Found added successfully!");
 
@@ -375,7 +375,7 @@ public class MenuGUI extends Application{
         });
 
         form.getChildren().addAll(idField, searchButton, resultLabel);
-        contentArea.getChildren().setAll(form)
+        contentArea.getChildren().setAll(form);
     }
 
     private void showAddPlayerForm() {
@@ -467,7 +467,7 @@ public class MenuGUI extends Application{
         searchButton.setOnAction(e -> {
             try {
                 int id = Integer.parseInt(idField.getText());
-                Player player = controller.getPlayerById(id);
+                NBAPlayer player = controller.getPlayerById(id);
                 resultLabel.setText(player != null ? player.toString() : "No player found with ID " + id);
             } catch (Exception ex) {
                 resultLabel.setText("Error: " + ex.getMessage());
@@ -595,7 +595,7 @@ public class MenuGUI extends Application{
         searchButton.setOnAction(e -> {
             try {
                 int id = Integer.parseInt(idField.getText());
-                Team team = controller.getTeamById(id);
+                NBATeam team = controller.getTeamById(id);
                 resultLabel.setText(team != null ? team.toString() : "No team found with ID " + id);
             } catch (Exception ex) {
                 resultLabel.setText("Error: " + ex.getMessage());
