@@ -15,7 +15,7 @@ public class Controller {
     private final PlayerS playerService;
     private final SeasonS seasonService;
     private  final SponsorS sponsorService;
-    private final TeamS teamService
+    private final TeamS teamService;
 
     public Controller(FoundsS foundsService, GameS gameService, ManagerS managerService, PlayerS playerService, SeasonS seasonService,SponsorS sponsorService, TeamS teamService) {
         this.foundsService = foundsService;

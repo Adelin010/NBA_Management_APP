@@ -1,11 +1,16 @@
 package com.example.nba.menus;
 
+import java.util.List;
+
 import com.example.nba.controller.Controller;
 import com.example.nba.model.*;
+
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,7 +28,7 @@ public class MenuGUI extends Application{
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         BorderPane root = new BorderPane();
-
+    
         root.setBackground(new Background(new BackgroundImage(
                 new Image("images/nba-court.jpeg", 800, 600, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
