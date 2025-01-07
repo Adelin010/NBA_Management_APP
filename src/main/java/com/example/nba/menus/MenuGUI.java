@@ -11,7 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class MenuGUI {
+public class MenuGUI extends Application{
     private final Controller controller;
     private Stage primaryStage;
     private StackPane contentArea;
