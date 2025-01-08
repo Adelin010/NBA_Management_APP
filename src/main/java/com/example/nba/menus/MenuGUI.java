@@ -2,7 +2,7 @@ package com.example.nba.menus;
 
 import java.util.List;
 
-import com.example.nba.controller.Controller;
+import com.example.nba.controller.AppCtrl;
 import com.example.nba.model.*;
 
 import javafx.application.Application;
@@ -17,12 +17,12 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class MenuGUI extends Application{
-    private final Controller controller;
+    private static AppCtrl controller;
     private Stage primaryStage;
     private StackPane contentArea;
 
-    public MenuGUI(Controller controller) {
-        this.controller = controller;
+    public static void setCtrl(AppCtrl ctrl){
+        controller = ctrl;
     }
 
     public void start(Stage primaryStage) {
@@ -30,7 +30,7 @@ public class MenuGUI extends Application{
         BorderPane root = new BorderPane();
     
         root.setBackground(new Background(new BackgroundImage(
-                new Image("images/nba-court.jpeg", 800, 600, false, true),
+                new Image(MenuGUI.class.getClassLoader().getResourceAsStream("images/PlayerBack.jpg"), 800, 600, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT
         )));
