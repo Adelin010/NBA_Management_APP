@@ -81,4 +81,8 @@ public class TeamS {
             return list.stream().filter((var t) -> t.getName().equals(name)).findFirst().orElse(null);
         }
     }
+
+    public int getPointsOfWinningTeam(String name){
+        return ((RepoDB<NBATeam>)rt).getPointsOfWinningTeam(name);
+    }
 }

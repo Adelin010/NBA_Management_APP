@@ -452,4 +452,25 @@ public class TestInfrastucture{
             System.out.println(elem);
         }
     }
+
+    @Test
+    public void testAdv(){
+
+        String url = System.getenv("DB_URL");
+        System.out.println(url);
+        Connection conn = null;
+        try{
+            conn = DriverManager.getConnection(url);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        RepoDB<NBATeam> rt = new RepoDB<>(conn, NBATeam.class, "Team");
+        RepoDB<NBAPlayer> rp = new RepoDB<>(conn, NBAPlayer.class, "Player");
+        System.out.println(rt.getPointsOfWinningTeam("Lakers"));
+        System.out.println(rt.getPointsOfWinningTeam("Chicago Bulls"));
+
+        System.out.println("Sort people by age: ");
+        rp.sortPlayersByAge(false).stream().forEach((var elem) -> System.out.println(elem));
+    }   
 }

@@ -60,7 +60,7 @@ public class PlayerS {
     public List<NBAPlayer> sortByAge(){
         if(isQ){
             //use the function in the repoDB
-            return null;
+            return ((RepoDB<NBAPlayer>)rp).sortPlayersByAge(false);
         }else{
             List<NBAPlayer> players = rp.getAll();
             return players.stream().sorted((NBAPlayer p1, NBAPlayer p2) -> Integer.compare(p1.getAge(), p2.getAge())).collect(Collectors.toList());

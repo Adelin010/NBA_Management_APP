@@ -9,6 +9,7 @@ import com.example.nba.interfaces.Entity;
 import com.example.nba.interfaces.Repo;
 import com.example.nba.model.Found;
 import com.example.nba.model.Game;
+import com.example.nba.model.NBAPlayer;
 import com.example.nba.util.DBUtil;
 
 public class RepoDB<T extends Entity> implements Repo<T> {
@@ -205,6 +206,54 @@ public class RepoDB<T extends Entity> implements Repo<T> {
         }
         return new ArrayList<>();
 
+    }
+
+    public int getPointsOfWinningTeam(String teamName){
+        String q = """
+                select sum(g.score_team1) as winning_points from Team t
+                join Game g on g.team1_id = t.id
+                where t.name like '%s' and g.score_team1 > g.score_team2 
+                UNION
+                select sum(g.score_team2) as winning_points from Team t
+                join Game g on g.team2_id = t.id
+                where t.name like '%s' and g.score_team2 > g.score_team1
+
+                """.formatted(teamName, teamName);
+        try{
+            var res = conn.createStatement().executeQuery(q);
+            //get the first value
+            int amount = 0;
+            for(int i = 1; i <= 2; ++i){
+                res.next();
+                String val = res.getString(1);
+                if(val == null)
+                    continue;
+                amount += Integer.parseInt(val);
+            }
+            return amount;
+
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
+
+    public List<NBAPlayer> sortPlayersByAge(boolean desc){
+        String q = """
+                select * from Player
+                order by age %s
+                """.formatted(desc ? "desc" : "");
+        
+        try{
+            var res = conn.createStatement().executeQuery(q);
+            List<T> list = dbUtil.instatiate(res);
+            if(list.size() != 0)
+                return(List<NBAPlayer>)list;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
     
     
