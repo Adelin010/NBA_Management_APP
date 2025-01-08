@@ -55,7 +55,7 @@ public class Driver {
             AppCtrl controller = new AppCtrl(fs, gs, ms, ps, ss, sps, ts);
 
             //start the application
-            MenuGUI.setCtrl(controller);
+            MenuGUI.setCrtl(controller);
             Application.launch(MenuGUI.class, args);
         }
         else{

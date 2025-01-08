@@ -1,6 +1,5 @@
 package com.example.nba.menus;
 
-import com.example.nba.controller.Controller;
 import com.example.nba.model.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -11,16 +10,16 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import com.nba.controller.*
+import com.example.nba.controller.AppCtrl;
 import java.util.List;
 
 public class MenuGUI extends Application {
-    private final AppCtrl controller;
+    private static AppCtrl controller;
     private Stage primaryStage;
     private StackPane contentArea;
 
-    public MenuGUI(Controller controller) {
-        this.controller = controller;
+    public static void setCrtl(AppCtrl appCtrl){
+        controller = appCtrl;
     }
 
     @Override
@@ -270,17 +269,19 @@ public class MenuGUI extends Application {
         Button fetchButton = createButton("Fetch");
         Label resultLabel = new Label();
 
+        TextField nameField = new TextField();
+        nameField.setPromptText("Enter the name of the team");
+
         fetchButton.setOnAction(e -> {
             try {
-                List<String> results = controller.getWinningPointsPerTeam();
-                StringBuilder result = new StringBuilder("Winning Points:\n");
-                results.forEach(teamResult -> result.append(teamResult).append("\n"));
-                resultLabel.setText(result.toString());
+                String name = nameField.getText();
+                int result = controller.getPointsOfWinningTeam(name);
+                resultLabel.setText("Points: %d".formatted(result));
             } catch (Exception ex) {
                 resultLabel.setText("Error: " + ex.getMessage());
             }
         });
-        form.getChildren().addAll(fetchButton, resultLabel);
+        form.getChildren().addAll(fetchButton, resultLabel, nameField);
         contentArea.getChildren().setAll(form);
     }
 
