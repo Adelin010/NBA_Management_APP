@@ -58,6 +58,7 @@ public class MenuGUI extends Application {
         String[] menuItems = {
                 "Get Manager by name",
                 "Add Team",
+                "Remove Team",
                 "Games Per Team",
                 "Team Founds",
                 "Sponsor Founds",
@@ -86,6 +87,7 @@ public class MenuGUI extends Application {
         switch (option) {
             case "Get Manager by name" -> showManagerSearchByName();
             case "Add Team" -> showAddTeamForm();
+            case "Remove Team" -> showRemoveTeamForm();
             case "Games Per Team" -> showGamesPerTeam();
             case "Team Founds" -> showTeamFounds();
             case "Sponsor Founds" -> showSponsorFounds();
@@ -158,7 +160,28 @@ public class MenuGUI extends Application {
         form.getChildren().addAll(nameField, conferenceIdField, submitButton, messageLabel);
         contentArea.getChildren().setAll(form);
     }
+    private void showRemoveTeamForm() {
+        VBox form = createFormLayout("Remove Team");
 
+        TextField teamNameField = new TextField();
+        teamNameField.setPromptText("Team Name");
+
+        Button removeButton = createButton("Remove Team");
+        Label messageLabel = new Label();
+
+        removeButton.setOnAction(e -> {
+            try {
+                String teamName = teamNameField.getText();
+                controller.removeTeamByName(teamName); // Call to the controller's remove method
+                messageLabel.setText("Team '" + teamName + "' removed successfully!");
+            } catch (Exception ex) {
+                messageLabel.setText("Error: " + ex.getMessage());
+            }
+        });
+
+        form.getChildren().addAll(teamNameField, removeButton, messageLabel);
+        contentArea.getChildren().setAll(form);
+    }
     private void showGamesPerTeam() {
         VBox form = createFormLayout("Games Per Team");
 
