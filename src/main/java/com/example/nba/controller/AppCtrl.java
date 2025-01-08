@@ -80,5 +80,6 @@ public class AppCtrl {
     public NBATeam getTeamByName(String name) {return teamService.getByName(name);}
     public List<NBATeam> getTeamsByConference(Integer conferenceId) {return teamService.getTheConferenceList(conferenceId);}
     public void updateTeam(NBATeam team) {teamService.update(team);}
+    public int getPointsOfWinningTeam(String name) {return teamService.getPointsOfWinningTeam(name);}
 }
 
