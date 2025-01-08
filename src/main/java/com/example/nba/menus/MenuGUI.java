@@ -172,7 +172,7 @@ public class MenuGUI extends Application {
         removeButton.setOnAction(e -> {
             try {
                 String teamName = teamNameField.getText();
-                controller.removeTeamByName(teamName); // Call to the controller's remove method
+                controller.removeTeamByName(teamName);
                 messageLabel.setText("Team '" + teamName + "' removed successfully!");
             } catch (Exception ex) {
                 messageLabel.setText("Error: " + ex.getMessage());
