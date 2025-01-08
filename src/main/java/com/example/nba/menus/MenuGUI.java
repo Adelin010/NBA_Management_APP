@@ -29,7 +29,11 @@ public class MenuGUI extends Application {
 
         VBox sidebar = createSidebar();
         contentArea = new StackPane();
-        contentArea.setStyle("-fx-background-color: rgba(255, 255, 255, 0.85); -fx-background-radius: 10;");
+        contentArea.setStyle("-fx-background-image: url('PlayerBack.jpg'); "
+                + "-fx-background-size: cover; "
+                + "-fx-background-position: center center; "
+                + "-fx-background-repeat: no-repeat; "
+                + "-fx-background-radius: 10;");
         contentArea.setPadding(new Insets(15));
 
         root.setLeft(sidebar);
