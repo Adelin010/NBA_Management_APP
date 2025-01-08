@@ -176,7 +176,8 @@ public class MenuGUI extends Application {
         removeButton.setOnAction(e -> {
             try {
                 String teamName = teamNameField.getText();
-                controller.removeTeamByName(teamName);
+                NBATeam t = controller.getTeamByName(teamName);
+                controller.deleteTeam(t.getId());
                 messageLabel.setText("Team '" + teamName + "' removed successfully!");
             } catch (Exception ex) {
                 messageLabel.setText("Error: " + ex.getMessage());
@@ -279,7 +280,7 @@ public class MenuGUI extends Application {
                 int endAge = Integer.parseInt(endAgeField.getText());
                 List<NBAPlayer> players = controller.filterPlayersByAge(startAge, endAge);
                 StringBuilder result = new StringBuilder();
-                players.forEach(player -> result.append(player.toString()).append("\n"));
+                players.stream().forEach(player -> result.append(player.toString()).append("\n"));
                 resultLabel.setText(result.toString());
             } catch (Exception ex) {
                 resultLabel.setText("Error: " + ex.getMessage());

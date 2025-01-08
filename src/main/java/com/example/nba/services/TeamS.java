@@ -30,7 +30,7 @@ public class TeamS {
     public void add(NBATeam team)throws InexistenteInstance{
         // Check for the integrity of the foreign key
         Conference c = rc.get(team.getConferenceId());
-        if(c == null)
+        if(c != null)
             throw new InexistenteInstance("The conference assigned to the team is null. Foreign key violation...");
         
         NBATeam t = rt.get(team.getId());

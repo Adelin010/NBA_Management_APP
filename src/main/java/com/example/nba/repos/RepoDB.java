@@ -256,5 +256,18 @@ public class RepoDB<T extends Entity> implements Repo<T> {
         return new ArrayList<>();
     }
     
-    
+    public List<NBAPlayer> getPlayersByRange(int start, int end){
+        String q = """
+                select * from Player
+                where age between %d and %d
+                """.formatted(start,end);
+        System.out.println(q);
+        try{
+            
+            return (List<NBAPlayer>)dbUtil.instatiate(conn.createStatement().executeQuery(q));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
 }

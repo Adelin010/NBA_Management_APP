@@ -96,7 +96,7 @@ public class PlayerS {
         int startI = start == -1 ? 0 : start;
 
         if(isQ){
-            return null;
+            return ((RepoDB<NBAPlayer>)rp).getPlayersByRange(startI, endI);
         }else{
             var players = rp.getAll();
             return players.stream().filter((var player) -> (player.getAge() >= startI && player.getAge() <= endI)).collect(Collectors.toList());
